@@ -695,6 +695,18 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
               <p>{t("直接贴在木料表面进行无形变曲线切割与雕刻，省墨下刀轮廓分明。", "Full-scale adhesive templates for precision scroll sawing and router engraving.")}</p>
               <span className="guide-card-cta">{t("查看木工教程 →", "Read scroll saw guide →")}</span>
             </Link>
+            <Link className="guide-card" href={localizedPath(locale, "rasterbatorAlternative")}>
+              <span className="guide-card-icon" aria-hidden="true">⚡</span>
+              <h3>{t("The Rasterbator 高清替代", "The Rasterbator Alternative")}</h3>
+              <p>{t("无波点网格与像素化杂点，保留原图高清细节，1:1 毫米级厘米尺寸物理切片。", "Tile print large posters with original clarity and zero halftone dot pixelation.")}</p>
+              <span className="guide-card-cta">{t("查看对比说明 →", "Read comparison →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "acrobatAlternative")}>
+              <span className="guide-card-icon" aria-hidden="true">🖨️</span>
+              <h3>{t("免 Adobe Acrobat 多页打印", "Print Without Adobe Acrobat")}</h3>
+              <p>{t("告别昂贵订阅与复杂打印设置，在浏览器免费生成带对齐重叠线的多页 PDF。", "Free visual multi-sheet tiling without paying for Adobe Acrobat Pro.")}</p>
+              <span className="guide-card-cta">{t("查看免费指南 →", "Read free guide →")}</span>
+            </Link>
           </div>
         </section>
       </main>

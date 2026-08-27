@@ -23,6 +23,10 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/print-stained-glass-patterns"),
       (SITE_URL + "/zh/print-scroll-saw-patterns"),
       (SITE_URL + "/print-scroll-saw-patterns"),
+      (SITE_URL + "/zh/rasterbator-alternative"),
+      (SITE_URL + "/rasterbator-alternative"),
+      (SITE_URL + "/zh/print-posters-without-acrobat"),
+      (SITE_URL + "/print-posters-without-acrobat"),
     ]);
   });
 

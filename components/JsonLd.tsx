@@ -71,6 +71,25 @@ export function WebSiteJsonLd({ locale }: { locale: Locale }) {
   );
 }
 
+export function OrganizationJsonLd() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "TileStencil",
+    url: SITE_URL,
+    logo: `${SITE_URL}/icon.png`,
+    sameAs: ["https://github.com/ismilewolf-eng/tilestencil"],
+    description: "Developer of free client-side image tiling and precision multi-page poster printing tools.",
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
 export type BreadcrumbItem = {
   name: string;
   url: string;

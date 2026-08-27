@@ -23,6 +23,8 @@ const routes: Array<{
   { route: "bannerGuide", changeFrequency: "monthly", priority: 0.8 },
   { route: "stainedGlassGuide", changeFrequency: "monthly", priority: 0.8 },
   { route: "scrollSawGuide", changeFrequency: "monthly", priority: 0.8 },
+  { route: "rasterbatorAlternative", changeFrequency: "monthly", priority: 0.9 },
+  { route: "acrobatAlternative", changeFrequency: "monthly", priority: 0.9 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

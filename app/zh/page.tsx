@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { WebApplicationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
+import { OrganizationJsonLd, WebApplicationJsonLd, WebSiteJsonLd } from "@/components/JsonLd";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates } from "@/lib/locale";
 
@@ -32,6 +32,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <OrganizationJsonLd />
       <WebSiteJsonLd locale="zh-CN" />
       <WebApplicationJsonLd locale="zh-CN" />
       <TileStencilApp locale="zh-CN" />

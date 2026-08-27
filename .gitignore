@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.wrangler/
+out/
+coverage/
+*.log
+*.tsbuildinfo
+review_result.txt
+temp_*.txt
+seo_pages_*.json
+scripts_build_seo_pages.js
+.env*
+!.env.example

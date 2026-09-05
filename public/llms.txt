@@ -1,0 +1,51 @@
+# TileStencil
+
+> Free, browser-local image tiling and multi-page poster printer at 100% actual scale.
+
+TileStencil (https://tilestencil.com) is a privacy-first web utility designed for makers, woodworkers, crafters, artists, and teachers. It scales and splits JPG or PNG images across multiple standard sheets of paper (A4, A3, US Letter) with precision millimeter margins, customizable overlap alignment lines, and multi-page PDF export. All image decoding and PDF generation happen strictly on the client side inside the user's browser—no images or dimensions are ever uploaded to a server.
+
+## Core Capabilities
+
+- **100% Client-Side Privacy**: Built with Next.js, React, HTML5 Canvas, and jsPDF. Zero bytes of image data or dimensions leave the user's device.
+- **True Physical Scaling**: Users specify exact output width and height in centimeters (`cm`) or inches (`in`). The geometric layout engine enforces 100% actual size printing without distortion or arbitrary scaling.
+- **Paper Formats**: Full support for ISO 216 (A4: 210x297mm, A3: 297x420mm) and ANSI (US Letter: 8.5x11in) in both Portrait and Landscape orientations.
+- **Overlap & Alignment**: Configurable perimeter margins (min 5mm) and tile overlap strips (e.g. 5-10mm) with printed crosshair registration marks and coordinate headers (e.g. A1, A2, B1, B2) for flawless physical assembly.
+- **Rendering Filters**:
+  - *Original*: Full-color high-resolution raster slicing.
+  - *Grayscale*: Ink-saving monochrome output.
+  - *Black & White Template*: High-contrast outline filter optimized for stained glass line art, wood routing, and stencil transfers.
+
+## Key Technical Specifications & Formulas
+
+- **Internal Unit**: Millimeters (`mm`).
+- **Printable Width**: `PrintableWidth = SheetWidth - (2 × Margin)`
+- **Printable Height**: `PrintableHeight = SheetHeight - (2 × Margin)`
+- **Horizontal Stride**: `StrideX = PrintableWidth - Overlap`
+- **Vertical Stride**: `StrideY = PrintableHeight - Overlap`
+- **Tile Count**:
+  - `Columns = ceil((TargetWidth - Overlap) / StrideX)`
+  - `Rows = ceil((TargetHeight - Overlap) / StrideY)`
+- **Edge Tiles**: Final row and column preserve exact remaining dimensions without stretching or distorting aspect ratio.
+
+## Documentation & Use Cases
+
+- [Tile Printing Guide](https://tilestencil.com/print-image-on-multiple-pages): Instructions for splitting large photos across multiple A4/A3 pages at home.
+- [Mural Stencil Guide](https://tilestencil.com/print-large-stencil): How to enlarge images into high-contrast black-and-white templates for wall murals and canvas tracing.
+- [Craft & Sewing Patterns](https://tilestencil.com/print-pattern-actual-size): 1:1 true scale pattern printing for leathercraft, woodworking templates, and Cosplay armor blueprints.
+- [Banner & Sign Printing](https://tilestencil.com/print-banner-letters): Horizontal landscape tiling for multi-meter party banners, classroom headlines, and event signs.
+- [Stained Glass Patterns](https://tilestencil.com/print-stained-glass-patterns): Exact scale line art with overlap marks for copper foil and lead came assembly.
+- [Scroll Saw Templates](https://tilestencil.com/print-scroll-saw-patterns): Ink-saving spray-mount blueprints for scroll sawing and wood routing.
+- [The Rasterbator Alternative](https://tilestencil.com/rasterbator-alternative): High-resolution poster tiling without halftone raster dots or pixelation.
+- [Print Without Adobe Acrobat](https://tilestencil.com/print-posters-without-acrobat): Free browser-based multi-page poster printing alternative to Adobe Acrobat Pro.
+
+## Alternative Language Endpoints
+
+- Simplified Chinese (`zh-CN`): Available under `https://tilestencil.com/zh` (e.g. `https://tilestencil.com/zh/print-pattern-actual-size`).
+
+## Canonical Links
+
+- Main Website: https://tilestencil.com
+- Chinese Portal: https://tilestencil.com/zh
+- Open Source Repository: https://github.com/ismilewolf-eng/tilestencil
+- Full LLM Context: https://tilestencil.com/llms-full.txt
+

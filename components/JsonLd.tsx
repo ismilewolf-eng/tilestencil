@@ -18,6 +18,10 @@ export function WebApplicationJsonLd({ locale }: { locale: Locale }) {
       price: "0",
       priceCurrency: "USD",
     },
+    isAccessibleForFree: true,
+    license: "https://opensource.org/licenses/MIT",
+    citation: `${SITE_URL}/llms.txt`,
+    softwareVersion: "1.0.0",
     description: isEn
       ? "Free browser-based multi-page poster and stencil printer. Split JPG and PNG images across multiple A4, A3, or US Letter pages at 100% actual physical size with alignment marks and tile overlap."
       : "在浏览器本地把 JPG 或 PNG 按真实尺寸拆成 A4、A3 或 US Letter 多页 PDF，带页码、裁切标记和拼接提示。图片不会上传。",

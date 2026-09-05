@@ -59,6 +59,9 @@ export const metadata: Metadata = {
 export default function EnglishRootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="help" type="text/markdown" href={`${SITE_URL}/llms.txt`} title="LLM Documentation" />
+      </head>
       <body>
         <DomainRedirect />
         {children}

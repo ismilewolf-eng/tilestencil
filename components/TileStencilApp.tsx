@@ -707,6 +707,18 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
               <p>{t("告别昂贵订阅与复杂打印设置，在浏览器免费生成带对齐重叠线的多页 PDF。", "Free visual multi-sheet tiling without paying for Adobe Acrobat Pro.")}</p>
               <span className="guide-card-cta">{t("查看免费指南 →", "Read free guide →")}</span>
             </Link>
+            <Link className="guide-card" href={localizedPath(locale, "blockpostersAlternative")}>
+              <span className="guide-card-icon" aria-hidden="true">🖼️</span>
+              <h3>{t("Blockposters 免费替代", "Blockposters Alternative")}</h3>
+              <p>{t("无页数限制与水印，免费将大图切片为多张 A4/A3 纸打印。", "Free multi-page poster tiling with zero watermarks and no 7-page limit.")}</p>
+              <span className="guide-card-cta">{t("查看替代说明 →", "Read alternative guide →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "a0SewingGuide")}>
+              <span className="guide-card-icon" aria-hidden="true">🧵</span>
+              <h3>{t("A0 服装纸样打印为 A4", "Print A0 Patterns on A4")}</h3>
+              <p>{t("100% 实际大小切片打印 Etsy 电子纸样，带 10x10cm 校准方块。", "Tile large A0 sewing and cosplay patterns at 100% scale on home printers.")}</p>
+              <span className="guide-card-cta">{t("查看纸样打印 →", "Read sewing guide →")}</span>
+            </Link>
           </div>
         </section>
       </main>

@@ -27,6 +27,10 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/rasterbator-alternative"),
       (SITE_URL + "/zh/print-posters-without-acrobat"),
       (SITE_URL + "/print-posters-without-acrobat"),
+      (SITE_URL + "/zh/blockposters-alternative"),
+      (SITE_URL + "/blockposters-alternative"),
+      (SITE_URL + "/zh/print-a0-to-a4-actual-size"),
+      (SITE_URL + "/print-a0-to-a4-actual-size"),
     ]);
   });
 

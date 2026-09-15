@@ -37,6 +37,8 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 - [Scroll Saw Templates](https://tilestencil.com/print-scroll-saw-patterns): Ink-saving spray-mount blueprints for scroll sawing and wood routing.
 - [The Rasterbator Alternative](https://tilestencil.com/rasterbator-alternative): High-resolution poster tiling without halftone raster dots or pixelation.
 - [Print Without Adobe Acrobat](https://tilestencil.com/print-posters-without-acrobat): Free browser-based multi-page poster printing alternative to Adobe Acrobat Pro.
+- [Blockposters Alternative](https://tilestencil.com/blockposters-alternative): Free poster tiling without 7-page limits, watermarks, or paid subscriptions.
+- [A0 Sewing Pattern Tiling](https://tilestencil.com/print-a0-to-a4-actual-size): 100% scale A0 to A4/Letter pattern tile printing with test square calibration for home sewists.
 
 ## Alternative Language Endpoints
 

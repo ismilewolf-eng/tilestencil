@@ -11,7 +11,9 @@ export type SiteRoute =
   | "stainedGlassGuide"
   | "scrollSawGuide"
   | "rasterbatorAlternative"
-  | "acrobatAlternative";
+  | "acrobatAlternative"
+  | "blockpostersAlternative"
+  | "a0SewingGuide";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -24,6 +26,8 @@ const routeSuffix: Record<SiteRoute, string> = {
   scrollSawGuide: "/print-scroll-saw-patterns",
   rasterbatorAlternative: "/rasterbator-alternative",
   acrobatAlternative: "/print-posters-without-acrobat",
+  blockpostersAlternative: "/blockposters-alternative",
+  a0SewingGuide: "/print-a0-to-a4-actual-size",
 };
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {

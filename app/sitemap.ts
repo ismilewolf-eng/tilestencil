@@ -25,6 +25,8 @@ const routes: Array<{
   { route: "scrollSawGuide", changeFrequency: "monthly", priority: 0.8 },
   { route: "rasterbatorAlternative", changeFrequency: "monthly", priority: 0.9 },
   { route: "acrobatAlternative", changeFrequency: "monthly", priority: 0.9 },
+  { route: "blockpostersAlternative", changeFrequency: "monthly", priority: 0.9 },
+  { route: "a0SewingGuide", changeFrequency: "monthly", priority: 0.9 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

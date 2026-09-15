@@ -16,6 +16,8 @@ const ROUTES: SiteRoute[] = [
   "scrollSawGuide",
   "rasterbatorAlternative",
   "acrobatAlternative",
+  "blockpostersAlternative",
+  "a0SewingGuide",
 ];
 
 function collectTsx(dir: string, out: string[] = []): string[] {

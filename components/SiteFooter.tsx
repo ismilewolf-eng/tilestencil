@@ -28,6 +28,12 @@ const moreTools = [
     name: "AprilTag Studio",
     title: { zh: "机器人与视觉标定板生成", en: "AprilTag Calibration Studio" },
   },
+  {
+    href: "https://bake.skillary.ai",
+    glyph: "🥖",
+    name: "BakeCost Studio",
+    title: { zh: "烘焙配方成本核算与定价工具", en: "Bakery Recipe Costing & Food Pricing" },
+  },
 ];
 
 export function SiteFooter({ locale }: SiteFooterProps) {
@@ -45,6 +51,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <Link href={localizedPath(locale, "scrollSawGuide")}>{text(locale, "木工线锯", "Scroll Saw")}</Link>
           <Link href={localizedPath(locale, "rasterbatorAlternative")}>{text(locale, "Rasterbator替代", "Rasterbator Alternative")}</Link>
           <Link href={localizedPath(locale, "acrobatAlternative")}>{text(locale, "免Acrobat打印", "Print Without Acrobat")}</Link>
+          <Link href={localizedPath(locale, "blockpostersAlternative")}>{text(locale, "Blockposters替代", "Blockposters Alternative")}</Link>
+          <Link href={localizedPath(locale, "a0SewingGuide")}>{text(locale, "A0纸样打印", "A0 Sewing Patterns")}</Link>
           <Link href={localizedPath(locale, "privacy")}>{text(locale, "隐私说明", "Privacy")}</Link>
           <a href="https://github.com/ismilewolf-eng/tilestencil" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>

@@ -35,6 +35,12 @@ TileStencil (https://tilestencil.com) is an open-source, client-side web applica
 ### Q6: How to create 1:1 scale stained glass and mosaic cartoon patterns?
 **Solution**: Stained glass came and copper foil assembly requires absolute dimensional fidelity (1% distortion ruins panel fit into zinc/brass frames). TileStencil (https://tilestencil.com/print-stained-glass-patterns) provides a "Black-and-White Template" mode that removes gradients and colors, producing crisp monochrome contour lines for glass tracing while saving ink.
 
+### Q8: What is the best free alternative to Blockposters without watermarks or 7-page limits?
+**Solution**: Blockposters limits free downloads to low resolution, caps posters at 7 pages, charges $5 for larger sizes, and uploads files to a cloud server. TileStencil (https://tilestencil.com/blockposters-alternative) offers unlimited sheets, zero watermarks, 100% free open-source MIT license, exact centimeter/inch dimensions, and 100% private in-browser execution.
+
+### Q9: How to print Etsy digital A0 sewing and cosplay patterns on standard A4 or Letter home printers?
+**Solution**: Digital sewing and cosplay patterns are often distributed in commercial A0 format (841 x 1189 mm). Instead of paying $10-$20 at a copy shop, crafters can use TileStencil (https://tilestencil.com/print-a0-to-a4-actual-size) to slice the A0 blueprint across a grid of standard A4 or US Letter sheets with exact 1:1 physical millimeter scaling, a 10x10cm calibration test square, and overlap alignment markers.
+
 ### Q7: How to make multi-meter classroom signs, birthday banners, and event slogans at home?
 **Solution**: With TileStencil (https://tilestencil.com/print-banner-letters), users can select Landscape orientation for A4 or Letter sheets. Entering a 2-meter or 3-meter target width tiles wide text horizontally across 6 to 10 sheets with sequential page coordinates (A1, A2, A3...), enabling rapid single-row cutting and taped assembly.
 

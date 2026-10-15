@@ -1672,3 +1672,61 @@ select {
   line-height: 1.6;
   color: var(--muted);
 }
+
+.stencil-controls {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: #fffefa;
+}
+
+.stencil-threshold {
+  display: grid;
+  gap: 8px;
+}
+
+.stencil-threshold span {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 650;
+}
+
+.stencil-threshold output {
+  color: var(--accent-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.stencil-threshold input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.stencil-threshold small {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.stencil-invert {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.stencil-invert input {
+  accent-color: var(--accent);
+}
+
+.app-guide {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 8px 20px 56px;
+  line-height: 1.65;
+}
+
+.app-guide h2 {
+  margin: 36px 0 10px;
+}

@@ -13,7 +13,9 @@ export type SiteRoute =
   | "rasterbatorAlternative"
   | "acrobatAlternative"
   | "blockpostersAlternative"
-  | "a0SewingGuide";
+  | "a0SewingGuide"
+  | "photoToStencil"
+  | "pumpkinStencil";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -28,6 +30,8 @@ const routeSuffix: Record<SiteRoute, string> = {
   acrobatAlternative: "/print-posters-without-acrobat",
   blockpostersAlternative: "/blockposters-alternative",
   a0SewingGuide: "/print-a0-to-a4-actual-size",
+  photoToStencil: "/photo-to-stencil",
+  pumpkinStencil: "/pumpkin-stencil-maker",
 };
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {

@@ -1,6 +1,6 @@
 "use client";
 
-import type { ChangeEvent, DragEvent } from "react";
+import type { ChangeEvent, DragEvent, ReactNode } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -16,7 +16,13 @@ import {
 } from "@/lib/geometry";
 import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
 import { SiteFooter } from "@/components/SiteFooter";
-import { exportTiledPdf, type ExportImage, type RenderMode } from "@/lib/pdf-export";
+import {
+  applyRenderMode,
+  DEFAULT_STENCIL,
+  exportTiledPdf,
+  type ExportImage,
+  type RenderMode,
+} from "@/lib/pdf-export";
 import { SAMPLE_PRESETS, type SamplePreset } from "@/lib/sample-presets";
 
 type Status =
@@ -92,10 +98,12 @@ function DisplayPlan({ plan, unit, locale }: { plan: TilePlan; unit: Measurement
 
 function TilePreview({
   image,
+  displayUrl,
   plan,
   locale,
 }: {
   image: ExportImage | null;
+  displayUrl: string | null;
   plan: TilePlan | null;
   locale: Locale;
 }) {
@@ -115,7 +123,7 @@ function TilePreview({
     <div className="tile-preview-wrap">
       <div className="tile-preview" style={{ aspectRatio: String(ratio) }}>
         {image ? (
-          <img src={image.dataUrl} alt={text(locale, `已选择图片：${image.name}`, `Selected image: ${image.name}`)} />
+          <img src={displayUrl ?? image.dataUrl} alt={text(locale, `已选择图片：${image.name}`, `Selected image: ${image.name}`)} />
         ) : (
           <div className="preview-placeholder">
             <span>{text(locale, "本地图片预览", "Local image preview")}</span>
@@ -153,18 +161,71 @@ function TilePreview({
   );
 }
 
-export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
+export type AppIntro = {
+  eyebrow: string;
+  heading: string;
+  copy: string;
+};
+
+export type AppDefaults = {
+  renderMode?: RenderMode;
+  widthCm?: number;
+  heightCm?: number;
+};
+
+const PREVIEW_MAX_PX = 900;
+
+/** Downscaled copy of the image with the export effect applied, for the on-screen preview only. */
+async function renderPreview(
+  image: ExportImage,
+  mode: RenderMode,
+  threshold: number,
+  invert: boolean,
+): Promise<string> {
+  const source = new Image();
+  await new Promise<void>((resolve, reject) => {
+    source.onload = () => resolve();
+    source.onerror = () => reject(new Error("preview"));
+    source.src = image.dataUrl;
+  });
+  const scale = Math.min(1, PREVIEW_MAX_PX / Math.max(image.widthPx, image.heightPx));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(image.widthPx * scale));
+  canvas.height = Math.max(1, Math.round(image.heightPx * scale));
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  if (!context) {
+    throw new Error("preview");
+  }
+  context.drawImage(source, 0, 0, canvas.width, canvas.height);
+  applyRenderMode(context, mode, { threshold, invert });
+  return canvas.toDataURL("image/png");
+}
+
+export function TileStencilApp({
+  locale = "zh-CN",
+  intro,
+  defaults,
+  children,
+}: {
+  locale?: Locale;
+  intro?: AppIntro;
+  defaults?: AppDefaults;
+  children?: ReactNode;
+}) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<ExportImage | null>(null);
   const [unit, setUnit] = useState<MeasurementUnit>("cm");
-  const [widthInput, setWidthInput] = useState("30");
-  const [heightInput, setHeightInput] = useState("20");
+  const [widthInput, setWidthInput] = useState(String(defaults?.widthCm ?? 30));
+  const [heightInput, setHeightInput] = useState(String(defaults?.heightCm ?? 20));
   const [keepAspectRatio, setKeepAspectRatio] = useState(true);
   const [paperSize, setPaperSize] = useState<PaperSize>("a4");
   const [orientation, setOrientation] = useState<PageOrientation>("portrait");
   const [marginInput, setMarginInput] = useState("0.8");
   const [overlapInput, setOverlapInput] = useState("0.5");
-  const [renderMode, setRenderMode] = useState<RenderMode>("original");
+  const [renderMode, setRenderMode] = useState<RenderMode>(defaults?.renderMode ?? "original");
+  const [threshold, setThreshold] = useState(DEFAULT_STENCIL.threshold);
+  const [invert, setInvert] = useState(DEFAULT_STENCIL.invert);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -192,6 +253,27 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
   }, [heightInput, locale, marginInput, orientation, overlapInput, paperSize, unit, widthInput]);
 
   const paper = getPaperDimensions(paperSize, orientation);
+
+  useEffect(() => {
+    if (!image || renderMode === "original") {
+      setPreviewUrl(null);
+      return undefined;
+    }
+    let cancelled = false;
+    const timer = window.setTimeout(() => {
+      renderPreview(image, renderMode, threshold, invert)
+        .then((url) => {
+          if (!cancelled) setPreviewUrl(url);
+        })
+        .catch(() => {
+          if (!cancelled) setPreviewUrl(null);
+        });
+    }, 120);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [image, renderMode, threshold, invert]);
 
   useEffect(() => {
     if (status?.kind !== "success") {
@@ -324,6 +406,7 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
         image,
         plan: planResult.plan,
         mode: renderMode,
+        stencil: { threshold, invert },
         onProgress: (completed, total) => {
           setStatus({
             kind: "progress",
@@ -388,13 +471,16 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
       <main id="workspace" className="workspace">
         <section className="intro" aria-labelledby="page-title">
           <div>
-            <p className="eyebrow">LOCAL PRINT WORKBENCH</p>
-            <h1 id="page-title">{t("把一张图，准确拼成纸面大图。", "Turn one image into an accurately assembled paper poster.")}</h1>
+            <p className="eyebrow">{intro?.eyebrow ?? "LOCAL PRINT WORKBENCH"}</p>
+            <h1 id="page-title">
+              {intro?.heading ?? t("把一张图，准确拼成纸面大图。", "Turn one image into an accurately assembled paper poster.")}
+            </h1>
             <p className="intro-copy">
-              {t(
-                "导入本地 JPG 或 PNG，按真实尺寸自动分到 A4、A3 或 US Letter。图像只在此浏览器中处理。",
-                "Import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter. Your image stays in this browser.",
-              )}
+              {intro?.copy ??
+                t(
+                  "导入本地 JPG 或 PNG，按真实尺寸自动分到 A4、A3 或 US Letter。图像只在此浏览器中处理。",
+                  "Import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter. Your image stays in this browser.",
+                )}
             </p>
           </div>
           <div className="privacy-note">
@@ -599,6 +685,33 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
                   </label>
                 ))}
               </div>
+              {renderMode === "template" ? (
+                <div className="stencil-controls">
+                  <label className="stencil-threshold">
+                    <span>
+                      {t("黑白分界", "Stencil threshold")} <output>{threshold}</output>
+                    </span>
+                    <input
+                      type="range"
+                      min={20}
+                      max={235}
+                      step={1}
+                      value={threshold}
+                      onChange={(event) => setThreshold(Number(event.target.value))}
+                    />
+                    <small>
+                      {t(
+                        "往左：更多白色、线条更细；往右：更多黑色、细节更多。看着预览调到轮廓清楚为止。",
+                        "Left keeps more white and thinner lines; right adds more black and detail. Adjust until the outline reads clearly in the preview.",
+                      )}
+                    </small>
+                  </label>
+                  <label className="stencil-invert">
+                    <input type="checkbox" checked={invert} onChange={(event) => setInvert(event.target.checked)} />
+                    <span>{t("黑白反转", "Invert black and white")}</span>
+                  </label>
+                </div>
+              ) : null}
             </section>
           </section>
 
@@ -611,7 +724,7 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
                 </div>
                 {planResult.plan ? <span className="page-badge">{locale === "en" ? `${planResult.plan.tiles.length} pages` : `${planResult.plan.tiles.length} 页`}</span> : null}
               </div>
-              <TilePreview image={image} plan={planResult.plan} locale={locale} />
+              <TilePreview image={image} displayUrl={previewUrl} plan={planResult.plan} locale={locale} />
               {planResult.plan ? <DisplayPlan plan={planResult.plan} unit={unit} locale={locale} /> : null}
               {planResult.error ? <p className="field-error plan-error" role="alert">{planResult.error}</p> : null}
             </div>
@@ -647,6 +760,8 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
           </aside>
         </form>
 
+        {children}
+
         <section className="guides-hub" aria-labelledby="guides-hub-heading">
           <div className="guides-hub-header">
             <p className="section-kicker">{t("探索场景", "PRINTING USE CASES")}</p>
@@ -659,6 +774,18 @@ export function TileStencilApp({ locale = "zh-CN" }: { locale?: Locale }) {
             </p>
           </div>
           <div className="guides-hub-grid">
+            <Link className="guide-card" href={localizedPath(locale, "photoToStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">✂️</span>
+              <h3>{t("照片转镂空模板", "Photo to Stencil Maker")}</h3>
+              <p>{t("把照片变成可调黑白分界的镂空模板，按真实尺寸分页打印。", "Turn any photo into an adjustable black-and-white stencil and print it at actual size.")}</p>
+              <span className="guide-card-cta">{t("开始制作 →", "Make a stencil →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "pumpkinStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">🎃</span>
+              <h3>{t("南瓜雕刻模板生成器", "Pumpkin Stencil Maker")}</h3>
+              <p>{t("用任意照片做万圣节南瓜雕刻模板，按南瓜实际大小打印。", "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.")}</p>
+              <span className="guide-card-cta">{t("制作南瓜模板 →", "Make a pumpkin stencil →")}</span>
+            </Link>
             <Link className="guide-card" href={localizedPath(locale, "posterGuide")}>
               <span className="guide-card-icon" aria-hidden="true">🖼️</span>
               <h3>{t("大图分页打印海报", "Multi-Page Poster Printing")}</h3>

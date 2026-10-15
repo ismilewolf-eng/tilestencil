@@ -27,6 +27,8 @@ const routes: Array<{
   { route: "acrobatAlternative", changeFrequency: "monthly", priority: 0.9 },
   { route: "blockpostersAlternative", changeFrequency: "monthly", priority: 0.9 },
   { route: "a0SewingGuide", changeFrequency: "monthly", priority: 0.9 },
+  { route: "photoToStencil", changeFrequency: "monthly", priority: 0.9 },
+  { route: "pumpkinStencil", changeFrequency: "monthly", priority: 0.9 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

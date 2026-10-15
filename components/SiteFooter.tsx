@@ -53,6 +53,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <Link href={localizedPath(locale, "acrobatAlternative")}>{text(locale, "免Acrobat打印", "Print Without Acrobat")}</Link>
           <Link href={localizedPath(locale, "blockpostersAlternative")}>{text(locale, "Blockposters替代", "Blockposters Alternative")}</Link>
           <Link href={localizedPath(locale, "a0SewingGuide")}>{text(locale, "A0纸样打印", "A0 Sewing Patterns")}</Link>
+          <Link href={localizedPath(locale, "photoToStencil")}>{text(locale, "照片转模板", "Photo to Stencil")}</Link>
+          <Link href={localizedPath(locale, "pumpkinStencil")}>{text(locale, "南瓜雕刻模板", "Pumpkin Stencils")}</Link>
           <Link href={localizedPath(locale, "privacy")}>{text(locale, "隐私说明", "Privacy")}</Link>
           <a href="https://github.com/ismilewolf-eng/tilestencil" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>

@@ -10,11 +10,26 @@ export interface ExportImage {
   name: string;
 }
 
+export interface StencilSettings {
+  /** Luminance cut-off (0–255). Pixels at or above it become white. */
+  threshold: number;
+  /** Swap black and white, e.g. for a dark subject on a light pumpkin. */
+  invert: boolean;
+}
+
+export const DEFAULT_STENCIL: StencilSettings = { threshold: 160, invert: false };
+
 export interface ExportPdfOptions {
   image: ExportImage;
   plan: TilePlan;
   mode: RenderMode;
+  stencil?: StencilSettings;
   onProgress?: (completed: number, total: number) => void;
+}
+
+export function stencilValue(luminance: number, stencil: StencilSettings = DEFAULT_STENCIL): 0 | 255 {
+  const white = luminance >= stencil.threshold;
+  return white !== stencil.invert ? 255 : 0;
 }
 
 type JsPdfInstance = {
@@ -47,7 +62,11 @@ function loadImage(dataUrl: string): Promise<HTMLImageElement> {
   });
 }
 
-function applyRenderMode(context: CanvasRenderingContext2D, mode: RenderMode): void {
+export function applyRenderMode(
+  context: CanvasRenderingContext2D,
+  mode: RenderMode,
+  stencil: StencilSettings = DEFAULT_STENCIL,
+): void {
   if (mode === "original") {
     return;
   }
@@ -59,7 +78,7 @@ function applyRenderMode(context: CanvasRenderingContext2D, mode: RenderMode): v
     const luminance = Math.round(
       data[offset] * 0.2126 + data[offset + 1] * 0.7152 + data[offset + 2] * 0.0722,
     );
-    const next = mode === "grayscale" ? luminance : luminance >= 160 ? 255 : 0;
+    const next = mode === "grayscale" ? luminance : stencilValue(luminance, stencil);
     data[offset] = next;
     data[offset + 1] = next;
     data[offset + 2] = next;
@@ -74,6 +93,7 @@ function createTileImage(
   plan: TilePlan,
   sourceInfo: ExportImage,
   mode: RenderMode,
+  stencil: StencilSettings,
 ): { dataUrl: string; format: "JPEG" | "PNG" } {
   const crop = getPixelCrop(
     tile,
@@ -102,7 +122,7 @@ function createTileImage(
     canvas.width,
     canvas.height,
   );
-  applyRenderMode(context, mode);
+  applyRenderMode(context, mode, stencil);
 
   if (mode === "template") {
     return { dataUrl: canvas.toDataURL("image/png"), format: "PNG" };
@@ -175,7 +195,7 @@ function fileStem(filename: string): string {
     .replace(/^-+|-+$/g, "") || "tilestencil";
 }
 
-export async function exportTiledPdf({ image, plan, mode, onProgress }: ExportPdfOptions): Promise<void> {
+export async function exportTiledPdf({ image, plan, mode, stencil = DEFAULT_STENCIL, onProgress }: ExportPdfOptions): Promise<void> {
   const [{ jsPDF }, source] = await Promise.all([import("jspdf"), loadImage(image.dataUrl)]);
   const pdf = new jsPDF({
     orientation: plan.orientation,
@@ -191,7 +211,7 @@ export async function exportTiledPdf({ image, plan, mode, onProgress }: ExportPd
     }
 
     drawPageGuidance(pdf, tile, plan);
-    const rendered = createTileImage(source, tile, plan, image, mode);
+    const rendered = createTileImage(source, tile, plan, image, mode, stencil);
     pdf.addImage(
       rendered.dataUrl,
       rendered.format,

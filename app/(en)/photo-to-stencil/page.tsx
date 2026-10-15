@@ -7,7 +7,7 @@ import { languageAlternates, localizedPath } from "@/lib/locale";
 export const metadata: Metadata = {
   title: "Photo to Stencil Maker – Free, Printable at Actual Size",
   description:
-    "Turn a photo into a stencil you can actually cut: automatic bridges keep the centres of letters and eyes from falling out. Adjust it with a live preview and print at the exact size you need. Free, no upload.",
+    "Turn a photo into a stencil you can actually cut: automatic bridges keep the centres of letters and eyes from falling out. Print it at exact size or export an SVG for Cricut and laser cutters. Free, no upload.",
   keywords: [
     "photo to stencil",
     "image to stencil",
@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     "stencil maker",
     "free stencil maker",
     "make a stencil from a picture",
+    "stencil svg",
+    "image to stencil svg",
   ],
   alternates: {
     canonical: "/photo-to-stencil",
@@ -48,6 +50,11 @@ const howToSteps = [
 ];
 
 const faqItems = [
+  {
+    question: "Can I export the stencil as an SVG for Cricut, Silhouette, or a laser cutter?",
+    answer:
+      "Yes. In black-and-white template mode, choose Export SVG. The file contains closed cut paths with the bridges already in place, sized in millimetres to the width you entered, so it imports at the right size into Cricut Design Space, Silhouette Studio, LightBurn, or Inkscape.",
+  },
   {
     question: "How do I turn a photo into a stencil for free?",
     answer:

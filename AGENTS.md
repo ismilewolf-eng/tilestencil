@@ -2,7 +2,7 @@
 
 ## Product boundary
 
-TileStencil is a browser-only image tiling tool. A user uploads a JPG or PNG, enters its final physical size, selects A4, A3, or US Letter paper, configures margins and tile overlap, chooses original, grayscale, or black-and-white template rendering, then downloads a multi-page PDF that can be assembled into the requested poster/stencil.
+TileStencil is a browser-only image tiling tool. A user uploads a JPG or PNG (or types text for letter stencils), enters its final physical size, selects A4, A3, or US Letter paper, configures margins and tile overlap, chooses original, grayscale, or black-and-white template rendering, then downloads a multi-page PDF that can be assembled into the requested poster/stencil. Template mode can also add stencil bridges and export a cut-ready SVG.
 
 ## Non-negotiable rules
 
@@ -12,7 +12,7 @@ TileStencil is a browser-only image tiling tool. A user uploads a JPG or PNG, en
 - Include page numbering, trim/assembly marks, overlap guidance, and a visible 100% / Actual Size printing reminder in the generated PDF.
 - Test pagination, overlaps, terminal row/column clipping, paper orientation, and unit conversion before reporting completion.
 - Support compact mobile layouts without hiding primary controls.
-- Do not add accounts, payments, cloud storage, AI APIs, mini-programs, generic analytics, or server-side image upload. The user approved Cloudflare Web Analytics for aggregate page-view and visit measurement only; it must be disclosed on the Privacy page and must never receive image bytes, image dimensions, physical-size settings, or generated PDFs.
+- Do not add accounts, cloud storage, AI APIs, mini-programs, generic analytics, or server-side image upload. Payments are approved (2026-10-15) only for paid stencil exports (SVG / high-resolution) via a hosted checkout; the free PDF workflow must stay free. The user approved Cloudflare Web Analytics for aggregate page-view and visit measurement only; it must be disclosed on the Privacy page and must never receive image bytes, image dimensions, physical-size settings, or generated PDFs.
 
 ## Working agreement
 

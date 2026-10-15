@@ -29,6 +29,10 @@ const howToSteps = [
 
 const faqItems = [
   {
+    question: "能导出给 Cricut、刻字机或激光切割机用的 SVG 吗？",
+    answer: "可以。在黑白模板模式下点“导出 SVG”，文件里是已经带好连接桥的闭合切割路径，按你填的宽度以毫米标注尺寸，导入 Cricut Design Space、Silhouette Studio、LightBurn 或 Inkscape 都是正确大小。",
+  },
+  {
     question: "怎样免费把照片做成镂空模板？",
     answer: "在本页选择照片，拖动阈值直到黑白预览轮廓清楚，设定尺寸后导出 PDF。免费、无需账号，照片不离开你的浏览器。",
   },

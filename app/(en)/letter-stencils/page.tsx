@@ -49,6 +49,11 @@ const howToSteps = [
 
 const faqItems = [
   {
+    question: "Can I export letter stencils as an SVG for Cricut, Silhouette, or a laser cutter?",
+    answer:
+      "Yes. Choose Export SVG under the PDF button. The file contains closed cut paths with the bridges already in place, sized in millimetres to the width you entered, so it imports at the right size into Cricut Design Space, Silhouette Studio, LightBurn, or Inkscape.",
+  },
+  {
     question: "How do I print large letter stencils?",
     answer:
       "Type your text on this page, choose a stencil font, and enter the total width you need, for example 90 cm for a garden sign. TileStencil splits the lettering across standard printer pages with overlap and trim marks. Print at 100% and tape the sheets together.",

@@ -18,6 +18,7 @@ import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
 import { LetterStencilSource } from "@/components/LetterStencilSource";
 import { SiteFooter } from "@/components/SiteFooter";
 import { cleanupStencil, findIslands } from "@/lib/stencil-bridges";
+import { stencilSvg, traceMask } from "@/lib/stencil-svg";
 import {
   applyRenderMode,
   DEFAULT_STENCIL,
@@ -197,6 +198,10 @@ type StencilBuild = {
   bridged: number;
   unbridged: number;
   specksRemoved: number;
+  /** The final black-and-white mask (1 = black, cut away), kept for SVG export. */
+  mask: Uint8Array;
+  maskWidth: number;
+  maskHeight: number;
 };
 
 function loadImageElement(dataUrl: string): Promise<HTMLImageElement> {
@@ -274,6 +279,9 @@ async function buildStencil(
   return {
     previewUrl: dataUrl,
     exportImage: bridgeMm !== null ? { dataUrl, widthPx: width, heightPx: height, name: image.name } : null,
+    mask: finalMask,
+    maskWidth: width,
+    maskHeight: height,
     islands,
     bridged,
     unbridged,
@@ -552,6 +560,32 @@ export function TileStencilApp({
     setRenderMode(preset.renderMode);
     setFileError(null);
     setStatus(null);
+  }
+
+  function handleSvgExport(): void {
+    if (!stencilBuild || !planResult.plan || !image) return;
+    const trace = traceMask(stencilBuild.mask, stencilBuild.maskWidth, stencilBuild.maskHeight);
+    const svg = stencilSvg(
+      trace,
+      stencilBuild.maskWidth,
+      stencilBuild.maskHeight,
+      planResult.plan.targetWidthMm,
+      planResult.plan.targetHeightMm,
+    );
+    const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    const link = document.createElement("a");
+    const base = image.name.replace(/\.[^.]+$/, "").replace(/[^\w-]+/g, "-").replace(/^-+|-+$/g, "") || "stencil";
+    link.href = url;
+    link.download = `${base}-stencil.svg`;
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 10000);
+    setStatus({
+      kind: "success",
+      message:
+        locale === "en"
+          ? `SVG ready: ${trace.loops} cut paths at ${cleanNumber(planResult.plan.targetWidthMm / 10)} × ${cleanNumber(planResult.plan.targetHeightMm / 10)} cm.`
+          : `SVG 已生成：${trace.loops} 条切割路径，尺寸 ${cleanNumber(planResult.plan.targetWidthMm / 10)} × ${cleanNumber(planResult.plan.targetHeightMm / 10)} 厘米。`,
+    });
   }
 
   async function handleExport(): Promise<void> {
@@ -960,6 +994,16 @@ export function TileStencilApp({
               <button className="primary-button export-button" type="submit" disabled={!image || !planResult.plan || isExporting}>
                 {isExporting ? t("正在生成 PDF…", "Generating PDF…") : t("导出拼接 PDF", "Export tiled PDF")}
               </button>
+              {renderMode === "template" ? (
+                <button
+                  className="secondary-button export-button svg-export-button"
+                  type="button"
+                  onClick={handleSvgExport}
+                  disabled={!image || !planResult.plan || !stencilBuild}
+                >
+                  {t("导出 SVG（刻字机 / 激光切割）", "Export SVG for Cricut / laser cutters")}
+                </button>
+              ) : null}
               {!image ? <p className="button-help">{t("选择一张图片后即可导出。", "Choose an image to enable export.")}</p> : null}
               {status ? (
                 <p className={status.kind === "error" ? "status-message is-error" : (status.kind === "success" ? "status-message is-success" : "status-message is-progress")} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">

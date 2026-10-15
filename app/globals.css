@@ -1822,3 +1822,8 @@ select {
   color: #b3341f;
   font-weight: 600;
 }
+
+.svg-export-button {
+  margin-top: 10px;
+  width: 100%;
+}

@@ -17,10 +17,12 @@ import {
 import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
 import { LetterStencilSource } from "@/components/LetterStencilSource";
 import { SiteFooter } from "@/components/SiteFooter";
+import { cleanupStencil, findIslands } from "@/lib/stencil-bridges";
 import {
   applyRenderMode,
   DEFAULT_STENCIL,
   exportTiledPdf,
+  stencilValue,
   type ExportImage,
   type RenderMode,
 } from "@/lib/pdf-export";
@@ -172,9 +174,105 @@ export type AppDefaults = {
   renderMode?: RenderMode;
   widthCm?: number;
   heightCm?: number;
+  /** Start with automatic stencil bridges on (cut-out stencil pages). */
+  bridges?: boolean;
+  /** Initial bridge width in mm (default 2). */
+  bridgeMm?: number;
 };
 
 const PREVIEW_MAX_PX = 900;
+/** Working resolution for stencil cleanup; also the resolution of a bridged export. */
+const STENCIL_WORK_PX = 1800;
+/** Cut-out details smaller than this (in mm) are removed as uncuttable specks. */
+const SPECK_MM = 1.5;
+
+type StencilBuild = {
+  /** Shown on screen; islands tinted red when bridges are off. */
+  previewUrl: string;
+  /** Present only when bridges are on: the cleaned stencil used for export. */
+  exportImage: ExportImage | null;
+  islands: number;
+  bridged: number;
+  specksRemoved: number;
+};
+
+function loadImageElement(dataUrl: string): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const element = new Image();
+    element.onload = () => resolve(element);
+    element.onerror = () => reject(new Error("stencil"));
+    element.src = dataUrl;
+  });
+}
+
+/** Threshold the image, then either bridge islands or tint them red so they are visible. */
+async function buildStencil(
+  image: ExportImage,
+  threshold: number,
+  invert: boolean,
+  targetWidthMm: number,
+  bridgeMm: number | null,
+): Promise<StencilBuild> {
+  const source = await loadImageElement(image.dataUrl);
+  const scale = Math.min(1, STENCIL_WORK_PX / Math.max(image.widthPx, image.heightPx));
+  const width = Math.max(1, Math.round(image.widthPx * scale));
+  const height = Math.max(1, Math.round(image.heightPx * scale));
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  if (!context) throw new Error("stencil");
+  context.drawImage(source, 0, 0, width, height);
+
+  const pixels = context.getImageData(0, 0, width, height);
+  const mask = new Uint8Array(width * height);
+  for (let i = 0, o = 0; i < mask.length; i++, o += 4) {
+    const luminance = Math.round(pixels.data[o] * 0.2126 + pixels.data[o + 1] * 0.7152 + pixels.data[o + 2] * 0.0722);
+    mask[i] = stencilValue(luminance, { threshold, invert }) === 0 ? 1 : 0;
+  }
+
+  const pxPerMm = width / Math.max(1, targetWidthMm);
+  let finalMask: Uint8Array = mask;
+  let islandLabels: Int32Array | null = null;
+  let islandIds: number[] = [];
+  let bridged = 0;
+  let specksRemoved = 0;
+  let islands: number;
+  if (bridgeMm !== null) {
+    const result = cleanupStencil(mask, width, height, {
+      bridgePx: Math.max(1, Math.round(bridgeMm * pxPerMm)),
+      minAreaPx: Math.round((SPECK_MM * pxPerMm) ** 2),
+    });
+    finalMask = result.mask;
+    islands = result.islands;
+    bridged = result.bridged;
+    specksRemoved = result.specksRemoved;
+  } else {
+    const found = findIslands(mask, width, height);
+    islandLabels = found.labels;
+    islandIds = found.islandIds;
+    islands = islandIds.length;
+  }
+
+  const isIsland = new Set(islandIds);
+  for (let i = 0, o = 0; i < finalMask.length; i++, o += 4) {
+    const red = islandLabels !== null && islandLabels[i] !== 0 && isIsland.has(islandLabels[i]);
+    const value = finalMask[i] === 1 ? 0 : 255;
+    pixels.data[o] = red ? 230 : value;
+    pixels.data[o + 1] = red ? 60 : value;
+    pixels.data[o + 2] = red ? 40 : value;
+    pixels.data[o + 3] = 255;
+  }
+  context.putImageData(pixels, 0, 0);
+  const dataUrl = canvas.toDataURL("image/png");
+  return {
+    previewUrl: dataUrl,
+    exportImage: bridgeMm !== null ? { dataUrl, widthPx: width, heightPx: height, name: image.name } : null,
+    islands,
+    bridged,
+    specksRemoved,
+  };
+}
 
 /** Downscaled copy of the image with the export effect applied, for the on-screen preview only. */
 async function renderPreview(
@@ -200,6 +298,25 @@ async function renderPreview(
   context.drawImage(source, 0, 0, canvas.width, canvas.height);
   applyRenderMode(context, mode, { threshold, invert });
   return canvas.toDataURL("image/png");
+}
+
+function stencilReport(build: StencilBuild, bridgesOn: boolean, locale: Locale): string {
+  const en = locale === "en";
+  const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
+  if (bridgesOn) {
+    if (build.bridged === 0 && build.specksRemoved === 0) {
+      return en ? "Nothing will fall out. Ready to cut." : "没有会掉下来的部分，可以直接刻。";
+    }
+    return en
+      ? `Added ${plural(build.bridged, "bridge")} and removed ${plural(build.specksRemoved, "speck")} too small to cut.`
+      : `已加 ${build.bridged} 条连接桥，清除 ${build.specksRemoved} 个刻不出来的碎点。`;
+  }
+  if (build.islands === 0) {
+    return en ? "Nothing will fall out when cut." : "没有会掉下来的部分。";
+  }
+  return en
+    ? `${plural(build.islands, "piece")} (red) will fall out when cut. Turn on bridges to keep them.`
+    : `有 ${build.islands} 块（红色）刻完会掉下来。打开连接桥即可保住。`;
 }
 
 export function TileStencilApp({
@@ -230,6 +347,9 @@ export function TileStencilApp({
   const [threshold, setThreshold] = useState(DEFAULT_STENCIL.threshold);
   const [invert, setInvert] = useState(DEFAULT_STENCIL.invert);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [bridgesOn, setBridgesOn] = useState(defaults?.bridges ?? false);
+  const [bridgeMm, setBridgeMm] = useState(defaults?.bridgeMm ?? 2);
+  const [stencilBuild, setStencilBuild] = useState<StencilBuild | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -258,26 +378,40 @@ export function TileStencilApp({
 
   const paper = getPaperDimensions(paperSize, orientation);
 
+  const targetWidthMm = planResult.plan?.targetWidthMm ?? 0;
+
   useEffect(() => {
     if (!image || renderMode === "original") {
       setPreviewUrl(null);
+      setStencilBuild(null);
       return undefined;
     }
     let cancelled = false;
     const timer = window.setTimeout(() => {
-      renderPreview(image, renderMode, threshold, invert)
-        .then((url) => {
-          if (!cancelled) setPreviewUrl(url);
-        })
-        .catch(() => {
-          if (!cancelled) setPreviewUrl(null);
-        });
-    }, 120);
+      const work =
+        renderMode === "template" && targetWidthMm > 0
+          ? buildStencil(image, threshold, invert, targetWidthMm, bridgesOn ? bridgeMm : null).then((build) => {
+              if (cancelled) return;
+              setStencilBuild(build);
+              setPreviewUrl(build.previewUrl);
+            })
+          : renderPreview(image, renderMode, threshold, invert).then((url) => {
+              if (cancelled) return;
+              setStencilBuild(null);
+              setPreviewUrl(url);
+            });
+      work.catch(() => {
+        if (!cancelled) {
+          setPreviewUrl(null);
+          setStencilBuild(null);
+        }
+      });
+    }, 150);
     return () => {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, [image, renderMode, threshold, invert]);
+  }, [image, renderMode, threshold, invert, bridgesOn, bridgeMm, targetWidthMm]);
 
   useEffect(() => {
     if (status?.kind !== "success") {
@@ -421,11 +555,13 @@ export function TileStencilApp({
     setStatus({ kind: "progress", message: t("正在准备本地 PDF…", "Preparing your local PDF…") });
     try {
       await new Promise<void>((resolve) => window.requestAnimationFrame(() => resolve()));
+      // With bridges on, export the cleaned stencil (already black and white).
+      const bridgedImage = renderMode === "template" && bridgesOn ? stencilBuild?.exportImage ?? null : null;
       await exportTiledPdf({
-        image,
+        image: bridgedImage ?? image,
         plan: planResult.plan,
         mode: renderMode,
-        stencil: { threshold, invert },
+        stencil: bridgedImage ? DEFAULT_STENCIL : { threshold, invert },
         onProgress: (completed, total) => {
           setStatus({
             kind: "progress",
@@ -741,6 +877,34 @@ export function TileStencilApp({
                     <input type="checkbox" checked={invert} onChange={(event) => setInvert(event.target.checked)} />
                     <span>{t("黑白反转", "Invert black and white")}</span>
                   </label>
+                  <div className="stencil-bridges">
+                    <label className="stencil-invert">
+                      <input type="checkbox" checked={bridgesOn} onChange={(event) => setBridgesOn(event.target.checked)} />
+                      <span>
+                        {t("自动加连接桥，做成真正能刻的镂空模板", "Add bridges automatically for a stencil you can actually cut")}
+                      </span>
+                    </label>
+                    {bridgesOn ? (
+                      <label className="stencil-threshold">
+                        <span>
+                          {t("连接桥宽度", "Bridge width")} <output>{bridgeMm} mm</output>
+                        </span>
+                        <input
+                          type="range"
+                          min={1}
+                          max={6}
+                          step={0.5}
+                          value={bridgeMm}
+                          onChange={(event) => setBridgeMm(Number(event.target.value))}
+                        />
+                      </label>
+                    ) : null}
+                    {image && stencilBuild ? (
+                      <p className={stencilBuild.islands > 0 && !bridgesOn ? "stencil-report is-warning" : "stencil-report"} role="status">
+                        {stencilReport(stencilBuild, bridgesOn, locale)}
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
               ) : null}
             </section>

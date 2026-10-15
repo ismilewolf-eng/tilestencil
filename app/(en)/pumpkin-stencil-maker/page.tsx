@@ -90,7 +90,7 @@ export default function EnglishPumpkinStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", widthCm: 18, heightCm: 18 }}>
+      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
           <h2>Why make your own pumpkin stencil</h2>
           <p>
@@ -106,8 +106,9 @@ export default function EnglishPumpkinStencilPage() {
               you carve. Lower the threshold to drop fine detail.
             </li>
             <li>
-              <strong>Watch for islands.</strong> The middle of an eye or a letter O falls out when carved. Leave a small
-              bridge of pumpkin connecting it to the rest, or scrape that area instead of cutting through.
+              <strong>Islands are handled for you.</strong> The middle of an eye or a letter O would fall out when carved,
+              so automatic bridges leave a thin strip of pumpkin connecting it to the rest. Use 3–4 mm bridges on a
+              pumpkin; thinner ones can snap.
             </li>
             <li>
               <strong>Carve or scrape?</strong> Black areas are usually cut through. For a shaded portrait, scrape the skin

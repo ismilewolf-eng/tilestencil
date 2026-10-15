@@ -7,7 +7,7 @@ import { languageAlternates, localizedPath } from "@/lib/locale";
 export const metadata: Metadata = {
   title: "Photo to Stencil Maker – Free, Printable at Actual Size",
   description:
-    "Turn a photo into a black-and-white stencil in your browser. Adjust the threshold with a live preview, then print it at the exact size you need across A4, A3, or Letter pages. No upload, no sign-up.",
+    "Turn a photo into a stencil you can actually cut: automatic bridges keep the centres of letters and eyes from falling out. Adjust it with a live preview and print at the exact size you need. Free, no upload.",
   keywords: [
     "photo to stencil",
     "image to stencil",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     locale: "en_US",
     title: "Photo to Stencil Maker – free and printable at actual size",
-    description: "Convert a photo to an adjustable black-and-white stencil and print it across multiple pages at true scale.",
+    description: "Convert a photo to a cut-ready stencil with automatic bridges and print it across multiple pages at true scale.",
     url: "/photo-to-stencil",
   },
 };
@@ -64,9 +64,9 @@ const faqItems = [
       "Every pixel brighter than the threshold becomes white and every darker pixel becomes black. A lower value gives thinner, simpler shapes; a higher value keeps more shadow detail. There is no single right number, so judge it by the preview.",
   },
   {
-    question: "Why are there floating pieces that fall out when I cut?",
+    question: "Why do pieces fall out when I cut a stencil, and how do bridges fix it?",
     answer:
-      "Closed shapes such as the centre of an O or the pupil of an eye are islands in a single-layer stencil. Add small bridges with a marker before cutting, or use the stencil only for tracing and painting freehand.",
+      "Closed shapes such as the centre of an O or the white of an eye are islands: once the black around them is cut, they drop out. With automatic bridges on, TileStencil finds every island and carves a thin strip connecting it to the rest of the sheet along the shortest path. Turn bridges off to see the islands highlighted in red.",
   },
   {
     question: "Can I make a stencil bigger than my printer paper?",
@@ -78,7 +78,7 @@ const faqItems = [
 const intro = {
   eyebrow: "FREE PHOTO TO STENCIL MAKER",
   heading: "Turn a photo into a stencil, then print it at the size you need.",
-  copy: "Choose a photo, adjust the black-and-white threshold with a live preview, and export a printable stencil across A4, A3, or US Letter pages. Everything runs in your browser.",
+  copy: "Choose a photo, adjust the threshold with a live preview, and let automatic bridges hold every island in place. Export a cut-ready stencil across A4, A3, or US Letter pages. Everything runs in your browser.",
 };
 
 export default function EnglishPhotoToStencilPage() {
@@ -90,14 +90,35 @@ export default function EnglishPhotoToStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", widthCm: 40, heightCm: 30 }}>
+      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
           <h2>What this stencil maker does</h2>
           <p>
-            Most online stencil makers stop at a black-and-white image. You still have to work out how to print it at 60 cm
-            wide on a home printer. TileStencil does both steps: it converts the photo, then splits the result into numbered
-            pages at the exact physical size, with overlap and trim marks for assembly.
+            Most online stencil makers stop at a black-and-white image. That is not a stencil yet: cut it out and the
+            middle of every letter O, eye, and ring falls away. TileStencil finds those islands and adds bridges
+            automatically, removes specks too small to cut, then splits the result into numbered pages at the exact
+            physical size, with overlap and trim marks for assembly.
           </p>
+
+          <h2>How the automatic bridges work</h2>
+          <ul>
+            <li>
+              <strong>Islands are detected for you.</strong> Any white area completely surrounded by black would fall out
+              when cut. Switch bridges off to see them in red.
+            </li>
+            <li>
+              <strong>Each bridge takes the shortest route.</strong> A thin strip is carved from the island to the nearest
+              part of the sheet that is already held, so bridges stay short and unobtrusive.
+            </li>
+            <li>
+              <strong>You choose the width.</strong> 2 mm suits paper and card; use 3–4 mm for mylar or cardboard you will
+              spray many times.
+            </li>
+            <li>
+              <strong>Tiny specks are cleaned up.</strong> Details under about 1.5 mm cannot be cut cleanly, so they are
+              removed before printing.
+            </li>
+          </ul>
 
           <h2>Getting a clean stencil from a photo</h2>
           <ul>

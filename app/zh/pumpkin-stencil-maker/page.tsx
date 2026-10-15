@@ -57,12 +57,12 @@ export default function ChinesePumpkinStencilPage() {
     <>
       <HowToJsonLd name="如何用照片制作南瓜雕刻模板" description="把照片转成按南瓜大小打印的雕刻模板。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", widthCm: 18, heightCm: 18 }}>
+      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
           <h2>让模板真的能刻出来</h2>
           <ul>
             <li><strong>色块要粗。</strong>打印出来细于约 5 毫米的部分，一刻就断。把阈值调小去掉细节。</li>
-            <li><strong>注意孤岛。</strong>眼珠、字母 O 的中间刻穿后会掉下来，留一小条南瓜连住，或者改成刮皮。</li>
+            <li><strong>孤岛自动处理。</strong>眼珠、字母 O 的中间刻穿后会掉，自动连接桥会留一小条南瓜连住。南瓜上建议用 3～4 毫米的桥，太细容易断。</li>
             <li><strong>刻穿还是刮皮？</strong>黑色部分一般刻穿；想做明暗人像，就把灰色部分的皮刮掉，点灯后会透出柔光。</li>
             <li><strong>大南瓜可以做大图。</strong>图案超过一张纸，TileStencil 会分页并加重叠标记，照样对得齐。</li>
           </ul>

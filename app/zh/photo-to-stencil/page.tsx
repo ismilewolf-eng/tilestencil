@@ -57,7 +57,7 @@ export default function ChinesePhotoToStencilPage() {
     <>
       <HowToJsonLd name="如何把照片做成可打印的镂空模板" description="把照片转成黑白镂空模板，并按真实尺寸分页打印。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", widthCm: 40, heightCm: 30 }}>
+      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
           <h2>做出干净模板的几个要点</h2>
           <ul>
@@ -65,6 +65,13 @@ export default function ChinesePhotoToStencilPage() {
             <li><strong>先裁剪。</strong>选文件前去掉杂乱背景，阈值对所有像素一视同仁。</li>
             <li><strong>盯住眼睛和边缘。</strong>调到五官和轮廓一眼能认出来为止；脸被涂黑就把阈值调小。</li>
             <li><strong>反转做镂空。</strong>想喷涂主体而不是背景时，勾选黑白反转。</li>
+          </ul>
+          <h2>自动连接桥：真正能刻的模板</h2>
+          <ul>
+            <li><strong>自动找出孤岛。</strong>被黑色完全包住的白色块，比如字母 O 的中间、眼白，一刻就会掉。关掉连接桥可以看到它们被标成红色。</li>
+            <li><strong>每座桥走最短路线。</strong>从孤岛到最近的、已经固定住的纸面刻一条细桥，尽量不影响图案。</li>
+            <li><strong>宽度可调。</strong>纸和卡纸用 2 毫米；要反复喷涂的模板膜、硬纸板用 3～4 毫米。</li>
+            <li><strong>自动清碎点。</strong>小于约 1.5 毫米的细节刻不干净，打印前会被清掉。</li>
           </ul>
           <h2>常见用途</h2>
           <ul>

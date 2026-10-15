@@ -1730,3 +1730,77 @@ select {
 .app-guide h2 {
   margin: 36px 0 10px;
 }
+
+.letter-source {
+  display: grid;
+  gap: 14px;
+}
+
+.letter-text {
+  display: grid;
+  gap: 6px;
+  font-weight: 650;
+}
+
+.letter-text textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: #fffefa;
+  font: inherit;
+  font-size: 1.15rem;
+  resize: vertical;
+}
+
+.letter-text small {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.letter-fonts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.letter-fonts legend {
+  margin-bottom: 8px;
+  font-weight: 650;
+}
+
+.letter-font {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: #fffefa;
+  cursor: pointer;
+}
+
+.letter-font.is-selected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.letter-font input {
+  position: absolute;
+  opacity: 0;
+}
+
+.letter-font span {
+  font-size: 1.4rem;
+}
+
+.letter-font small {
+  color: var(--muted);
+}
+
+.letter-font:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

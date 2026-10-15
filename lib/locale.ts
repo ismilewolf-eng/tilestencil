@@ -15,7 +15,9 @@ export type SiteRoute =
   | "blockpostersAlternative"
   | "a0SewingGuide"
   | "photoToStencil"
-  | "pumpkinStencil";
+  | "pumpkinStencil"
+  | "letterStencils"
+  | "tattooStencil";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -32,6 +34,8 @@ const routeSuffix: Record<SiteRoute, string> = {
   a0SewingGuide: "/print-a0-to-a4-actual-size",
   photoToStencil: "/photo-to-stencil",
   pumpkinStencil: "/pumpkin-stencil-maker",
+  letterStencils: "/letter-stencils",
+  tattooStencil: "/tattoo-stencil-maker",
 };
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {

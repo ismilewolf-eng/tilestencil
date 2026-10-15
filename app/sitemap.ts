@@ -29,6 +29,8 @@ const routes: Array<{
   { route: "a0SewingGuide", changeFrequency: "monthly", priority: 0.9 },
   { route: "photoToStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "pumpkinStencil", changeFrequency: "monthly", priority: 0.9 },
+  { route: "letterStencils", changeFrequency: "monthly", priority: 0.9 },
+  { route: "tattooStencil", changeFrequency: "monthly", priority: 0.9 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

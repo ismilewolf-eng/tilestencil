@@ -15,6 +15,7 @@ import {
   type TilePlan,
 } from "@/lib/geometry";
 import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
+import { LetterStencilSource } from "@/components/LetterStencilSource";
 import { SiteFooter } from "@/components/SiteFooter";
 import {
   applyRenderMode,
@@ -205,11 +206,14 @@ export function TileStencilApp({
   locale = "zh-CN",
   intro,
   defaults,
+  source = "image",
   children,
 }: {
   locale?: Locale;
   intro?: AppIntro;
   defaults?: AppDefaults;
+  /** "text" swaps the photo upload for the stencil lettering generator. */
+  source?: "image" | "text";
   children?: ReactNode;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -357,6 +361,21 @@ export function TileStencilApp({
     }
   }
 
+  // The lettering generator keeps the callback from its first render, so read live values via refs.
+  const widthRef = useRef(widthInput);
+  const keepAspectRef = useRef(keepAspectRatio);
+  widthRef.current = widthInput;
+  keepAspectRef.current = keepAspectRatio;
+
+  function acceptGeneratedImage(next: ExportImage | null): void {
+    setImage(next);
+    setStatus(null);
+    const width = Number(widthRef.current);
+    if (next && keepAspectRef.current && width > 0) {
+      setHeightInput(cleanNumber(width / (next.widthPx / next.heightPx)));
+    }
+  }
+
   function handleFileChange(event: ChangeEvent<HTMLInputElement>): void {
     void acceptImage(event.target.files?.[0]);
   }
@@ -500,6 +519,17 @@ export function TileStencilApp({
           }}
         >
           <section className="settings-panel" aria-label={t("打印设置", "Print settings")}>
+            {source === "text" ? (
+              <section className="settings-section" aria-labelledby="source-heading">
+                <div className="section-heading">
+                  <div>
+                    <p className="section-kicker">{t("文字", "LETTERING")}</p>
+                    <h2 id="source-heading">{t("输入要做成模板的文字", "Type your stencil text")}</h2>
+                  </div>
+                </div>
+                <LetterStencilSource locale={locale} onImage={acceptGeneratedImage} />
+              </section>
+            ) : (
             <section className="settings-section" aria-labelledby="source-heading">
               <div className="section-heading">
                 <div>
@@ -573,6 +603,7 @@ export function TileStencilApp({
               ) : null}
               {fileError ? <p className="field-error" role="alert">{fileError}</p> : null}
             </section>
+            )}
 
             <section className="settings-section" aria-labelledby="size-heading">
               <div className="section-heading">
@@ -785,6 +816,18 @@ export function TileStencilApp({
               <h3>{t("南瓜雕刻模板生成器", "Pumpkin Stencil Maker")}</h3>
               <p>{t("用任意照片做万圣节南瓜雕刻模板，按南瓜实际大小打印。", "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.")}</p>
               <span className="guide-card-cta">{t("制作南瓜模板 →", "Make a pumpkin stencil →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
+              <span className="guide-card-icon" aria-hidden="true">🔠</span>
+              <h3>{t("字母模板生成器", "Letter Stencil Generator")}</h3>
+              <p>{t("输入文字，生成任意大小的镂空字母和数字，分页打印。", "Type any word and print stencil letters or numbers at any size across pages.")}</p>
+              <span className="guide-card-cta">{t("生成字母模板 →", "Make letter stencils →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "tattooStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">🖋️</span>
+              <h3>{t("纹身转印模板", "Tattoo Stencil Maker")}</h3>
+              <p>{t("把图案转成清晰线稿，按身体部位的真实尺寸打印。", "Turn a design into a clean stencil and print it at the exact size for the placement.")}</p>
+              <span className="guide-card-cta">{t("制作纹身模板 →", "Make a tattoo stencil →")}</span>
             </Link>
             <Link className="guide-card" href={localizedPath(locale, "posterGuide")}>
               <span className="guide-card-icon" aria-hidden="true">🖼️</span>

@@ -109,3 +109,41 @@ describe("cleanupStencil", () => {
     expect(performance.now() - started).toBeLessThan(3000);
   });
 });
+
+describe("cleanupStencil on photo-like input", () => {
+  it("fills small white islands instead of bridging them", () => {
+    // A black field sprinkled with 2x2 white dots (texture), plus one real ring.
+    const size = 60;
+    const rows: string[] = [];
+    for (let y = 0; y < size; y++) {
+      let row = "";
+      for (let x = 0; x < size; x++) {
+        const dot = x % 6 < 2 && y % 6 < 2 && x > 2 && y > 2 && x < 57 && y < 57;
+        row += dot ? "." : "#";
+      }
+      rows.push(row);
+    }
+    const { mask, width, height } = grid(rows);
+    const result = cleanupStencil(mask, width, height, { bridgePx: 2, minAreaPx: 2, minIslandPx: 9 });
+    expect(result.bridged).toBe(0);
+    expect(result.islands).toBe(0);
+    expect(result.specksRemoved).toBeGreaterThan(50);
+  });
+
+  it("reports islands left over when the bridging limit is reached", () => {
+    const { mask, width, height } = ring(31, 3, true);
+    const result = cleanupStencil(mask, width, height, { bridgePx: 2, minAreaPx: 1, maxIslands: 1 });
+    expect(result.islands).toBe(2);
+    expect(result.bridged).toBe(1);
+    expect(result.unbridged).toBe(1);
+  });
+
+  it("draws a straight, narrow bridge", () => {
+    const { mask, width, height } = ring(41, 6);
+    const result = cleanupStencil(mask, width, height, { bridgePx: 2, minAreaPx: 1 });
+    const carved = mask.reduce((a, b) => a + b, 0) - result.mask.reduce((a, b) => a + b, 0);
+    // Crossing a 6-pixel ring with a ~2-pixel bridge removes a few dozen pixels at most.
+    expect(carved).toBeGreaterThan(5);
+    expect(carved).toBeLessThan(40);
+  });
+});

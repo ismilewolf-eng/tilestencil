@@ -11,8 +11,14 @@
 export interface StencilCleanupOptions {
   /** Bridge width in pixels; 0 disables bridging. */
   bridgePx: number;
-  /** Regions (white islands or black holes) smaller than this many pixels are removed. */
+  /** Black specks (cut holes) smaller than this many pixels are removed. */
   minAreaPx: number;
+  /**
+   * White regions smaller than this are filled in rather than bridged: on a real
+   * photo, busy textures (grass, hair) break into hundreds of tiny islands that a
+   * person would simply cut away. Defaults to minAreaPx.
+   */
+  minIslandPx?: number;
   /** Bridging work is bounded; extra islands are reported but left alone. */
   maxIslands?: number;
 }
@@ -22,6 +28,8 @@ export interface StencilCleanupResult {
   /** Islands that would fall out before cleanup (after speck removal). */
   islands: number;
   bridged: number;
+  /** Islands left alone because the bridging limit was reached. */
+  unbridged: number;
   specksRemoved: number;
 }
 
@@ -129,12 +137,13 @@ export function cleanupStencil(
 ): StencilCleanupResult {
   const mask = new Uint8Array(source);
   const specksRemoved =
-    removeSpecks(mask, width, height, 0, options.minAreaPx) + removeSpecks(mask, width, height, 1, options.minAreaPx);
+    removeSpecks(mask, width, height, 0, options.minIslandPx ?? options.minAreaPx) +
+    removeSpecks(mask, width, height, 1, options.minAreaPx);
 
   const { labels, islandIds } = findIslands(mask, width, height);
   const islands = islandIds.length;
   if (islands === 0 || options.bridgePx <= 0) {
-    return { mask, islands, bridged: 0, specksRemoved };
+    return { mask, islands, bridged: 0, unbridged: 0, specksRemoved };
   }
 
   const limit = options.maxIslands ?? DEFAULT_MAX_ISLANDS;
@@ -153,69 +162,73 @@ export function cleanupStencil(
   const pending = new Uint8Array(maxId + 1);
   for (const id of ordered.slice(0, limit)) pending[id] = 1;
 
-  // Multi-source BFS from the paper (edge-connected white plus the image frame,
-  // since the page margin is paper too) through black pixels. The first time the
-  // search touches an island, the parent chain is the shortest bridge to paper
-  // that is already held in place.
-  const parent = new Int32Array(mask.length).fill(-2); // -2 unvisited, -1 seed
+  // Multi-source BFS (8-connected) from the paper (edge-connected white plus the
+  // image frame, since the page margin is paper too) through black pixels. Each
+  // visited pixel remembers which paper pixel it was reached from. The first time
+  // the search touches an island, that origin is the nearest anchor, and the
+  // bridge is drawn as a straight line to it rather than along the search path,
+  // which would come out as a staircase.
+  const origin = new Int32Array(mask.length).fill(-1);
   const queue = new Int32Array(mask.length);
   let head = 0;
   let tail = 0;
   const seed = (index: number) => {
-    if (parent[index] !== -2) return;
-    parent[index] = -1;
+    if (origin[index] !== -1) return;
+    origin[index] = index;
     queue[tail++] = index;
   };
   for (let i = 0; i < mask.length; i++) {
     const id = labels[i];
-    const inIsland = id !== 0 && id <= maxId && isIsland[id] === 1;
-    if (inIsland) continue;
+    if (id !== 0 && id <= maxId && isIsland[id] === 1) continue;
     const x = i % width;
     const y = (i - x) / width;
     const onEdge = x === 0 || y === 0 || x === width - 1 || y === height - 1;
     if (mask[i] === 0 || onEdge) seed(i);
   }
 
-  const radius = Math.max(0, (options.bridgePx - 1) / 2);
-  const path: number[] = [];
+  const segments: Array<[number, number]> = [];
   let bridged = 0;
+  const steps = [-1, 1, -width, width, -width - 1, -width + 1, width - 1, width + 1];
 
   while (head < tail) {
     const index = queue[head++];
     const x = index % width;
-    for (let k = 0; k < 4; k++) {
-      const next =
-        k === 0 ? (x > 0 ? index - 1 : -1)
-        : k === 1 ? (x < width - 1 ? index + 1 : -1)
-        : k === 2 ? (index >= width ? index - width : -1)
-        : (index + width < mask.length ? index + width : -1);
-      if (next < 0 || parent[next] !== -2) continue;
+    for (let k = 0; k < 8; k++) {
+      const dx = k === 0 || k === 4 || k === 6 ? -1 : k === 1 || k === 5 || k === 7 ? 1 : 0;
+      if ((dx === -1 && x === 0) || (dx === 1 && x === width - 1)) continue;
+      const next = index + steps[k];
+      if (next < 0 || next >= mask.length || origin[next] !== -1) continue;
       const id = labels[next];
       if (id !== 0 && id <= maxId && pending[id] === 1) {
-        // Reached an island: record the chain back to the paper.
         pending[id] = 0;
         bridged++;
-        let step = index;
-        while (step >= 0) {
-          path.push(step);
-          step = parent[step];
-        }
+        segments.push([origin[index], next]);
         // The island is now held; its pixels seed further searches (nested islands).
         for (const member of members.get(id)!) seed(member);
         continue;
       }
       if (mask[next] === 1) {
-        parent[next] = index;
+        origin[next] = origin[index];
         queue[tail++] = next;
       }
     }
   }
 
   // Paint after the search so carving does not disturb it.
-  for (const step of path) {
-    const sx = step % width;
-    paintDisc(mask, width, height, sx, (step - sx) / width, radius);
+  // At least 0.5 so each stamp is a plus shape: a diagonal line then stays
+  // 4-connected instead of touching only at corners.
+  const radius = Math.max(0.5, (options.bridgePx - 1) / 2);
+  for (const [from, to] of segments) {
+    const x0 = from % width;
+    const y0 = (from - x0) / width;
+    const x1 = to % width;
+    const y1 = (to - x1) / width;
+    const count = Math.max(1, Math.ceil(Math.hypot(x1 - x0, y1 - y0) * 2));
+    for (let i = 0; i <= count; i++) {
+      const t = i / count;
+      paintDisc(mask, width, height, x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, radius);
+    }
   }
 
-  return { mask, islands, bridged, specksRemoved };
+  return { mask, islands, bridged, unbridged: islands - bridged, specksRemoved };
 }

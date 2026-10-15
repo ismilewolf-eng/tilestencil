@@ -185,6 +185,8 @@ const PREVIEW_MAX_PX = 900;
 const STENCIL_WORK_PX = 1800;
 /** Cut-out details smaller than this (in mm) are removed as uncuttable specks. */
 const SPECK_MM = 1.5;
+/** White islands smaller than this (in mm) are filled rather than bridged (photo texture). */
+const MIN_ISLAND_MM = 3;
 
 type StencilBuild = {
   /** Shown on screen; islands tinted red when bridges are off. */
@@ -193,6 +195,7 @@ type StencilBuild = {
   exportImage: ExportImage | null;
   islands: number;
   bridged: number;
+  unbridged: number;
   specksRemoved: number;
 };
 
@@ -236,16 +239,19 @@ async function buildStencil(
   let islandLabels: Int32Array | null = null;
   let islandIds: number[] = [];
   let bridged = 0;
+  let unbridged = 0;
   let specksRemoved = 0;
   let islands: number;
   if (bridgeMm !== null) {
     const result = cleanupStencil(mask, width, height, {
       bridgePx: Math.max(1, Math.round(bridgeMm * pxPerMm)),
       minAreaPx: Math.round((SPECK_MM * pxPerMm) ** 2),
+      minIslandPx: Math.round((MIN_ISLAND_MM * pxPerMm) ** 2),
     });
     finalMask = result.mask;
     islands = result.islands;
     bridged = result.bridged;
+    unbridged = result.unbridged;
     specksRemoved = result.specksRemoved;
   } else {
     const found = findIslands(mask, width, height);
@@ -270,6 +276,7 @@ async function buildStencil(
     exportImage: bridgeMm !== null ? { dataUrl, widthPx: width, heightPx: height, name: image.name } : null,
     islands,
     bridged,
+    unbridged,
     specksRemoved,
   };
 }
@@ -304,6 +311,11 @@ function stencilReport(build: StencilBuild, bridgesOn: boolean, locale: Locale):
   const en = locale === "en";
   const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
   if (bridgesOn) {
+    if (build.unbridged > 0) {
+      return en
+        ? `Added ${plural(build.bridged, "bridge")}, but ${plural(build.unbridged, "piece")} still could fall out. The background is too busy: move the threshold, or crop to the subject.`
+        : `已加 ${build.bridged} 条连接桥，但还有 ${build.unbridged} 块可能会掉。背景太杂了：调一下阈值，或者把照片裁到只剩主体。`;
+    }
     if (build.bridged === 0 && build.specksRemoved === 0) {
       return en ? "Nothing will fall out. Ready to cut." : "没有会掉下来的部分，可以直接刻。";
     }
@@ -900,7 +912,10 @@ export function TileStencilApp({
                       </label>
                     ) : null}
                     {image && stencilBuild ? (
-                      <p className={stencilBuild.islands > 0 && !bridgesOn ? "stencil-report is-warning" : "stencil-report"} role="status">
+                      <p
+                        className={(stencilBuild.islands > 0 && !bridgesOn) || stencilBuild.unbridged > 0 ? "stencil-report is-warning" : "stencil-report"}
+                        role="status"
+                      >
                         {stencilReport(stencilBuild, bridgesOn, locale)}
                       </p>
                     ) : null}

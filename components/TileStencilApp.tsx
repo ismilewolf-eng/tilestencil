@@ -16,6 +16,7 @@ import {
 } from "@/lib/geometry";
 import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
 import { LetterStencilSource } from "@/components/LetterStencilSource";
+import { loadSvgPaymentConfig, SvgPaywall, type SvgPaymentConfig } from "@/components/SvgPaywall";
 import { SiteFooter } from "@/components/SiteFooter";
 import { cleanupStencil, findIslands } from "@/lib/stencil-bridges";
 import { stencilSvg, traceMask } from "@/lib/stencil-svg";
@@ -370,6 +371,14 @@ export function TileStencilApp({
   const [bridgesOn, setBridgesOn] = useState(defaults?.bridges ?? false);
   const [bridgeMm, setBridgeMm] = useState(defaults?.bridgeMm ?? 2);
   const [stencilBuild, setStencilBuild] = useState<StencilBuild | null>(null);
+  const [svgPayment, setSvgPayment] = useState<SvgPaymentConfig>({ paid: false });
+  const [paywallOpen, setPaywallOpen] = useState(false);
+  // One payment unlocks the current image (any threshold, size, or bridge setting).
+  const [unlockedImage, setUnlockedImage] = useState<ExportImage | null>(null);
+
+  useEffect(() => {
+    void loadSvgPaymentConfig().then(setSvgPayment);
+  }, []);
   const [fileError, setFileError] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -560,6 +569,14 @@ export function TileStencilApp({
     setRenderMode(preset.renderMode);
     setFileError(null);
     setStatus(null);
+  }
+
+  function requestSvgExport(): void {
+    if (svgPayment.paid && unlockedImage !== image) {
+      setPaywallOpen(true);
+      return;
+    }
+    handleSvgExport();
   }
 
   function handleSvgExport(): void {
@@ -998,11 +1015,24 @@ export function TileStencilApp({
                 <button
                   className="secondary-button export-button svg-export-button"
                   type="button"
-                  onClick={handleSvgExport}
+                  onClick={requestSvgExport}
                   disabled={!image || !planResult.plan || !stencilBuild}
                 >
                   {t("导出 SVG（刻字机 / 激光切割）", "Export SVG for Cricut / laser cutters")}
+                  {svgPayment.paid && unlockedImage !== image ? ` · $${svgPayment.price}` : ""}
                 </button>
+              ) : null}
+              {paywallOpen && svgPayment.paid ? (
+                <SvgPaywall
+                  config={svgPayment}
+                  locale={locale}
+                  onClose={() => setPaywallOpen(false)}
+                  onPaid={() => {
+                    setUnlockedImage(image);
+                    setPaywallOpen(false);
+                    handleSvgExport();
+                  }}
+                />
               ) : null}
               {!image ? <p className="button-help">{t("选择一张图片后即可导出。", "Choose an image to enable export.")}</p> : null}
               {status ? (

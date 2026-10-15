@@ -1833,3 +1833,27 @@ select {
   color: var(--muted);
   font-size: 0.9rem;
 }
+
+.svg-paywall {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  background: #fffefa;
+}
+
+.svg-paywall-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+
+.svg-paywall-note,
+.svg-paywall-message {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}

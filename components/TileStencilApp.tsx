@@ -1040,6 +1040,12 @@ export function TileStencilApp({
               <p>{t("用任意照片做万圣节南瓜雕刻模板，按南瓜实际大小打印。", "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.")}</p>
               <span className="guide-card-cta">{t("制作南瓜模板 →", "Make a pumpkin stencil →")}</span>
             </Link>
+            <Link className="guide-card" href={localizedPath(locale, "cricutStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">✂️</span>
+              <h3>{t("Cricut 刻字机模板", "Cricut Stencil Maker")}</h3>
+              <p>{t("照片转可切割 SVG，自带连接桥，按毫米标注尺寸。", "Photo to cut-ready SVG with bridges, sized for Cricut and laser cutters.")}</p>
+              <span className="guide-card-cta">{t("制作 SVG 模板 →", "Make an SVG stencil →")}</span>
+            </Link>
             <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
               <span className="guide-card-icon" aria-hidden="true">🔠</span>
               <h3>{t("字母模板生成器", "Letter Stencil Generator")}</h3>

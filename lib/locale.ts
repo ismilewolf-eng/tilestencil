@@ -17,7 +17,10 @@ export type SiteRoute =
   | "photoToStencil"
   | "pumpkinStencil"
   | "letterStencils"
-  | "tattooStencil";
+  | "tattooStencil"
+  | "terms"
+  | "refundPolicy"
+  | "pricing";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -36,6 +39,9 @@ const routeSuffix: Record<SiteRoute, string> = {
   pumpkinStencil: "/pumpkin-stencil-maker",
   letterStencils: "/letter-stencils",
   tattooStencil: "/tattoo-stencil-maker",
+  terms: "/terms",
+  refundPolicy: "/refund-policy",
+  pricing: "/pricing",
 };
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {

@@ -31,6 +31,9 @@ const routes: Array<{
   { route: "pumpkinStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "letterStencils", changeFrequency: "monthly", priority: 0.9 },
   { route: "tattooStencil", changeFrequency: "monthly", priority: 0.9 },
+  { route: "pricing", changeFrequency: "monthly", priority: 0.5 },
+  { route: "terms", changeFrequency: "yearly", priority: 0.3 },
+  { route: "refundPolicy", changeFrequency: "yearly", priority: 0.3 },
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

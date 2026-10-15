@@ -39,6 +39,12 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/letter-stencils"),
       (SITE_URL + "/zh/tattoo-stencil-maker"),
       (SITE_URL + "/tattoo-stencil-maker"),
+      (SITE_URL + "/zh/pricing"),
+      (SITE_URL + "/pricing"),
+      (SITE_URL + "/zh/terms"),
+      (SITE_URL + "/terms"),
+      (SITE_URL + "/zh/refund-policy"),
+      (SITE_URL + "/refund-policy"),
     ]);
   });
 

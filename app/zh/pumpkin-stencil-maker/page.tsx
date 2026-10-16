@@ -61,6 +61,9 @@ export default function ChinesePumpkinStencilPage() {
       <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
           <StencilExampleSection locale="zh-CN" name="pumpkin" />
+          <p>
+            只想要个经典南瓜脸？直接下载<Link href={localizedPath("zh-CN", "halloweenStencils")}>免费万圣节模板</Link>：南瓜灯、蝙蝠、黑猫、骷髅，都已加好连接桥。
+          </p>
           <h2>让模板真的能刻出来</h2>
           <ul>
             <li><strong>色块要粗。</strong>打印出来细于约 5 毫米的部分，一刻就断。把阈值调小去掉细节。</li>

@@ -1,0 +1,413 @@
+[
+ {
+  "slug": "pumpkin-classic",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Classic jack-o'-lantern",
+   "zh": "经典南瓜灯"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "pumpkin-scary",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Scary jagged-tooth pumpkin",
+   "zh": "吓人尖牙南瓜"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "pumpkin-happy",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Happy smiling pumpkin",
+   "zh": "笑眯眯南瓜"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Added 0 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "pumpkin-surprised",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Surprised pumpkin",
+   "zh": "吃惊南瓜"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "pumpkin-vampire",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Vampire pumpkin with fangs",
+   "zh": "吸血鬼南瓜"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "pumpkin-wink",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Winking pumpkin",
+   "zh": "眨眼南瓜"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "pumpkin-face-bold",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Jack-o'-lantern silhouette",
+   "zh": "南瓜灯剪影"
+  },
+  "own": false,
+  "title": "Jack o lantern Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Jack_o_lantern_Pinhead_icon.svg",
+  "width": 1232,
+  "height": 1122,
+  "report": "Added 4 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "pumpkin-outline",
+  "category": "halloween",
+  "group": "pumpkin",
+  "name": {
+   "en": "Outlined jack-o'-lantern",
+   "zh": "线条南瓜灯"
+  },
+  "own": false,
+  "title": "Jack o Lantern (80432) - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Jack_o_Lantern_(80432)_-_The_Noun_Project.svg",
+  "width": 1232,
+  "height": 1176,
+  "report": "Added 5 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "bat-flying",
+  "category": "halloween",
+  "group": "bat",
+  "name": {
+   "en": "Flying bat",
+   "zh": "飞行的蝙蝠"
+  },
+  "own": false,
+  "title": "Bat shadow black.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bat_shadow_black.svg",
+  "width": 1232,
+  "height": 609,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "bat-wide-wings",
+  "category": "halloween",
+  "group": "bat",
+  "name": {
+   "en": "Bat with wide wings",
+   "zh": "展翅蝙蝠"
+  },
+  "own": false,
+  "title": "Bat shadow.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bat_shadow.svg",
+  "width": 1232,
+  "height": 609,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "cat-sitting",
+  "category": "halloween",
+  "group": "cat",
+  "name": {
+   "en": "Sitting black cat",
+   "zh": "坐着的黑猫"
+  },
+  "own": false,
+  "title": "Sitting cat silhouette with eye.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Sitting_cat_silhouette_with_eye.svg",
+  "width": 746,
+  "height": 1232,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "cat-looking-up",
+  "category": "halloween",
+  "group": "cat",
+  "name": {
+   "en": "Black cat looking up",
+   "zh": "抬头的黑猫"
+  },
+  "own": false,
+  "title": "Cat silhouette.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Cat_silhouette.svg",
+  "width": 1145,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "cat-face",
+  "category": "halloween",
+  "group": "cat",
+  "name": {
+   "en": "Black cat face",
+   "zh": "黑猫脸"
+  },
+  "own": false,
+  "title": "Black Cat Vector.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Black_Cat_Vector.svg",
+  "width": 1232,
+  "height": 873,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "cat-vintage",
+  "category": "halloween",
+  "group": "cat",
+  "name": {
+   "en": "Vintage black cat",
+   "zh": "复古黑猫"
+  },
+  "own": false,
+  "title": "Le Chat Noir.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Le_Chat_Noir.svg",
+  "width": 757,
+  "height": 1232,
+  "report": "Added 4 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "ghost-boo",
+  "category": "halloween",
+  "group": "ghost",
+  "name": {
+   "en": "Boo ghost",
+   "zh": "小幽灵"
+  },
+  "own": false,
+  "title": "Spooky ghost Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Spooky_ghost_Pinhead_icon.svg",
+  "width": 1159,
+  "height": 1232,
+  "report": "Added 3 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "skull-crossbones",
+  "category": "halloween",
+  "group": "skull",
+  "name": {
+   "en": "Skull and crossbones",
+   "zh": "骷髅交叉骨"
+  },
+  "own": false,
+  "title": "Skull and Crossbones.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Skull_and_Crossbones.svg",
+  "width": 1232,
+  "height": 1194,
+  "report": "Added 24 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "skull-crossbones-bold",
+  "category": "halloween",
+  "group": "skull",
+  "name": {
+   "en": "Bold skull and crossbones",
+   "zh": "粗线骷髅"
+  },
+  "own": false,
+  "title": "Skull & crossbones.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Skull_%26_crossbones.svg",
+  "width": 1232,
+  "height": 1194,
+  "report": "Added 19 bridges and removed 5 specks too small to cut."
+ },
+ {
+  "slug": "skull-round",
+  "category": "halloween",
+  "group": "skull",
+  "name": {
+   "en": "Round cartoon skull",
+   "zh": "卡通骷髅"
+  },
+  "own": false,
+  "title": "Kalebp skull.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Kalebp_skull.svg",
+  "width": 1232,
+  "height": 833,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "pirate-skull-cutlasses",
+  "category": "halloween",
+  "group": "skull",
+  "name": {
+   "en": "Pirate skull with cutlasses",
+   "zh": "海盗骷髅弯刀"
+  },
+  "own": false,
+  "title": "Skull and Crossed Swords.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Skull_and_Crossed_Swords.svg",
+  "width": 1232,
+  "height": 957,
+  "report": "Added 4 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "spider",
+  "category": "halloween",
+  "group": "spider",
+  "name": {
+   "en": "Spider",
+   "zh": "蜘蛛"
+  },
+  "own": false,
+  "title": "Spider outline.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Spider_outline.svg",
+  "width": 1232,
+  "height": 1069,
+  "report": "Added 0 bridges and removed 21 specks too small to cut."
+ },
+ {
+  "slug": "spider-web-round",
+  "category": "halloween",
+  "group": "spider",
+  "name": {
+   "en": "Round spider web",
+   "zh": "圆形蜘蛛网"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 72 bridges and removed 16 specks too small to cut."
+ },
+ {
+  "slug": "spider-web-bold",
+  "category": "halloween",
+  "group": "spider",
+  "name": {
+   "en": "Bold spider web",
+   "zh": "粗线蜘蛛网"
+  },
+  "own": false,
+  "title": "Spider-web-trap-svgrepo-com.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Spider-web-trap-svgrepo-com.svg",
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 24 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "spider-web-fine",
+  "category": "halloween",
+  "group": "spider",
+  "name": {
+   "en": "Fine spider web",
+   "zh": "细线蜘蛛网"
+  },
+  "own": false,
+  "title": "Spiders web.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Spiders_web.svg",
+  "width": 1232,
+  "height": 1227,
+  "report": "Added 203 bridges and removed 24 specks too small to cut."
+ },
+ {
+  "slug": "raven-flying",
+  "category": "halloween",
+  "group": "raven",
+  "name": {
+   "en": "Flying raven",
+   "zh": "飞翔的乌鸦"
+  },
+  "own": false,
+  "title": "Capi x Raven.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Capi_x_Raven.svg",
+  "width": 1232,
+  "height": 1227,
+  "report": "Added 1 bridge and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "raven-standing",
+  "category": "halloween",
+  "group": "raven",
+  "name": {
+   "en": "Standing raven",
+   "zh": "站着的乌鸦"
+  },
+  "own": false,
+  "title": "Crow standing with red key 2.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Crow_standing_with_red_key_2.svg",
+  "width": 1232,
+  "height": 1082,
+  "report": "Added 1 bridge and removed 11 specks too small to cut."
+ },
+ {
+  "slug": "witch-broom",
+  "category": "halloween",
+  "group": "witch",
+  "name": {
+   "en": "Witch on a broomstick",
+   "zh": "骑扫帚的女巫"
+  },
+  "own": false,
+  "title": "Sorĉistino 0.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sor%C4%89istino_0.svg",
+  "width": 1232,
+  "height": 1037,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "witch-cat-broom",
+  "category": "halloween",
+  "group": "witch",
+  "name": {
+   "en": "Witch and cat on a broom",
+   "zh": "女巫和猫"
+  },
+  "own": false,
+  "title": "Sorĉistino.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sor%C4%89istino.svg",
+  "width": 1232,
+  "height": 1151,
+  "report": "Added 3 bridges and removed 6 specks too small to cut."
+ }
+]

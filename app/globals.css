@@ -1891,3 +1891,77 @@ select {
 .stencil-example figcaption {
   margin-top: 8px;
 }
+
+.gallery-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.gallery-jump a {
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 44%), 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.gallery-card {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.gallery-thumb {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.gallery-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.gallery-card figcaption {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.gallery-card figcaption strong {
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.gallery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.gallery-actions a {
+  color: var(--accent-dark);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.gallery-credits {
+  font-size: 13px;
+}

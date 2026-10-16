@@ -525,6 +525,22 @@ export function TileStencilApp({
     }
   }
 
+  // Gallery links open a free design straight in the tool: ?design=/stencils/<category>/<name>.png
+  useEffect(() => {
+    if (source !== "image") return;
+    const design = new URLSearchParams(window.location.search).get("design");
+    if (!design || !/^\/stencils\/[a-z0-9-]+\/[a-z0-9-]+\.png$/.test(design)) return;
+    void fetch(design)
+      .then((response) => (response.ok ? response.blob() : Promise.reject(new Error(String(response.status)))))
+      .then((blob) => {
+        setRenderMode("template");
+        return acceptImage(new File([blob], design.split("/").pop() ?? "stencil.png", { type: "image/png" }));
+      })
+      .catch(() => undefined);
+    // Runs once on load; acceptImage reads the current size inputs itself.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // The lettering generator keeps the callback from its first render, so read live values via refs.
   const widthRef = useRef(widthInput);
   const keepAspectRef = useRef(keepAspectRatio);
@@ -1102,6 +1118,12 @@ export function TileStencilApp({
               <h3>{t("喷笔模板", "Airbrush Stencil Maker")}</h3>
               <p>{t("一键切换正片和负片，做喷笔模板和遮罩。", "Positive and negative airbrush stencils and masks from any image.")}</p>
               <span className="guide-card-cta">{t("制作喷笔模板 →", "Make an airbrush stencil →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "halloweenStencils")}>
+              <span className="guide-card-icon" aria-hidden="true">🎃</span>
+              <h3>{t("免费万圣节模板", "Free Halloween Stencils")}</h3>
+              <p>{t("南瓜脸、蝙蝠、骷髅、蜘蛛网等，已加连接桥，免费下载 PDF。", "Pumpkin faces, bats, skulls, spider webs and more, with bridges. Free PDF downloads.")}</p>
+              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
             </Link>
             <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
               <span className="guide-card-icon" aria-hidden="true">🔠</span>

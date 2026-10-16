@@ -100,6 +100,11 @@ export default function EnglishPumpkinStencilPage() {
             (your dog, your kid in costume, your team logo) is the one people stop to look at. This tool turns that photo into
             bold black-and-white shapes and prints it at the size of your pumpkin.
           </p>
+          <p>
+            Just want a quick classic face? Grab one of our{" "}
+            <Link href={localizedPath("en", "halloweenStencils")}>free Halloween stencils</Link>: jack-o&apos;-lantern faces,
+            bats, black cats, and skulls with bridges already added.
+          </p>
 
           <h2>Tips for a stencil that actually carves</h2>
           <ul>

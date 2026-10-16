@@ -61,6 +61,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <Link href={localizedPath(locale, "sprayPaintStencil")}>{text(locale, "喷漆模板", "Spray Paint Stencils")}</Link>
           <Link href={localizedPath(locale, "woodBurningStencil")}>{text(locale, "烙画模板", "Wood Burning Stencils")}</Link>
           <Link href={localizedPath(locale, "airbrushStencil")}>{text(locale, "喷笔模板", "Airbrush Stencils")}</Link>
+          <Link href={localizedPath(locale, "freeStencils")}>{text(locale, "免费模板", "Free Stencils")}</Link>
+          <Link href={localizedPath(locale, "halloweenStencils")}>{text(locale, "万圣节模板", "Halloween Stencils")}</Link>
           <Link href={localizedPath(locale, "pricing")}>{text(locale, "价格", "Pricing")}</Link>
           <Link href={localizedPath(locale, "privacy")}>{text(locale, "隐私说明", "Privacy")}</Link>
           <Link href={localizedPath(locale, "terms")}>{text(locale, "服务条款", "Terms")}</Link>

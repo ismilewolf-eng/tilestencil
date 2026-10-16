@@ -5,6 +5,8 @@ import {
   type Locale,
   type SiteRoute,
 } from "@/lib/locale";
+import { designFiles, GALLERY_CATEGORIES } from "@/lib/gallery";
+import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -35,10 +37,17 @@ const routes: Array<{
   { route: "sprayPaintStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "woodBurningStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "airbrushStencil", changeFrequency: "monthly", priority: 0.9 },
+  { route: "freeStencils", changeFrequency: "weekly", priority: 0.9 },
+  { route: "halloweenStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "pricing", changeFrequency: "monthly", priority: 0.5 },
   { route: "terms", changeFrequency: "yearly", priority: 0.3 },
   { route: "refundPolicy", changeFrequency: "yearly", priority: 0.3 },
 ];
+
+// Gallery pages list their stencil images so they can be found in image search.
+const galleryImages = new Map<SiteRoute, string[]>(
+  GALLERY_CATEGORIES.map((category) => [category.route, category.designs.map((design) => SITE_URL + designFiles(design).png)]),
+);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
@@ -52,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: {
         languages: absoluteLanguageAlternates(route),
       },
+      ...(galleryImages.has(route) ? { images: galleryImages.get(route) } : {}),
     })),
   );
 }

@@ -3,7 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import type { Locale } from "@/lib/locale";
 
-export type SvgPaymentConfig = { paid: false } | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean };
+export type SvgPaymentConfig =
+  | { paid: false }
+  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean }
+  /** The check failed on the live site: do not hand out the paid export, ask for a refresh. */
+  | { paid: "unknown" };
 
 type PaypalButtons = {
   Buttons: (options: {
@@ -21,15 +25,21 @@ declare global {
   }
 }
 
-/** Fetch whether SVG export is paid. Any failure (e.g. local preview without Functions) means free. */
+const isLocalPreview = () => ["localhost", "127.0.0.1"].includes(window.location.hostname);
+
+/**
+ * Fetch whether SVG export is paid. On a local preview without Functions a failure means free;
+ * on the real site it fails closed, so blocking the request cannot unlock paid exports.
+ */
 export async function loadSvgPaymentConfig(): Promise<SvgPaymentConfig> {
+  const failed: SvgPaymentConfig = isLocalPreview() ? { paid: false } : { paid: "unknown" };
   try {
     const response = await fetch("/api/svg/config", { cache: "no-store" });
-    if (!response.ok) return { paid: false };
+    if (!response.ok) return failed;
     const config = (await response.json()) as SvgPaymentConfig;
-    return config.paid ? config : { paid: false };
+    return config.paid === true ? config : { paid: false };
   } catch {
-    return { paid: false };
+    return failed;
   }
 }
 

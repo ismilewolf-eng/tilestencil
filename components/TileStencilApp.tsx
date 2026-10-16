@@ -371,7 +371,8 @@ export function TileStencilApp({
   const [bridgesOn, setBridgesOn] = useState(defaults?.bridges ?? false);
   const [bridgeMm, setBridgeMm] = useState(defaults?.bridgeMm ?? 2);
   const [stencilBuild, setStencilBuild] = useState<StencilBuild | null>(null);
-  const [svgPayment, setSvgPayment] = useState<SvgPaymentConfig>({ paid: false });
+  // null until the server says whether SVG export is paid; the button waits for it.
+  const [svgPayment, setSvgPayment] = useState<SvgPaymentConfig | null>(null);
   const [paywallOpen, setPaywallOpen] = useState(false);
   // One payment unlocks the current image (any threshold, size, or bridge setting).
   const [unlockedImage, setUnlockedImage] = useState<ExportImage | null>(null);
@@ -572,6 +573,14 @@ export function TileStencilApp({
   }
 
   function requestSvgExport(): void {
+    if (!svgPayment) return;
+    if (svgPayment.paid === "unknown") {
+      setStatus({
+        kind: "error",
+        message: t("暂时无法确认 SVG 的价格，请刷新页面再试。", "Could not check SVG pricing. Refresh the page and try again."),
+      });
+      return;
+    }
     if (svgPayment.paid && unlockedImage !== image) {
       setPaywallOpen(true);
       return;
@@ -1016,13 +1025,13 @@ export function TileStencilApp({
                   className="secondary-button export-button svg-export-button"
                   type="button"
                   onClick={requestSvgExport}
-                  disabled={!image || !planResult.plan || !stencilBuild}
+                  disabled={!image || !planResult.plan || !stencilBuild || !svgPayment}
                 >
                   {t("导出 SVG（刻字机 / 激光切割）", "Export SVG for Cricut / laser cutters")}
-                  {svgPayment.paid && unlockedImage !== image ? ` · $${svgPayment.price}` : ""}
+                  {svgPayment?.paid === true && unlockedImage !== image ? ` · $${svgPayment.price}` : ""}
                 </button>
               ) : null}
-              {paywallOpen && svgPayment.paid ? (
+              {paywallOpen && svgPayment?.paid === true ? (
                 <SvgPaywall
                   config={svgPayment}
                   locale={locale}

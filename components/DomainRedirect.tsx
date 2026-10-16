@@ -1,8 +1,9 @@
 import { SITE_URL } from "@/lib/site";
 
 export function DomainRedirect() {
-  // If accessed from *.pages.dev, immediately redirect to custom domain https://tilestencil.com preserving path & query
-  const redirectScript = `if(typeof window!=="undefined"&&window.location.hostname.endsWith(".pages.dev")){window.location.replace("${SITE_URL}"+window.location.pathname+window.location.search+window.location.hash);}`;
+  // If accessed from the production tilestencil.pages.dev host, redirect to https://tilestencil.com preserving
+  // path & query. Branch previews (e.g. paytest.tilestencil.pages.dev) are left alone so they can be tested.
+  const redirectScript = `if(typeof window!=="undefined"&&window.location.hostname==="tilestencil.pages.dev"){window.location.replace("${SITE_URL}"+window.location.pathname+window.location.search+window.location.hash);}`;
 
   return (
     <script

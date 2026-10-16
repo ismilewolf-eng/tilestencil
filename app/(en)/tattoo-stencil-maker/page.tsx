@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -86,6 +87,7 @@ export default function EnglishTattooStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="en" name="tattoo" />
           <h2>From design to stencil in one step</h2>
           <p>
             A stencil only needs the lines. Grey shading, paper texture, and phone-camera shadows all smudge on transfer

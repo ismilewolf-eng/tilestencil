@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -63,6 +64,7 @@ export default function ChineseCricutStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="zh-CN" name="cricut" />
           <h2>比在 Design Space 里描图强在哪</h2>
           <p>
             Cricut Design Space 能去背景，但它不知道模板里哪些部分切完会掉。字母 O 的中间、眼白这类孤岛，要么掉下来，要么得手动加桥。TileStencil

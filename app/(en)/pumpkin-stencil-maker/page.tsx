@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -92,6 +93,7 @@ export default function EnglishPumpkinStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="en" name="pumpkin" />
           <h2>Why make your own pumpkin stencil</h2>
           <p>
             Free pumpkin stencil galleries all offer the same cats, bats, and witches. A stencil made from your own photo

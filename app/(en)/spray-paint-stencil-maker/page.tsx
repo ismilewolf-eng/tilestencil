@@ -67,6 +67,7 @@ export default function EnglishSprayPaintStencilPage() {
           ],
         },
       ]}
+      example="spray-paint"
       faqItems={[
         {
           question: "How do I make a spray paint stencil from a picture?",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -63,6 +64,7 @@ export default function ChinesePhotoToStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="zh-CN" name="photo-to-stencil" />
           <h2>做出干净模板的几个要点</h2>
           <ul>
             <li><strong>先要有对比。</strong>侧光人像、浅色墙前的深色物体，形状最清楚。</li>

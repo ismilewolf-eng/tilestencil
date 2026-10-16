@@ -1857,3 +1857,37 @@ select {
   color: var(--muted);
   font-size: 0.9rem;
 }
+
+.stencil-example {
+  margin: 12px 0 0;
+}
+
+.stencil-example-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stencil-example-pair > div {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.stencil-example-pair img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #d9dde3;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.stencil-example-pair span,
+.stencil-example figcaption {
+  font-size: 0.85rem;
+  color: #5b6472;
+}
+
+.stencil-example figcaption {
+  margin-top: 8px;
+}

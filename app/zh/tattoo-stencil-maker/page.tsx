@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -55,6 +56,7 @@ export default function ChineseTattooStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="zh-CN" name="tattoo" />
           <h2>线条干净的几个要点</h2>
           <ul>
             <li><strong>平拍或扫描。</strong>白天正对手稿拍摄，背景亮度才均匀。</li>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -59,6 +60,7 @@ export default function ChinesePumpkinStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="zh-CN" name="pumpkin" />
           <h2>让模板真的能刻出来</h2>
           <ul>
             <li><strong>色块要粗。</strong>打印出来细于约 5 毫米的部分，一刻就断。把阈值调小去掉细节。</li>

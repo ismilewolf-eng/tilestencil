@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { StencilExampleSection } from "@/components/StencilExample";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -99,6 +100,7 @@ export default function EnglishPhotoToStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
+          <StencilExampleSection locale="en" name="photo-to-stencil" />
           <h2>What this stencil maker does</h2>
           <p>
             Most online stencil makers stop at a black-and-white image. That is not a stencil yet: cut it out and the

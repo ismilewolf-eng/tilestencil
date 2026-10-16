@@ -59,6 +59,7 @@ export default function EnglishPrintLargeStencilPage() {
           ],
         },
       ]}
+      example="wall"
       faqItems={[
         {
           question: "How do I make a large stencil for a wall?",

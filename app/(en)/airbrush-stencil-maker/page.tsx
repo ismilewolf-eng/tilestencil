@@ -58,6 +58,7 @@ export default function EnglishAirbrushStencilPage() {
           ],
         },
       ]}
+      example="airbrush"
       faqItems={[
         {
           question: "How do I make my own airbrush stencils?",

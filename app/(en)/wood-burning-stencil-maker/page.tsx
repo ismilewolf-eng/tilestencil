@@ -58,6 +58,7 @@ export default function EnglishWoodBurningStencilPage() {
           ],
         },
       ]}
+      example="wood-burning"
       faqItems={[
         {
           question: "How do I turn a photo into a wood burning pattern?",

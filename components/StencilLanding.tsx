@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
 import { TileStencilApp, type AppDefaults, type AppIntro } from "@/components/TileStencilApp";
+import { StencilExampleSection } from "@/components/StencilExample";
+import type { ExampleKey } from "@/lib/examples";
 import type { Locale } from "@/lib/locale";
 
 export type LandingSection = { heading: string; body?: ReactNode; items?: ReactNode[] };
@@ -16,6 +18,7 @@ export function StencilLanding({
   howToSteps,
   sections,
   faqItems,
+  example,
 }: {
   locale: Locale;
   intro: AppIntro;
@@ -25,6 +28,7 @@ export function StencilLanding({
   howToSteps: Array<{ name: string; text: string }>;
   sections: LandingSection[];
   faqItems: FaqItem[];
+  example?: ExampleKey;
 }) {
   return (
     <>
@@ -32,6 +36,7 @@ export function StencilLanding({
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale={locale} intro={intro} defaults={defaults}>
         <article className="app-guide">
+          {example ? <StencilExampleSection locale={locale} name={example} /> : null}
           {sections.map((section) => (
             <section key={section.heading}>
               <h2>{section.heading}</h2>

@@ -22,7 +22,7 @@ function sharedFaq(locale: Locale, count: number): FaqItem[] {
         },
         {
           question: "How do I make a stencil bigger or smaller?",
-          answer: "Click Resize / SVG under the design. It opens in the stencil maker, where you enter the exact width in cm or inches; designs larger than one sheet are split across several pages with alignment marks.",
+          answer: "Click Resize under the design. It opens in the stencil maker, where you enter the exact width in cm or inches; designs larger than one sheet are split across several pages with alignment marks.",
         },
         {
           question: "What are the thin white lines across some designs?",
@@ -30,7 +30,7 @@ function sharedFaq(locale: Locale, count: number): FaqItem[] {
         },
         {
           question: "Can I get an SVG file for my Cricut or Silhouette?",
-          answer: "Yes. Click Resize / SVG, set the size, and download the SVG. Printing and the PDF are free; the cut-ready SVG costs $1.99 per design.",
+          answer: "Yes. Click the SVG button under any design, set the width, and the cut-ready SVG downloads with bridges already in place. Printing and the PDF are free; the SVG costs $1.99 per design.",
         },
       ]
     : [
@@ -40,7 +40,7 @@ function sharedFaq(locale: Locale, count: number): FaqItem[] {
         },
         {
           question: "怎么把模板放大或缩小？",
-          answer: "点图案下面的“改尺寸 / SVG”，会在模板工具里打开，填上想要的宽度（厘米或英寸）就行；超过一张纸会自动分页，带拼接标记。",
+          answer: "点图案下面的“改尺寸”，会在模板工具里打开，填上想要的宽度（厘米或英寸）就行；超过一张纸会自动分页，带拼接标记。",
         },
         {
           question: "有些图案上的细白线是什么？",
@@ -48,7 +48,7 @@ function sharedFaq(locale: Locale, count: number): FaqItem[] {
         },
         {
           question: "能拿到刻字机用的 SVG 吗？",
-          answer: "可以。点“改尺寸 / SVG”，设好尺寸后下载 SVG。打印和 PDF 免费，可直接切割的 SVG 每个图案 1.99 美元。",
+          answer: "可以。点图案下面的 SVG 按钮，设好宽度就能下载已加好连接桥、可直接切割的 SVG。打印和 PDF 免费，SVG 每个图案 1.99 美元。",
         },
       ];
 }

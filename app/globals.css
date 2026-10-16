@@ -1965,3 +1965,161 @@ select {
 .gallery-credits {
   font-size: 13px;
 }
+
+
+/* Gallery: direct SVG purchase */
+.gallery-svg-button {
+  justify-self: start;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fffdf8;
+  font: 600 14px/1 inherit;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 150ms cubic-bezier(.23, 1, .32, 1), transform 120ms cubic-bezier(.23, 1, .32, 1);
+}
+
+.gallery-svg-button:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.gallery-svg-button:active {
+  transform: translateY(1px);
+}
+
+.gallery-svg-button:focus-visible,
+.svg-dialog button:focus-visible,
+.svg-dialog input:focus-visible,
+.svg-dialog select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-svg-button:hover:not(:disabled) {
+    background: var(--accent-dark);
+    border-color: var(--accent-dark);
+  }
+}
+
+.svg-dialog {
+  width: min(460px, calc(100vw - 32px));
+  padding: 20px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 18%);
+}
+
+.svg-dialog::backdrop {
+  background: rgb(20 20 20 / 45%);
+}
+
+.svg-dialog-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.svg-dialog-head h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.svg-dialog-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.svg-dialog-note {
+  margin: 10px 0 14px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.svg-dialog-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.svg-dialog-size input {
+  width: 96px;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 400;
+}
+
+.svg-dialog-size select {
+  min-height: 40px;
+  padding: 0 8px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 400;
+  background: var(--surface);
+}
+
+.svg-dialog-download {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 14px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fffdf8;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.svg-dialog-download:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.svg-dialog .svg-paywall {
+  margin-top: 14px;
+}
+
+.svg-dialog-done,
+.svg-dialog-error {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.svg-dialog-done {
+  color: var(--success);
+}
+
+.svg-dialog-error {
+  color: var(--error);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-svg-button {
+    transition: none;
+  }
+}

@@ -13,7 +13,10 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 - **Rendering Filters**:
   - *Original*: Full-color high-resolution raster slicing.
   - *Grayscale*: Ink-saving monochrome output.
-  - *Black & White Template*: High-contrast outline filter optimized for stained glass line art, wood routing, and stencil transfers.
+  - *Black & White Template*: High-contrast stencil filter with an adjustable threshold, invert (positive/negative), and live preview.
+- **Cut-Ready Stencils**: Detects islands (enclosed pieces that would fall out when cut, such as the centre of an O) and adds bridges automatically along the shortest path; removes specks too small to cut. Bridge width is adjustable (1–6 mm).
+- **SVG Export**: Closed cut paths sized in millimetres for Cricut, Silhouette, LightBurn, and laser cutters, with bridges included. Paid at $1.99 per image (one-time, no account); tiled PDF printing stays free.
+- **Letter Stencil Generator**: Type any text and render it in open-licence stencil fonts at any size, tiled across pages or exported as SVG.
 
 ## Key Technical Specifications & Formulas
 
@@ -30,7 +33,7 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 ## Documentation & Use Cases
 
 - [Tile Printing Guide](https://tilestencil.com/print-image-on-multiple-pages): Instructions for splitting large photos across multiple A4/A3 pages at home.
-- [Mural Stencil Guide](https://tilestencil.com/print-large-stencil): How to enlarge images into high-contrast black-and-white templates for wall murals and canvas tracing.
+- [Large Wall Stencil Maker](https://tilestencil.com/print-large-stencil): Make a wall-size or mural stencil on a home printer, tiled with alignment marks; no projector needed.
 - [Craft & Sewing Patterns](https://tilestencil.com/print-pattern-actual-size): 1:1 true scale pattern printing for leathercraft, woodworking templates, and Cosplay armor blueprints.
 - [Banner & Sign Printing](https://tilestencil.com/print-banner-letters): Horizontal landscape tiling for multi-meter party banners, classroom headlines, and event signs.
 - [Stained Glass Patterns](https://tilestencil.com/print-stained-glass-patterns): Exact scale line art with overlap marks for copper foil and lead came assembly.
@@ -38,6 +41,15 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 - [The Rasterbator Alternative](https://tilestencil.com/rasterbator-alternative): High-resolution poster tiling without halftone raster dots or pixelation.
 - [Print Without Adobe Acrobat](https://tilestencil.com/print-posters-without-acrobat): Free browser-based multi-page poster printing alternative to Adobe Acrobat Pro.
 - [Blockposters Alternative](https://tilestencil.com/blockposters-alternative): Free poster tiling without 7-page limits, watermarks, or paid subscriptions.
+- [Photo to Stencil Maker](https://tilestencil.com/photo-to-stencil): Turn a photo into a cut-ready stencil with automatic bridges; print at actual size or export SVG.
+- [Cricut Stencil Maker](https://tilestencil.com/cricut-stencil-maker): Photo to SVG stencil for Cricut, Silhouette, and laser cutters.
+- [Letter Stencils](https://tilestencil.com/letter-stencils): Printable stencil letters and numbers in any word and size.
+- [Spray Paint Stencil Maker](https://tilestencil.com/spray-paint-stencil-maker): Single- and two-layer spray paint stencils from a photo or logo.
+- [Airbrush Stencil Maker](https://tilestencil.com/airbrush-stencil-maker): Positive and negative airbrush stencils and friskets.
+- [Wood Burning Stencil Maker](https://tilestencil.com/wood-burning-stencil-maker): Photo to pyrography pattern at board size, with transfer methods.
+- [Tattoo Stencil Maker](https://tilestencil.com/tattoo-stencil-maker): Clean tattoo stencil line art printed at exact placement size.
+- [Pumpkin Stencil Maker](https://tilestencil.com/pumpkin-stencil-maker): Custom pumpkin carving stencils from any photo.
+- [Pricing](https://tilestencil.com/pricing): Free tool; SVG export $1.99 per image.
 - [A0 Sewing Pattern Tiling](https://tilestencil.com/print-a0-to-a4-actual-size): 100% scale A0 to A4/Letter pattern tile printing with test square calibration for home sewists.
 
 ## Alternative Language Endpoints

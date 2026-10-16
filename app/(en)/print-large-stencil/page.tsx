@@ -1,120 +1,82 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GuideShell } from "@/components/GuideShell";
-import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
-import { languageAlternates } from "@/lib/locale";
+import { StencilLanding } from "@/components/StencilLanding";
+import { languageAlternates, localizedPath } from "@/lib/locale";
 
 export const metadata: Metadata = {
-  title: "Enlarge an Image as a Stencil Template",
+  title: "Large Wall Stencil Maker – Print a Mural Stencil at Full Size",
   description:
-    "Enlarge an image to a real wall or canvas size, choose a high-contrast black-and-white template, and print an assemble-ready multi-page PDF at home.",
-  keywords: ["enlarge stencil template", "print large stencil", "wall mural template", "black and white template", "trace image at actual size"],
-  alternates: {
-    canonical: "/print-large-stencil",
-    languages: languageAlternates("stencilGuide"),
-  },
+    "Make your own large wall stencil from any image: set the real width of the wall, and TileStencil splits the stencil across A4, A3, or Letter pages with alignment marks. No projector needed.",
+  keywords: ["large wall stencil", "wall mural stencil", "diy wall mural", "print large stencil", "mural projector alternative"],
+  alternates: { canonical: "/print-large-stencil", languages: languageAlternates("stencilGuide") },
   openGraph: {
     locale: "en_US",
-    title: "Enlarge an image as a stencil template",
-    description: "Make a full-size black-and-white template with alignment marks for home printing.",
+    title: "Large Wall Stencil Maker – print a mural stencil at full size",
+    description: "Any image to a full-size wall stencil, tiled across normal printer paper with alignment marks.",
     url: "/print-large-stencil",
   },
 };
 
-const howToSteps = [
-  {
-    name: "Measure the target wall or board area",
-    text: "Measure the exact width and height needed on your wall or canvas, and enter those physical dimensions in cm or inches.",
-  },
-  {
-    name: "Select Black-and-White template mode",
-    text: "Pick the B&W template export option to maximize outline contrast for tracing, carving, or stencil cutting.",
-  },
-  {
-    name: "Print at 100% and assemble",
-    text: "Print all pages at 100% Actual Size, arrange in order by grid coordinate (e.g. A1, A2), trim overlaps and tape seams.",
-  },
-];
-
-const faqItems = [
-  {
-    question: "What is the benefit of the Black-and-White Template mode?",
-    answer: "It creates high-contrast monochrome contours, saving printer ink while making cutting lines and transfer outlines crystal clear for tracing onto walls or wood.",
-  },
-  {
-    question: "How do I ensure clean alignment on huge multi-sheet murals?",
-    answer: "Set an overlap margin of around 5–10mm (0.2–0.4 in). Cut off only one overlapping margin along the guide mark and overlap sheets, which cushions any small manual cutting inaccuracies.",
-  },
-  {
-    question: "What is the best way to tape assembled template sheets?",
-    answer: "Use painter's masking tape to tack sheets temporarily on the front, then flip the assembly and use wide clear packing tape across the entire seam on the backside.",
-  },
-];
-
 export default function EnglishPrintLargeStencilPage() {
   return (
-    <>
-      <HowToJsonLd
-        name="How to Enlarge an Image as a Stencil Template"
-        description="Scale designs to real wall dimensions and print high-contrast tiling stencil patterns on standard paper."
-        steps={howToSteps}
-      />
-      <FaqJsonLd items={faqItems} />
-      <GuideShell
-        locale="en"
-        route="stencilGuide"
-      kicker="MURAL AND TRACING TEMPLATES"
-      title="Enlarge an image to wall size, then assemble it from regular paper."
-      lead="For a mural, canvas trace, cut-paper project, or large transfer, convert your image to a high-contrast black-and-white template and split it into pages at the finished size."
-    >
-      <section>
-        <h2>Decide how large the template needs to be</h2>
-        <p>
-          Measure the usable width and height of the wall, canvas, or board, then enter those numbers directly. TileStencil calculates each page in millimetres, so you do not need to guess what a percentage increase will look like at the final size.
-        </p>
-        <ul>
-          <li>Scale a sketch to a specific wall size in centimetres or inches.</li>
-          <li>Split a design into large paper pieces for tracing or cutting.</li>
-          <li>Make a proportional outline reference for an event display or craft project.</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Choose black and white, then leave room to assemble</h2>
-        <p>
-          Select the black-and-white template mode for a high-contrast image that makes outlines, tracing, and cut lines easier to see. Keep a margin for your printer, then add a small overlap so neighbouring pages can still line up if a cut is slightly imperfect.
-        </p>
-        <p>
-          A4 works with most home printers, while A3 reduces the number of seams. Landscape paper often suits wide artwork. In every case, the PDF labels each page’s place in the assembly grid.
-        </p>
-      </section>
-
-      <section>
-        <h2>Print one test page first</h2>
-        <p>
-          Print one sheet at <strong>Actual Size / 100%</strong> to confirm the paper size and printer margins. Then lay out all pages from left to right and top to bottom by page number. Trim only edges that cover adjacent artwork and join from the back, using the remaining overlap to correct the seam.
-        </p>
-      </section>
-
-      <section className="guide-faq">
-        <h2>Frequently Asked Questions (FAQ)</h2>
-        {faqItems.map((item) => (
-          <div className="guide-faq-item" key={item.question}>
-            <h3 className="guide-faq-question">{item.question}</h3>
-            <p className="guide-faq-answer">{item.answer}</p>
-          </div>
-        ))}
-      </section>
-
-      <aside className="guide-callout">
-        <p>Just want to turn a photo or graphic into a wall poster?</p>
-        <Link href="/print-image-on-multiple-pages">See the complete multi-page image-printing guide →</Link>
-      </aside>
-
-      <Link className="guide-cta" href="/">
-        Open TileStencil and make a stencil template
-      </Link>
-    </GuideShell>
-    </>
+    <StencilLanding
+      locale="en"
+      intro={{
+        eyebrow: "LARGE WALL STENCIL MAKER",
+        heading: "Make a wall-size stencil on your home printer.",
+        copy: "Enter the real width of the wall or mural, adjust the black-and-white stencil with a live preview, and print it across numbered A4, A3, or Letter pages with overlap and alignment marks. No projector needed.",
+      }}
+      defaults={{ renderMode: "template", widthCm: 120, heightCm: 80 }}
+      howToName="How to make a large wall stencil without a projector"
+      howToDescription="Scale any image to the size of a wall and print it as a tiled stencil on standard paper."
+      howToSteps={[
+        { name: "Measure the wall area", text: "Measure the width and height you want the mural to cover and enter them in cm or inches." },
+        { name: "Turn the image into a stencil", text: "Use the black-and-white template and move the threshold until the shapes are bold and simple enough to paint." },
+        { name: "Print the tiles", text: "Print every page at 100% Actual Size. Each page is numbered by row and column." },
+        { name: "Assemble and transfer", text: "Trim one overlap edge, tape the pages together, fix the sheet to the wall, and trace or pounce the outline before painting." },
+      ]}
+      sections={[
+        {
+          heading: "Why print instead of projecting",
+          body: "A projector needs a dark room, a steady stand, and an outlet near the wall, and the image distorts if it is not square to the surface. A tiled print is exactly to scale, can be repositioned as many times as you like, and works in daylight on any wall. TileStencil works in millimetres internally, so 2 metres on screen is 2 metres on the wall.",
+        },
+        {
+          heading: "Ways to get the outline onto the wall",
+          items: [
+            <><strong>Trace with transfer paper</strong>: put graphite or chalk transfer paper behind the taped sheet and go over the lines with a pen.</>,
+            <><strong>Pounce</strong>: perforate the lines with a pounce wheel, tape the sheet up, and dab charcoal powder through the holes. Ideal for big, simple shapes.</>,
+            <><strong>Cut-out stencil</strong>: turn on bridges, cut the black areas out of the taped sheet or poster board, and paint straight through it.</>,
+          ],
+        },
+        {
+          heading: "Tips for big murals",
+          items: [
+            "Use A3 if your printer supports it: fewer pages means fewer seams.",
+            "Keep a 5–10 mm overlap so small trimming errors can be absorbed at the seams.",
+            "Tape the sheets from the back with wide clear tape and the front with low-tack painter's tape.",
+            "Check level with a spirit level or laser line before tracing.",
+            <>Lettering on a wall? Use the <Link href={localizedPath("en", "letterStencils")}>letter stencil generator</Link>.</>,
+          ],
+        },
+      ]}
+      faqItems={[
+        {
+          question: "How do I make a large stencil for a wall?",
+          answer: "Choose your image here, set the width and height of the wall area, switch to the black-and-white template, and print the PDF at Actual Size. Tape the numbered pages together using the overlap marks, then trace, pounce, or cut it out.",
+        },
+        {
+          question: "How many pages will a wall stencil need?",
+          answer: "The tool shows the page count live. For example, a 120 × 80 cm mural with the default margins and overlap takes 21 A4 pages in portrait, or 9 A3 pages in landscape.",
+        },
+        {
+          question: "Can I do this without a projector?",
+          answer: "Yes. That is the point of tiled printing: the paper itself is the projector, exactly to scale, and you can reposition it before committing to paint.",
+        },
+        {
+          question: "Is it free?",
+          answer: "Yes. Making and printing the tiled stencil is free with no account, and your image stays in your browser.",
+        },
+      ]}
+    />
   );
 }

@@ -1085,6 +1085,24 @@ export function TileStencilApp({
               <p>{t("照片转可切割 SVG，自带连接桥，按毫米标注尺寸。", "Photo to cut-ready SVG with bridges, sized for Cricut and laser cutters.")}</p>
               <span className="guide-card-cta">{t("制作 SVG 模板 →", "Make an SVG stencil →")}</span>
             </Link>
+            <Link className="guide-card" href={localizedPath(locale, "sprayPaintStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">🎨</span>
+              <h3>{t("喷漆模板", "Spray Paint Stencil Maker")}</h3>
+              <p>{t("照片或标志做成喷漆模板，含双层模板做法。", "Photo or logo to a spray paint stencil, including two-layer stencils.")}</p>
+              <span className="guide-card-cta">{t("制作喷漆模板 →", "Make a spray paint stencil →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "woodBurningStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">🔥</span>
+              <h3>{t("烙画图样", "Wood Burning Stencil Maker")}</h3>
+              <p>{t("照片转烙画轮廓，按木板大小打印，附转印方法。", "Photo to pyrography outlines at the size of your board, with transfer methods.")}</p>
+              <span className="guide-card-cta">{t("制作烙画图样 →", "Make a wood burning pattern →")}</span>
+            </Link>
+            <Link className="guide-card" href={localizedPath(locale, "airbrushStencil")}>
+              <span className="guide-card-icon" aria-hidden="true">💨</span>
+              <h3>{t("喷笔模板", "Airbrush Stencil Maker")}</h3>
+              <p>{t("一键切换正片和负片，做喷笔模板和遮罩。", "Positive and negative airbrush stencils and masks from any image.")}</p>
+              <span className="guide-card-cta">{t("制作喷笔模板 →", "Make an airbrush stencil →")}</span>
+            </Link>
             <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
               <span className="guide-card-icon" aria-hidden="true">🔠</span>
               <h3>{t("字母模板生成器", "Letter Stencil Generator")}</h3>

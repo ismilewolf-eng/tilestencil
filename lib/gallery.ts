@@ -1,3 +1,4 @@
+import animals from "@/lib/gallery/animals.json";
 import christmas from "@/lib/gallery/christmas.json";
 import flowers from "@/lib/gallery/flowers.json";
 import halloween from "@/lib/gallery/halloween.json";
@@ -232,7 +233,71 @@ export const FLOWERS: GalleryCategory = {
   ],
 };
 
-export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS, FLOWERS];
+export const ANIMALS: GalleryCategory = {
+  id: "animals",
+  route: "animalStencils",
+  label: { en: "Animal stencils", zh: "动物模板" },
+  blurb: { en: "Dogs, cats, wolves, birds, horses, unicorns, dragons, and dinosaurs", zh: "狗、猫、狼、鸟、马、独角兽、龙、恐龙等" },
+  designs: animals as GalleryDesign[],
+  groups: [
+    {
+      id: "pets",
+      heading: { en: "Dog, cat, and paw print stencils", zh: "狗、猫和爪印模板" },
+      tip: {
+        en: "Paw prints make a trail across a floor, a pet bowl mat, or a dog bed. Print one at about 6 cm and repeat it, alternating left and right.",
+        zh: "爪印可以在地板、宠物餐垫或狗窝上印一串。打印成约 6 厘米，左右交替重复印。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "wild",
+      heading: { en: "Wolf, bear, and wild animal stencils", zh: "狼、熊和野生动物模板" },
+      tip: {
+        en: "Wild animals suit cabin signs, mugs, and outdoor gear. The howling wolf looks best in front of a full moon: paint a circle first, then spray the wolf in black.",
+        zh: "野生动物适合木屋招牌、杯子和户外用品。嚎叫的狼配满月最好看：先刷一个圆当月亮，再用黑色喷狼。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "bird",
+      heading: { en: "Bird, eagle, and owl stencils", zh: "鸟、老鹰和猫头鹰模板" },
+      tip: {
+        en: "Birds look natural in small flocks: print the same bird two or three times at different sizes. The owl's eyes are held by bridges, so it can be cut as one piece.",
+        zh: "鸟成群更自然：同一只鸟按两三种大小打印。猫头鹰的眼睛靠连接桥固定，可以整张刻出来。",
+      },
+      tool: "cricutStencil",
+    },
+    {
+      id: "horse",
+      heading: { en: "Horse and unicorn stencils", zh: "马和独角兽模板" },
+      tip: {
+        en: "Unicorns are a favourite for kids' rooms and party decorations. Paint them in white or pastel colours, then add glitter while the paint is still wet.",
+        zh: "独角兽很适合儿童房和派对装饰。用白色或浅色刷，趁颜料没干撒上亮粉。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "fantasy",
+      heading: { en: "Dragon and dinosaur stencils", zh: "龙和恐龙模板" },
+      tip: {
+        en: "Dinosaurs work well walking in a line along a wall or a toy box. The Welsh dragon and heraldic lion have fine claws and tongues, so print them at 20 cm or more.",
+        zh: "恐龙适合沿着墙或玩具箱排成一队。威尔士红龙和纹章狮子的爪子、舌头比较细，建议打印 20 厘米以上。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "sea",
+      heading: { en: "Fish and turtle stencils", zh: "鱼和乌龟模板" },
+      tip: {
+        en: "Fish and turtles suit bathrooms, beach houses, and tote bags. Use fabric paint on cotton, or outdoor acrylic on wood and stone.",
+        zh: "鱼和乌龟适合浴室、海边小屋和帆布袋。棉布用布用颜料，木头和石头用户外丙烯。",
+      },
+      tool: "cricutStencil",
+    },
+  ],
+};
+
+export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS, FLOWERS, ANIMALS];
 
 export function designFiles(design: GalleryDesign) {
   const base = `/stencils/${design.category}/${design.slug}`;

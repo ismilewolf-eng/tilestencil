@@ -66,7 +66,9 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
         ? t("做 “BOO”“Happy Halloween” 字样。", " for “BOO” or “Happy Halloween”.")
         : category.id === "christmas"
           ? t("做 “Merry Christmas”“Noel” 字样。", " for “Merry Christmas” or “Noel”.")
-          : t("做 “Home”“Bloom” 这类字样。", " for words such as “Home” or “Bloom”.")}
+          : category.id === "animals"
+            ? t("做宠物名字。", " for your pet's name.")
+            : t("做 “Home”“Bloom” 这类字样。", " for words such as “Home” or “Bloom”.")}
     </>
   );
   const printing = t("打印时选“实际大小”或 100%，不要选“适合页面”。", "Print at Actual Size or 100%, not Fit to Page.");
@@ -95,6 +97,36 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
           : {
               question: "南瓜模板怎么转到南瓜上？",
               answer: "按实际大小打印，把纸贴在南瓜上，用针沿黑色形状每隔几毫米扎一个孔，揭掉纸后沿着孔刻。往孔里抹一点面粉会更容易看清。",
+            },
+      ],
+    };
+  }
+
+  if (category.id === "animals") {
+    return {
+      kicker: t("免费动物模板", "FREE ANIMAL STENCILS"),
+      title: t("免费动物模板：狗、猫、狼、鸟、马、龙和恐龙", "Free animal stencils: dogs, cats, wolves, birds, horses, dragons, and dinosaurs"),
+      lead: t(
+        `${n} 个免费动物镂空模板：狗、猫、爪印、狼、熊、大象、老鹰、猫头鹰、马、独角兽、龙、恐龙、鱼和乌龟。每个都已加好连接桥。下载 PDF 直接打印，或一键放进模板工具，改成墙面、T 恤、木牌或儿童房需要的尺寸。`,
+        `${n} free printable animal stencils: dogs, cats, a paw print, wolves, a bear, an elephant, an eagle, an owl, horses, unicorns, dragons, dinosaurs, fish, and a turtle. Every design already has bridges. Download the free PDF, or open any design in the stencil maker to size it for walls, shirts, wood signs, or a kids' room.`,
+      ),
+      uses: [
+        printing,
+        t("黑色部分是要刻掉的地方，颜料从这里透过去。", "Black areas are cut out; that is where the paint goes through."),
+        t("儿童房墙面：恐龙、独角兽、大象放大到 40～60 厘米，分几页打印拼起来，用乳胶漆和海绵拍。", "For a kids' room wall, enlarge a dinosaur, unicorn, or elephant to 40–60 cm, print it across a few pages, and dab latex paint on with a sponge."),
+        t("想印自家宠物？用照片转模板工具，直接把宠物照片做成模板。", "Want your own pet? Turn its photo into a stencil with the photo to stencil maker."),
+        makeYourOwn,
+      ],
+      faq: [
+        ...sharedFaq(locale, n),
+        locale === "en"
+          ? {
+              question: "Can I make a stencil of my own dog or cat?",
+              answer: "Yes. Open the photo to stencil maker, choose a photo with your pet against a plain background, and move the threshold until the outline looks right. Bridges are added automatically.",
+            }
+          : {
+              question: "能把自己家的狗或猫做成模板吗？",
+              answer: "能。打开照片转模板工具，选一张背景干净的宠物照片，调阈值到轮廓满意就行，连接桥会自动加上。",
             },
       ],
     };

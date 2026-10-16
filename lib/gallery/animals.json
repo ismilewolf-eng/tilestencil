@@ -1,0 +1,450 @@
+[
+ {
+  "slug": "dog-standing",
+  "category": "animals",
+  "group": "pets",
+  "name": {
+   "en": "Standing dog",
+   "zh": "站着的狗"
+  },
+  "own": false,
+  "title": "Dog Silhouette 01.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Dog_Silhouette_01.svg",
+  "width": 1220,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "greyhound",
+  "category": "animals",
+  "group": "pets",
+  "name": {
+   "en": "Greyhound",
+   "zh": "灵缇犬"
+  },
+  "own": false,
+  "title": "Dog group Sighthounds.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Dog_group_Sighthounds.svg",
+  "width": 1144,
+  "height": 1232,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "cat-lying",
+  "category": "animals",
+  "group": "pets",
+  "name": {
+   "en": "Lying cat",
+   "zh": "趴着的猫"
+  },
+  "own": false,
+  "title": "House Cat Silhouette (NIH BioArt 207 - 630537).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:House_Cat_Silhouette_(NIH_BioArt_207_-_630537).svg",
+  "width": 1232,
+  "height": 750,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "rabbit-running",
+  "category": "animals",
+  "group": "pets",
+  "name": {
+   "en": "Running rabbit",
+   "zh": "奔跑的兔子"
+  },
+  "own": false,
+  "title": "Purple hare.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Purple_hare.svg",
+  "width": 1232,
+  "height": 683,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "paw-print",
+  "category": "animals",
+  "group": "pets",
+  "name": {
+   "en": "Paw print",
+   "zh": "爪印"
+  },
+  "own": false,
+  "title": "Wolf Paw Print.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wolf_Paw_Print.svg",
+  "width": 1042,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "wolf-howling",
+  "category": "animals",
+  "group": "wild",
+  "name": {
+   "en": "Howling wolf",
+   "zh": "嚎叫的狼"
+  },
+  "own": false,
+  "title": "Wolf.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wolf.svg",
+  "width": 1093,
+  "height": 1232,
+  "report": "Added 4 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "wolf-running",
+  "category": "animals",
+  "group": "wild",
+  "name": {
+   "en": "Running wolf",
+   "zh": "奔跑的狼"
+  },
+  "own": false,
+  "title": "Wolf 2.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Wolf_2.svg",
+  "width": 1232,
+  "height": 564,
+  "report": "Added 0 bridges and removed 49 specks too small to cut."
+ },
+ {
+  "slug": "bear-standing",
+  "category": "animals",
+  "group": "wild",
+  "name": {
+   "en": "Standing bear",
+   "zh": "站立的熊"
+  },
+  "own": false,
+  "title": "Grizzly Bear Silhouette (NIH BioArt 184 - 630269).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Grizzly_Bear_Silhouette_(NIH_BioArt_184_-_630269).svg",
+  "width": 555,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "mountain-lion",
+  "category": "animals",
+  "group": "wild",
+  "name": {
+   "en": "Mountain lion",
+   "zh": "美洲狮"
+  },
+  "own": false,
+  "title": "Mountain Lion Silhouette (NIH BioArt 368 - 632518).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Mountain_Lion_Silhouette_(NIH_BioArt_368_-_632518).svg",
+  "width": 1232,
+  "height": 593,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "elephant",
+  "category": "animals",
+  "group": "wild",
+  "name": {
+   "en": "Elephant",
+   "zh": "大象"
+  },
+  "own": false,
+  "title": "Zoo icon.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Zoo_icon.svg",
+  "width": 1232,
+  "height": 910,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "eagle",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Eagle",
+   "zh": "老鹰"
+  },
+  "own": false,
+  "title": "Eagle 01.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Eagle_01.svg",
+  "width": 1047,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "owl",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Owl",
+   "zh": "猫头鹰"
+  },
+  "own": false,
+  "title": "Owl (13455) - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Owl_(13455)_-_The_Noun_Project.svg",
+  "width": 793,
+  "height": 1232,
+  "report": "Added 9 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "hawk-flying",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Flying hawk",
+   "zh": "飞翔的鹰"
+  },
+  "own": false,
+  "title": "Raptor Silhouette (NIH BioArt 428 - 633963).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Raptor_Silhouette_(NIH_BioArt_428_-_633963).svg",
+  "width": 1085,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "bird-perched",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Perched bird",
+   "zh": "停在枝头的鸟"
+  },
+  "own": false,
+  "title": "Aegotheles Silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Aegotheles_Silhouette.svg",
+  "width": 733,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "duck",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Duck",
+   "zh": "鸭子"
+  },
+  "own": false,
+  "title": "Duck Silhouette (NIH BioArt 135 - 629476).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Duck_Silhouette_(NIH_BioArt_135_-_629476).svg",
+  "width": 1232,
+  "height": 1132,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "kiwi",
+  "category": "animals",
+  "group": "bird",
+  "name": {
+   "en": "Kiwi bird",
+   "zh": "几维鸟"
+  },
+  "own": false,
+  "title": "Kiwi silhouette-by-flomar.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Kiwi_silhouette-by-flomar.svg",
+  "width": 1232,
+  "height": 969,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "horse-rearing",
+  "category": "animals",
+  "group": "horse",
+  "name": {
+   "en": "Rearing horse",
+   "zh": "扬蹄的马"
+  },
+  "own": false,
+  "title": "Pahonia-contour (horse silhouette).svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pahonia-contour_(horse_silhouette).svg",
+  "width": 1232,
+  "height": 1176,
+  "report": "Added 3 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "unicorn-rearing",
+  "category": "animals",
+  "group": "horse",
+  "name": {
+   "en": "Rearing unicorn",
+   "zh": "扬蹄的独角兽"
+  },
+  "own": false,
+  "title": "Unicorn rearing Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Unicorn_rearing_Pinhead_icon.svg",
+  "width": 1085,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "unicorn-head",
+  "category": "animals",
+  "group": "horse",
+  "name": {
+   "en": "Unicorn head",
+   "zh": "独角兽头像"
+  },
+  "own": false,
+  "title": "Unicorn head Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Unicorn_head_Pinhead_icon.svg",
+  "width": 1069,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "unicorn-head-simple",
+  "category": "animals",
+  "group": "horse",
+  "name": {
+   "en": "Simple unicorn head",
+   "zh": "简约独角兽头"
+  },
+  "own": false,
+  "title": "Unicorn (41157) - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Unicorn_(41157)_-_The_Noun_Project.svg",
+  "width": 1232,
+  "height": 946,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "dragon-welsh",
+  "category": "animals",
+  "group": "fantasy",
+  "name": {
+   "en": "Welsh dragon",
+   "zh": "威尔士红龙"
+  },
+  "own": false,
+  "title": "Draig.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Draig.svg",
+  "width": 1232,
+  "height": 841,
+  "report": "Added 0 bridges and removed 5 specks too small to cut."
+ },
+ {
+  "slug": "lion-rampant",
+  "category": "animals",
+  "group": "fantasy",
+  "name": {
+   "en": "Heraldic lion",
+   "zh": "纹章狮子"
+  },
+  "own": false,
+  "title": "Vintage Heraldic Panther Silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vintage_Heraldic_Panther_Silhouette.svg",
+  "width": 1203,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 5 specks too small to cut."
+ },
+ {
+  "slug": "t-rex",
+  "category": "animals",
+  "group": "fantasy",
+  "name": {
+   "en": "T. rex",
+   "zh": "霸王龙"
+  },
+  "own": false,
+  "title": "Tyrannosaurus silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tyrannosaurus_silhouette.svg",
+  "width": 1232,
+  "height": 523,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "brontosaurus",
+  "category": "animals",
+  "group": "fantasy",
+  "name": {
+   "en": "Long-neck dinosaur",
+   "zh": "长颈恐龙"
+  },
+  "own": false,
+  "title": "Euhelopus Silhouette.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Euhelopus_Silhouette.svg",
+  "width": 1232,
+  "height": 870,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "ankylosaurus",
+  "category": "animals",
+  "group": "fantasy",
+  "name": {
+   "en": "Ankylosaurus",
+   "zh": "甲龙"
+  },
+  "own": false,
+  "title": "Ankylosaurus silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ankylosaurus_silhouette.svg",
+  "width": 1232,
+  "height": 563,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "fish",
+  "category": "animals",
+  "group": "sea",
+  "name": {
+   "en": "Fish",
+   "zh": "鱼"
+  },
+  "own": false,
+  "title": "Fish icon (The Noun Project 27052).svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Fish_icon_(The_Noun_Project_27052).svg",
+  "width": 1232,
+  "height": 588,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "fish-jumping",
+  "category": "animals",
+  "group": "sea",
+  "name": {
+   "en": "Jumping fish",
+   "zh": "跃起的鱼"
+  },
+  "own": false,
+  "title": "Fish icon.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Fish_icon.svg",
+  "width": 1232,
+  "height": 1160,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "turtle",
+  "category": "animals",
+  "group": "sea",
+  "name": {
+   "en": "Turtle",
+   "zh": "乌龟"
+  },
+  "own": false,
+  "title": "Turtle.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Turtle.svg",
+  "width": 1232,
+  "height": 645,
+  "report": "Nothing will fall out. Ready to cut."
+ }
+]

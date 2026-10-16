@@ -52,6 +52,7 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 - [Free Halloween Stencils](https://tilestencil.com/free-stencils/halloween): Pumpkin faces, bats, black cats, skulls, spider webs, ravens, and witches.
 - [Free Christmas Stencils](https://tilestencil.com/free-stencils/christmas): Snowflakes, stars, Christmas trees, ornaments, reindeer, snowman, gingerbread man, stockings, and gifts.
 - [Free Flower Stencils](https://tilestencil.com/free-stencils/flowers): Daisies, sunflowers, tulips, lotus, roses, butterflies, maple leaves, and ferns.
+- [Free Animal Stencils](https://tilestencil.com/free-stencils/animals): Dogs, cats, paw prints, wolves, birds, horses, unicorns, dragons, dinosaurs, and fish.
 - [Pumpkin Stencil Maker](https://tilestencil.com/pumpkin-stencil-maker): Custom pumpkin carving stencils from any photo.
 - [Pricing](https://tilestencil.com/pricing): Free tool; SVG export $1.99 per image.
 - [A0 Sewing Pattern Tiling](https://tilestencil.com/print-a0-to-a4-actual-size): 100% scale A0 to A4/Letter pattern tile printing with test square calibration for home sewists.

@@ -7,7 +7,7 @@
  *   PAYPAL_CLIENT_ID, PAYPAL_SECRET   REST app credentials (sandbox or live)
  *   PAYPAL_ENV                        "sandbox" (default) or "live"
  *   SVG_PAID                          "1" turns paid SVG on; anything else keeps SVG free
- *   SVG_PRICE_USD                     price per stencil, default "2.99"
+ *   SVG_PRICE_USD                     price per stencil, default "1.99"
  */
 
 export interface PaymentEnv {
@@ -20,7 +20,7 @@ export interface PaymentEnv {
 
 type Fetch = (input: string, init?: RequestInit) => Promise<Response>;
 
-export const DEFAULT_PRICE = "2.99";
+export const DEFAULT_PRICE = "1.99";
 
 export function apiBase(env: PaymentEnv): string {
   return env.PAYPAL_ENV === "live" ? "https://api-m.paypal.com" : "https://api-m.sandbox.paypal.com";

@@ -51,7 +51,7 @@ const faqItems = [
   {
     question: "Can I export letter stencils as an SVG for Cricut, Silhouette, or a laser cutter?",
     answer:
-      "Yes. Choose Export SVG under the PDF button. The file contains closed cut paths with the bridges already in place, sized in millimetres to the width you entered, so it imports at the right size into Cricut Design Space, Silhouette Studio, LightBurn, or Inkscape.",
+      "Yes. Choose Export SVG under the PDF button. The file contains closed cut paths with the bridges already in place, sized in millimetres to the width you entered, so it imports at the right size into Cricut Design Space, Silhouette Studio, LightBurn, or Inkscape. The SVG costs $1.99 per design, paid once; printing the PDF stays free.",
   },
   {
     question: "How do I print large letter stencils?",

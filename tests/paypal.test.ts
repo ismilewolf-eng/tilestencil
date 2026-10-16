@@ -35,8 +35,8 @@ describe("payment switch and public config", () => {
   });
 
   it("falls back to the default price for nonsense values", () => {
-    expect(price({ SVG_PRICE_USD: "abc" })).toBe("2.99");
-    expect(price({ SVG_PRICE_USD: "0.01" })).toBe("2.99");
+    expect(price({ SVG_PRICE_USD: "abc" })).toBe("1.99");
+    expect(price({ SVG_PRICE_USD: "0.01" })).toBe("1.99");
     expect(price({ SVG_PRICE_USD: "4.5" })).toBe("4.50");
   });
 });

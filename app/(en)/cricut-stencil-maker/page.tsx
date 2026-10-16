@@ -7,7 +7,7 @@ import { languageAlternates, localizedPath } from "@/lib/locale";
 export const metadata: Metadata = {
   title: "Cricut Stencil Maker – Turn a Photo into a Cut-Ready SVG",
   description:
-    "Make a stencil for Cricut, Silhouette, or a laser cutter from any photo. Automatic bridges keep the centres from falling out, and the SVG is sized in millimetres so it imports at the right size. Free, no upload.",
+    "Make a stencil for Cricut, Silhouette, or a laser cutter from any photo. Automatic bridges keep the centres from falling out, and the SVG is sized in millimetres so it imports at the right size. Free preview, $1.99 per SVG, no upload.",
   keywords: [
     "cricut stencil",
     "stencil for cricut",
@@ -48,6 +48,11 @@ const howToSteps = [
 ];
 
 const faqItems = [
+  {
+    question: "How much does the SVG cost?",
+    answer:
+      "Previews, adjustments, and printing a tiled PDF are free. The cut-ready SVG is $1.99 per image, paid once by PayPal or debit/credit card with no account and no subscription; after that you can re-export the same image as often as you like. There is a 14-day money-back guarantee.",
+  },
   {
     question: "How do I make a stencil for my Cricut from a photo?",
     answer:

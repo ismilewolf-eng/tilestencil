@@ -30,7 +30,7 @@ const howToSteps = [
 const faqItems = [
   {
     question: "能导出给 Cricut、刻字机或激光切割机用的 SVG 吗？",
-    answer: "可以。在黑白模板模式下点“导出 SVG”，文件里是已经带好连接桥的闭合切割路径，按你填的宽度以毫米标注尺寸，导入 Cricut Design Space、Silhouette Studio、LightBurn 或 Inkscape 都是正确大小。",
+    answer: "可以。在黑白模板模式下点“导出 SVG”，文件里是已经带好连接桥的闭合切割路径，按你填的宽度以毫米标注尺寸，导入 Cricut Design Space、Silhouette Studio、LightBurn 或 Inkscape 都是正确大小。SVG 每张图 1.99 美元，付一次即可；打印 PDF 仍然免费。",
   },
   {
     question: "怎样免费把照片做成镂空模板？",

@@ -7,7 +7,7 @@ import { languageAlternates, localizedPath } from "@/lib/locale";
 export const metadata: Metadata = {
   title: "Cricut 刻字机模板制作 – 照片转可切割 SVG",
   description:
-    "用任意照片做 Cricut、Silhouette 刻字机或激光切割机能直接切的模板。自动加连接桥，SVG 按毫米标注尺寸，导入就是正确大小。免费，不上传图片。",
+    "用任意照片做 Cricut、Silhouette 刻字机或激光切割机能直接切的模板。自动加连接桥，SVG 按毫米标注尺寸，导入就是正确大小。免费预览，SVG 每张 1.99 美元，不上传图片。",
   keywords: ["Cricut 模板", "刻字机模板", "激光切割模板", "SVG 模板", "照片转 SVG"],
   alternates: {
     canonical: "/zh/cricut-stencil-maker",
@@ -28,6 +28,10 @@ const howToSteps = [
 ];
 
 const faqItems = [
+  {
+    question: "SVG 怎么收费？",
+    answer: "预览、调整和打印分页 PDF 都免费。可切割 SVG 每张图 1.99 美元，用 PayPal 或银行卡付一次，不用注册、没有订阅；付完后同一张图可以反复导出。14 天内可全额退款。",
+  },
   {
     question: "怎么用照片给 Cricut 做模板？",
     answer: "在本页选照片，调阈值到黑白预览满意，填尺寸，点“导出 SVG”。在 Cricut Design Space 里用“上传 → 上传图片”选这个 SVG，导入后就是带好连接桥、可以直接切的图。",

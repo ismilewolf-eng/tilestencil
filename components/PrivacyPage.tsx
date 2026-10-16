@@ -41,8 +41,8 @@ export function PrivacyPage({ locale }: PrivacyPageProps) {
           <p>
             {text(
               locale,
-              "不上传你的图片、文件名、尺寸设置或生成的 PDF；不要求登录；不使用支付或广告脚本。我们使用 Cloudflare Web Analytics 记录汇总的访问量和页面浏览量，Cloudflare 不跟踪单个访问者。",
-              "We do not upload your image, filename, size settings, or generated PDF. We do not require sign-in and do not use payments or advertising scripts. We use Cloudflare Web Analytics for aggregate visit and page-view counts; Cloudflare does not track individual visitors.",
+              "不上传你的图片、文件名、尺寸设置或生成的 PDF；不要求登录；不使用广告脚本。我们使用 Cloudflare Web Analytics 记录汇总的访问量和页面浏览量，Cloudflare 不跟踪单个访问者。购买付费 SVG 导出时，只有在你打开付款框后才会加载 PayPal 的付款脚本，付款由 PayPal 处理；我们只收到订单号、金额和付款状态，看不到你的银行卡信息。SVG 仍然在你的浏览器里生成，图片不会上传。",
+              "We do not upload your image, filename, size settings, or generated PDF. We do not require sign-in and do not use advertising scripts. We use Cloudflare Web Analytics for aggregate visit and page-view counts; Cloudflare does not track individual visitors. If you buy a paid SVG export, PayPal's checkout script loads only when you open the checkout and PayPal processes the payment; we receive the order number, amount, and payment status, never your card details. The SVG is still generated in your browser and your image is never uploaded.",
             )}
           </p>
         </section>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { HalloweenGalleryPage } from "@/components/GalleryPages";
+import { CategoryGalleryPage } from "@/components/GalleryPages";
+import { HALLOWEEN } from "@/lib/gallery";
 import { languageAlternates } from "@/lib/locale";
 
 export const metadata: Metadata = {
@@ -14,5 +15,5 @@ export const metadata: Metadata = {
 };
 
 export default function ChineseHalloweenStencilsPage() {
-  return <HalloweenGalleryPage locale="zh-CN" />;
+  return <CategoryGalleryPage locale="zh-CN" category={HALLOWEEN} />;
 }

@@ -1,3 +1,4 @@
+import christmas from "@/lib/gallery/christmas.json";
 import halloween from "@/lib/gallery/halloween.json";
 import type { SiteRoute } from "@/lib/locale";
 
@@ -30,7 +31,10 @@ export type GalleryGroup = {
 
 export type GalleryCategory = {
   id: string;
-  route: SiteRoute;
+  route: Exclude<SiteRoute, "home" | "privacy">;
+  label: { en: string; zh: string };
+  /** One line for the hub page, listing what is inside. */
+  blurb: { en: string; zh: string };
   designs: GalleryDesign[];
   groups: GalleryGroup[];
 };
@@ -38,6 +42,8 @@ export type GalleryCategory = {
 export const HALLOWEEN: GalleryCategory = {
   id: "halloween",
   route: "halloweenStencils",
+  label: { en: "Halloween stencils", zh: "万圣节模板" },
+  blurb: { en: "Pumpkin faces, bats, black cats, skulls, spider webs, witches, and more", zh: "南瓜脸、蝙蝠、黑猫、骷髅、蜘蛛网、女巫等" },
   designs: halloween as GalleryDesign[],
   groups: [
     {
@@ -115,7 +121,71 @@ export const HALLOWEEN: GalleryCategory = {
   ],
 };
 
-export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN];
+export const CHRISTMAS: GalleryCategory = {
+  id: "christmas",
+  route: "christmasStencils",
+  label: { en: "Christmas stencils", zh: "圣诞模板" },
+  blurb: { en: "Snowflakes, stars, Christmas trees, reindeer, ornaments, and more", zh: "雪花、星星、圣诞树、驯鹿、圣诞彩球等" },
+  designs: christmas as GalleryDesign[],
+  groups: [
+    {
+      id: "snowflake",
+      heading: { en: "Snowflake stencils", zh: "雪花模板" },
+      tip: {
+        en: "Spray white or silver through a snowflake onto windows, mirrors, and wrapping paper, or dab glass paint with a sponge. Resize a few copies to different widths so the flakes do not all look the same.",
+        zh: "用白色或银色透过雪花模板喷在窗户、镜子、包装纸上，或者用海绵蘸玻璃颜料拍。多做几份不同大小的，雪花看起来更自然。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "star",
+      heading: { en: "Star stencils", zh: "星星模板" },
+      tip: {
+        en: "Stars are the most useful stencils of all: tree toppers, cards, walls, and signs. The nautical star keeps its two-tone points thanks to bridges along each point.",
+        zh: "星星是最常用的模板：树顶、贺卡、墙面、招牌都能用。航海星每个角的黑白两半靠连接桥连在一起。",
+      },
+      tool: "cricutStencil",
+    },
+    {
+      id: "tree",
+      heading: { en: "Christmas tree stencils", zh: "圣诞树模板" },
+      tip: {
+        en: "Paint trees in a row along a wooden sign, or print one large across several pages for a wall or door. The bauble tree uses bridges to hold each white ornament in place.",
+        zh: "可以在木牌上画一排圣诞树，或者放大分几页打印做墙面、门上的大树。挂彩球那款的每个白色小球都靠连接桥固定。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "ornament",
+      heading: { en: "Ornament and bell stencils", zh: "彩球和铃铛模板" },
+      tip: {
+        en: "Ornaments make good gift tags and card fronts: cut them from card stock and paint through them, or keep the cut-out shapes as decorations.",
+        zh: "彩球和铃铛适合做礼物标签和贺卡：用卡纸刻好后刷颜料，刻下来的形状本身也能当装饰。",
+      },
+      tool: "cricutStencil",
+    },
+    {
+      id: "reindeer",
+      heading: { en: "Reindeer stencils", zh: "驯鹿模板" },
+      tip: {
+        en: "Reindeer look great in a line across a window or mantel. Antlers are thin, so print at 15 cm or larger and use card or plastic for a reusable stencil.",
+        zh: "驯鹿排成一排贴在窗户或壁炉上很好看。鹿角比较细，建议打印 15 厘米以上，用卡纸或塑料片做可重复用的模板。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "more",
+      heading: { en: "Snowman, gingerbread, stockings, and gifts", zh: "雪人、姜饼人、圣诞袜和礼物" },
+      tip: {
+        en: "Small designs for cookies, cards, kids' crafts, and fabric. For cookies, cut the stencil from food-safe plastic and dust icing sugar or cocoa through it.",
+        zh: "适合饼干、贺卡、儿童手工和布料的小图案。做饼干时用食品级塑料片刻模板，透过它筛糖粉或可可粉。",
+      },
+      tool: "cricutStencil",
+    },
+  ],
+};
+
+export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS];
 
 export function designFiles(design: GalleryDesign) {
   const base = `/stencils/${design.category}/${design.slug}`;

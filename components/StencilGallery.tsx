@@ -101,8 +101,8 @@ export function GalleryCredits({ locale, category }: { locale: Locale; category:
       <p>
         {text(
           locale,
-          "TileStencil 自己画的图案（南瓜脸、圆形蜘蛛网等）可以免费用于个人和商业用途，比如做装饰、上课、卖手工成品；只是请不要把文件原样拿去转卖。其余图案来自维基共享资源，属于公有领域或 CC0，可以随意使用，我们只是把它们加上连接桥，变成能直接刻的模板。",
-          "Designs drawn by TileStencil (the pumpkin faces, the round spider web, and others marked below) are free for personal and commercial use, such as decorations, classes, and handmade goods you sell. Please do not resell the files themselves. The other designs are public domain or CC0 artwork from Wikimedia Commons, free for any use; we added bridges so they can be cut.",
+          "下面标明为 TileStencil 原创的图案可以免费用于个人和商业用途，比如做装饰、上课、卖手工成品；只是请不要把文件原样拿去转卖。其余图案来自维基共享资源，属于公有领域或 CC0，可以随意使用，我们只是把它们加上连接桥，变成能直接刻的模板。",
+          "Designs marked below as drawn by TileStencil are free for personal and commercial use, such as decorations, classes, and handmade goods you sell. Please do not resell the files themselves. The other designs are public domain or CC0 artwork from Wikimedia Commons, free for any use; we added bridges so they can be cut.",
         )}
       </p>
       <ul className="gallery-credits">

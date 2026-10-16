@@ -1125,6 +1125,12 @@ export function TileStencilApp({
               <p>{t("南瓜脸、蝙蝠、骷髅、蜘蛛网等，已加连接桥，免费下载 PDF。", "Pumpkin faces, bats, skulls, spider webs and more, with bridges. Free PDF downloads.")}</p>
               <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
             </Link>
+            <Link className="guide-card" href={localizedPath(locale, "christmasStencils")}>
+              <span className="guide-card-icon" aria-hidden="true">❄️</span>
+              <h3>{t("免费圣诞模板", "Free Christmas Stencils")}</h3>
+              <p>{t("雪花、星星、圣诞树、驯鹿等，已加连接桥，免费下载 PDF。", "Snowflakes, stars, trees, reindeer and more, with bridges. Free PDF downloads.")}</p>
+              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
+            </Link>
             <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
               <span className="guide-card-icon" aria-hidden="true">🔠</span>
               <h3>{t("字母模板生成器", "Letter Stencil Generator")}</h3>

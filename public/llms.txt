@@ -50,6 +50,7 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 - [Tattoo Stencil Maker](https://tilestencil.com/tattoo-stencil-maker): Clean tattoo stencil line art printed at exact placement size.
 - [Free Printable Stencils](https://tilestencil.com/free-stencils): Free stencil designs with bridges, as PDF and PNG, resizable in the stencil maker.
 - [Free Halloween Stencils](https://tilestencil.com/free-stencils/halloween): Pumpkin faces, bats, black cats, skulls, spider webs, ravens, and witches.
+- [Free Christmas Stencils](https://tilestencil.com/free-stencils/christmas): Snowflakes, stars, Christmas trees, ornaments, reindeer, snowman, gingerbread man, stockings, and gifts.
 - [Pumpkin Stencil Maker](https://tilestencil.com/pumpkin-stencil-maker): Custom pumpkin carving stencils from any photo.
 - [Pricing](https://tilestencil.com/pricing): Free tool; SVG export $1.99 per image.
 - [A0 Sewing Pattern Tiling](https://tilestencil.com/print-a0-to-a4-actual-size): 100% scale A0 to A4/Letter pattern tile printing with test square calibration for home sewists.

@@ -1,0 +1,387 @@
+[
+ {
+  "slug": "snowflake-classic",
+  "category": "christmas",
+  "group": "snowflake",
+  "name": {
+   "en": "Classic snowflake",
+   "zh": "经典雪花"
+  },
+  "own": true,
+  "width": 1102,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "snowflake-fern",
+  "category": "christmas",
+  "group": "snowflake",
+  "name": {
+   "en": "Fern snowflake",
+   "zh": "蕨叶雪花"
+  },
+  "own": true,
+  "width": 1109,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "snowflake-crystal",
+  "category": "christmas",
+  "group": "snowflake",
+  "name": {
+   "en": "Crystal snowflake",
+   "zh": "冰晶雪花"
+  },
+  "own": true,
+  "width": 1096,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "snowflake-star",
+  "category": "christmas",
+  "group": "snowflake",
+  "name": {
+   "en": "Star snowflake",
+   "zh": "星形雪花"
+  },
+  "own": true,
+  "width": 1126,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "star-solid",
+  "category": "christmas",
+  "group": "star",
+  "name": {
+   "en": "Five-point star",
+   "zh": "五角星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1178,
+  "report": "Added 0 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "star-outline",
+  "category": "christmas",
+  "group": "star",
+  "name": {
+   "en": "Outlined star",
+   "zh": "空心五角星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1178,
+  "report": "Added 1 bridge and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "star-nautical",
+  "category": "christmas",
+  "group": "star",
+  "name": {
+   "en": "Nautical star",
+   "zh": "航海星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1179,
+  "report": "Added 5 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "star-compass",
+  "category": "christmas",
+  "group": "star",
+  "name": {
+   "en": "Compass star",
+   "zh": "四芒星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 4 specks too small to cut."
+ },
+ {
+  "slug": "star-shooting",
+  "category": "christmas",
+  "group": "star",
+  "name": {
+   "en": "Shooting star",
+   "zh": "流星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1110,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "tree-tiered",
+  "category": "christmas",
+  "group": "tree",
+  "name": {
+   "en": "Christmas tree with star",
+   "zh": "带星星的圣诞树"
+  },
+  "own": true,
+  "width": 896,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "tree-simple",
+  "category": "christmas",
+  "group": "tree",
+  "name": {
+   "en": "Simple Christmas tree",
+   "zh": "简约圣诞树"
+  },
+  "own": true,
+  "width": 1039,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "tree-ornaments",
+  "category": "christmas",
+  "group": "tree",
+  "name": {
+   "en": "Christmas tree with baubles",
+   "zh": "挂彩球的圣诞树"
+  },
+  "own": true,
+  "width": 1034,
+  "height": 1232,
+  "report": "Added 7 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "pine-tree",
+  "category": "christmas",
+  "group": "tree",
+  "name": {
+   "en": "Pine tree silhouette",
+   "zh": "松树剪影"
+  },
+  "own": false,
+  "title": "Simple 1 colour pine.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Simple_1_colour_pine.svg",
+  "width": 891,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "ornament-ball",
+  "category": "christmas",
+  "group": "ornament",
+  "name": {
+   "en": "Christmas bauble",
+   "zh": "圣诞彩球"
+  },
+  "own": true,
+  "width": 1035,
+  "height": 1232,
+  "report": "Added 3 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "ornament-drop",
+  "category": "christmas",
+  "group": "ornament",
+  "name": {
+   "en": "Teardrop ornament",
+   "zh": "水滴形挂饰"
+  },
+  "own": true,
+  "width": 739,
+  "height": 1232,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "bell",
+  "category": "christmas",
+  "group": "ornament",
+  "name": {
+   "en": "Christmas bell",
+   "zh": "圣诞铃铛"
+  },
+  "own": true,
+  "width": 1017,
+  "height": 1232,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "reindeer-leaping",
+  "category": "christmas",
+  "group": "reindeer",
+  "name": {
+   "en": "Leaping reindeer",
+   "zh": "跳跃的驯鹿"
+  },
+  "own": false,
+  "title": "Deer Matt Todd 01.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Deer_Matt_Todd_01.svg",
+  "width": 881,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "reindeer-running",
+  "category": "christmas",
+  "group": "reindeer",
+  "name": {
+   "en": "Running reindeer",
+   "zh": "奔跑的驯鹿"
+  },
+  "own": false,
+  "title": "Reindeer (145926) - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Reindeer_(145926)_-_The_Noun_Project.svg",
+  "width": 1232,
+  "height": 1057,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "reindeer-outline",
+  "category": "christmas",
+  "group": "reindeer",
+  "name": {
+   "en": "Outlined leaping reindeer",
+   "zh": "线条驯鹿"
+  },
+  "own": false,
+  "title": "Reindeer - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Reindeer_-_The_Noun_Project.svg",
+  "width": 1232,
+  "height": 1201,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "stag",
+  "category": "christmas",
+  "group": "reindeer",
+  "name": {
+   "en": "Stag with antlers",
+   "zh": "长角雄鹿"
+  },
+  "own": false,
+  "title": "Deer silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Deer_silhouette.svg",
+  "width": 1232,
+  "height": 1207,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "santa-hat",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Santa hat",
+   "zh": "圣诞帽"
+  },
+  "own": false,
+  "title": "Santa hat.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Santa_hat.svg",
+  "width": 1232,
+  "height": 897,
+  "report": "Added 2 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "snowman",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Snowman",
+   "zh": "雪人"
+  },
+  "own": false,
+  "title": "Snowman - The Noun Project.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Snowman_-_The_Noun_Project.svg",
+  "width": 946,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "gingerbread-man",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Gingerbread man",
+   "zh": "姜饼人"
+  },
+  "own": true,
+  "width": 1089,
+  "height": 1232,
+  "report": "Added 6 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "candy-cane",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Candy cane",
+   "zh": "拐杖糖"
+  },
+  "own": true,
+  "width": 787,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "stocking",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Christmas stocking",
+   "zh": "圣诞袜"
+  },
+  "own": true,
+  "width": 901,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "mitten",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Mitten",
+   "zh": "手套"
+  },
+  "own": true,
+  "width": 954,
+  "height": 1232,
+  "report": "Added 7 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "gift-box",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Gift box",
+   "zh": "礼物盒"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1215,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "holly",
+  "category": "christmas",
+  "group": "more",
+  "name": {
+   "en": "Holly leaves and berries",
+   "zh": "冬青叶"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 878,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ }
+]

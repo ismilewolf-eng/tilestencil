@@ -1,0 +1,339 @@
+[
+ {
+  "slug": "daisy",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Daisy",
+   "zh": "雏菊"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1205,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "sunflower",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Sunflower",
+   "zh": "向日葵"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "tulip",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Tulip",
+   "zh": "郁金香"
+  },
+  "own": true,
+  "width": 748,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "wildflowers",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Wildflowers",
+   "zh": "野花"
+  },
+  "own": true,
+  "width": 980,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "lotus",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Lotus flower",
+   "zh": "莲花"
+  },
+  "own": false,
+  "title": "Lotus flower Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lotus_flower_Pinhead_icon.svg",
+  "width": 1232,
+  "height": 865,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "dahlia",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Dahlia line art",
+   "zh": "线条大丽花"
+  },
+  "own": false,
+  "title": "Flower SVG sketch10.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Flower_SVG_sketch10.svg",
+  "width": 1232,
+  "height": 1212,
+  "report": "Added 37 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "flower-six-petal",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Six-petal flower",
+   "zh": "六瓣花"
+  },
+  "own": false,
+  "title": "Six-petals b w flower icon.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Six-petals_b_w_flower_icon.svg",
+  "width": 1148,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "flower-outline",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Outlined flower",
+   "zh": "线条小花"
+  },
+  "own": false,
+  "title": "Six petal flower icon.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Six_petal_flower_icon.svg",
+  "width": 1147,
+  "height": 1232,
+  "report": "Added 13 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "flower-pot",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Flower in a pot",
+   "zh": "盆花"
+  },
+  "own": false,
+  "title": "Potted flower Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Potted_flower_Pinhead_icon.svg",
+  "width": 578,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "hibiscus",
+  "category": "flowers",
+  "group": "flower",
+  "name": {
+   "en": "Hibiscus",
+   "zh": "扶桑花"
+  },
+  "own": false,
+  "title": "Hibiskus.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Hibiskus.svg",
+  "width": 1195,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 3 specks too small to cut."
+ },
+ {
+  "slug": "rose-outline",
+  "category": "flowers",
+  "group": "rose",
+  "name": {
+   "en": "Rose outline",
+   "zh": "线条玫瑰"
+  },
+  "own": false,
+  "title": "Utena Rose (Transparent).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Utena_Rose_(Transparent).svg",
+  "width": 1232,
+  "height": 1231,
+  "report": "Added 10 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "rose-with-leaves",
+  "category": "flowers",
+  "group": "rose",
+  "name": {
+   "en": "Rose with leaves",
+   "zh": "带叶玫瑰"
+  },
+  "own": false,
+  "title": "England rugby shirt rose 1871.svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:England_rugby_shirt_rose_1871.svg",
+  "width": 940,
+  "height": 1232,
+  "report": "Added 4 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "butterfly-simple",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Simple butterfly",
+   "zh": "简约蝴蝶"
+  },
+  "own": false,
+  "title": "Bluesky logo (black).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Bluesky_logo_(black).svg",
+  "width": 1232,
+  "height": 1102,
+  "report": "Added 0 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "butterfly-tribal",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Tribal butterfly",
+   "zh": "图腾蝴蝶"
+  },
+  "own": false,
+  "title": "Butter.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Butter.svg",
+  "width": 1220,
+  "height": 1232,
+  "report": "Added 20 bridges and removed 2 specks too small to cut."
+ },
+ {
+  "slug": "butterfly-stars",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Butterfly with stars",
+   "zh": "星星蝴蝶"
+  },
+  "own": false,
+  "title": "Butterfly with stars and dots Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Butterfly_with_stars_and_dots_Pinhead_icon.svg",
+  "width": 1232,
+  "height": 1131,
+  "report": "Added 6 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "butterfly-rounded",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Rounded butterfly",
+   "zh": "圆翅蝴蝶"
+  },
+  "own": false,
+  "title": "Butterfly Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Butterfly_Pinhead_icon.svg",
+  "width": 1232,
+  "height": 1131,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "butterfly-moth",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Butterfly silhouette",
+   "zh": "蝴蝶剪影"
+  },
+  "own": false,
+  "title": "Lepidoptera icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Lepidoptera_icon.svg",
+  "width": 1232,
+  "height": 939,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "butterfly-minimal",
+  "category": "flowers",
+  "group": "butterfly",
+  "name": {
+   "en": "Minimal butterfly outline",
+   "zh": "极简蝴蝶"
+  },
+  "own": false,
+  "title": "Black ADHD Butterfly.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Black_ADHD_Butterfly.svg",
+  "width": 1232,
+  "height": 699,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "leaf",
+  "category": "flowers",
+  "group": "leaf",
+  "name": {
+   "en": "Leaf with veins",
+   "zh": "带叶脉的叶子"
+  },
+  "own": true,
+  "width": 770,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "maple-leaf",
+  "category": "flowers",
+  "group": "leaf",
+  "name": {
+   "en": "Maple leaf",
+   "zh": "枫叶"
+  },
+  "own": false,
+  "title": "Maple leaf Pinhead icon.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Maple_leaf_Pinhead_icon.svg",
+  "width": 1232,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "maple-leaf-stem",
+  "category": "flowers",
+  "group": "leaf",
+  "name": {
+   "en": "Maple leaf with stem",
+   "zh": "带茎枫叶"
+  },
+  "own": false,
+  "title": "Maple Leaf (Pantone).svg",
+  "license": "Public domain",
+  "source": "https://commons.wikimedia.org/wiki/File:Maple_Leaf_(Pantone).svg",
+  "width": 1147,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "fern",
+  "category": "flowers",
+  "group": "leaf",
+  "name": {
+   "en": "Fern frond",
+   "zh": "蕨叶"
+  },
+  "own": false,
+  "title": "Silver fern simple silhouette.svg",
+  "license": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Silver_fern_simple_silhouette.svg",
+  "width": 1232,
+  "height": 934,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ }
+]

@@ -64,7 +64,9 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
       <Link href={localizedPath(locale, "letterStencils")}>{t("字母模板生成器", "letter stencil generator")}</Link>
       {category.id === "halloween"
         ? t("做 “BOO”“Happy Halloween” 字样。", " for “BOO” or “Happy Halloween”.")
-        : t("做 “Merry Christmas”“Noel” 字样。", " for “Merry Christmas” or “Noel”.")}
+        : category.id === "christmas"
+          ? t("做 “Merry Christmas”“Noel” 字样。", " for “Merry Christmas” or “Noel”.")
+          : t("做 “Home”“Bloom” 这类字样。", " for words such as “Home” or “Bloom”.")}
     </>
   );
   const printing = t("打印时选“实际大小”或 100%，不要选“适合页面”。", "Print at Actual Size or 100%, not Fit to Page.");
@@ -93,6 +95,36 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
           : {
               question: "南瓜模板怎么转到南瓜上？",
               answer: "按实际大小打印，把纸贴在南瓜上，用针沿黑色形状每隔几毫米扎一个孔，揭掉纸后沿着孔刻。往孔里抹一点面粉会更容易看清。",
+            },
+      ],
+    };
+  }
+
+  if (category.id === "flowers") {
+    return {
+      kicker: t("免费花朵模板", "FREE FLOWER STENCILS"),
+      title: t("免费花朵模板：花、玫瑰、蝴蝶和叶子", "Free flower stencils: flowers, roses, butterflies, and leaves"),
+      lead: t(
+        `${n} 个免费花朵和自然镂空模板：雏菊、向日葵、郁金香、莲花、玫瑰、蝴蝶、枫叶和蕨叶。每个都已加好连接桥。下载 PDF 直接打印，或一键放进模板工具，改成墙面、家具、布料或贺卡需要的尺寸。`,
+        `${n} free printable flower and nature stencils: daisies, sunflowers, tulips, lotus, roses, butterflies, maple leaves, and ferns. Every design already has bridges. Download the free PDF, or open any design in the stencil maker to size it for walls, furniture, fabric, or cards.`,
+      ),
+      uses: [
+        printing,
+        t("黑色部分是要刻掉的地方，颜料从这里透过去。", "Black areas are cut out; that is where the paint goes through."),
+        t("墙面和家具用丙烯或乳胶漆，海绵蘸少量颜料轻拍，边缘不会渗。布料用布用颜料，或者冷冻纸刻好熨上再刷。", "On walls and furniture, dab acrylic or latex paint with an almost dry sponge so it does not bleed. On fabric, use fabric paint, or cut freezer paper and iron it on first."),
+        t("做花墙或花边：同一个图案按不同大小多做几份，交错排开会更自然。", "For a flower wall or border, make the same design at two or three sizes and stagger them so the pattern looks natural."),
+        makeYourOwn,
+      ],
+      faq: [
+        ...sharedFaq(locale, n),
+        locale === "en"
+          ? {
+              question: "How do I stencil flowers on a wall?",
+              answer: "Print the flower at the size you want, cut it from card or mylar, fix it with low-tack spray adhesive or painter's tape, and dab the paint on with a sponge or stencil brush in thin layers. Lift it straight off and move it to the next spot.",
+            }
+          : {
+              question: "怎么在墙上印花朵？",
+              answer: "按想要的大小打印，用卡纸或 Mylar 膜刻好，用低黏喷胶或美纹纸固定，用海绵或模板刷薄薄地拍几层颜料，然后垂直揭下，换到下一个位置。",
             },
       ],
     };

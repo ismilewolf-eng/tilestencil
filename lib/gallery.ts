@@ -1,4 +1,5 @@
 import christmas from "@/lib/gallery/christmas.json";
+import flowers from "@/lib/gallery/flowers.json";
 import halloween from "@/lib/gallery/halloween.json";
 import type { SiteRoute } from "@/lib/locale";
 
@@ -185,7 +186,53 @@ export const CHRISTMAS: GalleryCategory = {
   ],
 };
 
-export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS];
+export const FLOWERS: GalleryCategory = {
+  id: "flowers",
+  route: "flowerStencils",
+  label: { en: "Flower, butterfly and leaf stencils", zh: "花朵、蝴蝶和叶子模板" },
+  blurb: { en: "Daisies, sunflowers, tulips, lotus, roses, butterflies, and leaves", zh: "雏菊、向日葵、郁金香、莲花、玫瑰、蝴蝶、叶子等" },
+  designs: flowers as GalleryDesign[],
+  groups: [
+    {
+      id: "flower",
+      heading: { en: "Flower stencils", zh: "花朵模板" },
+      tip: {
+        en: "Simple flowers like the daisy and sunflower print well from 5 cm up, so they suit cards and cakes as well as walls. Line-art flowers such as the dahlia need 12 cm or more for the bridges to stay strong.",
+        zh: "雏菊、向日葵这类简单的花 5 厘米起就能印，贺卡、蛋糕、墙面都合适。大丽花这种线条图案要 12 厘米以上，连接桥才结实。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "rose",
+      heading: { en: "Rose stencils", zh: "玫瑰模板" },
+      tip: {
+        en: "Roses have many enclosed petals, so these versions already include bridges. Paint them in one colour, or stencil the leaves in green first and the flower in red once it is dry.",
+        zh: "玫瑰的花瓣大多是封闭的，这些版本已经加好连接桥。可以单色印，也可以先用绿色印叶子，干了再用红色印花。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "butterfly",
+      heading: { en: "Butterfly stencils", zh: "蝴蝶模板" },
+      tip: {
+        en: "Butterflies look best in a loose group flying across a wall or up a staircase. Print one design at a few sizes, or flip it in your printer settings for a mirror-image pair.",
+        zh: "蝴蝶适合一群散开地飞过墙面或楼梯。同一个图案按几种大小打印，或者在打印设置里水平翻转，得到一对方向相反的。",
+      },
+      tool: "cricutStencil",
+    },
+    {
+      id: "leaf",
+      heading: { en: "Leaf stencils", zh: "叶子模板" },
+      tip: {
+        en: "Leaves work for autumn decorations, tea towels, and botanical walls. Stencil them in two shades of green, or in reds and oranges for fall.",
+        zh: "叶子适合秋季装饰、茶巾和植物主题墙。可以用两种深浅的绿色，秋天用红色和橙色。",
+      },
+      tool: "sprayPaintStencil",
+    },
+  ],
+};
+
+export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS, FLOWERS];
 
 export function designFiles(design: GalleryDesign) {
   const base = `/stencils/${design.category}/${design.slug}`;

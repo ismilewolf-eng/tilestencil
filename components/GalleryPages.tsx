@@ -68,6 +68,8 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
           ? t("做 “Merry Christmas”“Noel” 字样。", " for “Merry Christmas” or “Noel”.")
           : category.id === "animals"
             ? t("做宠物名字。", " for your pet's name.")
+            : category.id === "shapes"
+              ? t("做 “Love”“Home” 这类字样。", " for words such as “Love” or “Home”.")
             : t("做 “Home”“Bloom” 这类字样。", " for words such as “Home” or “Bloom”.")}
     </>
   );
@@ -97,6 +99,36 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
           : {
               question: "南瓜模板怎么转到南瓜上？",
               answer: "按实际大小打印，把纸贴在南瓜上，用针沿黑色形状每隔几毫米扎一个孔，揭掉纸后沿着孔刻。往孔里抹一点面粉会更容易看清。",
+            },
+      ],
+    };
+  }
+
+  if (category.id === "shapes") {
+    return {
+      kicker: t("免费形状和图案模板", "FREE SHAPE AND PATTERN STENCILS"),
+      title: t("免费爱心、月亮、曼陀罗和花砖图案模板", "Free heart, moon, mandala, and tile pattern stencils"),
+      lead: t(
+        `${n} 个免费形状和图案镂空模板：爱心、月亮、太阳、云朵、彩虹、曼陀罗、摩洛哥花砖、蜂窝、皇冠、船锚等，全部由 TileStencil 原创。每个都已加好连接桥。下载 PDF 直接打印，或一键放进模板工具，按墙面、地板、家具或卡片需要的尺寸打印。`,
+        `${n} free printable shape and pattern stencils, all drawn by TileStencil: hearts, moons, suns, clouds, a rainbow, mandalas, Moroccan and quatrefoil tiles, honeycomb, a crown, an anchor, and more. Every design already has bridges. Download the free PDF, or open any design in the stencil maker to print it at the size of your wall, floor, furniture, or card.`,
+      ),
+      uses: [
+        printing,
+        t("黑色部分是要刻掉的地方，颜料从这里透过去。", "Black areas are cut out; that is where the paint goes through."),
+        t("花砖图案用来印地板、瓷砖或整面墙：按一块砖的大小打印（比如 30 厘米），刻在 Mylar 膜上，一块挨一块地印。每印完一块，等颜料干了再印相邻那块。", "Use the tile patterns on floors, old tiles, or a whole wall: print at the size of one tile (for example 30 cm), cut it from mylar, and repeat it tile by tile. Let each one dry before you stencil the one next to it."),
+        t("爱心、星星这类小图案适合贺卡、婚礼装饰和儿童手工，打印 3～8 厘米就够。", "Small shapes such as hearts suit cards, wedding decorations, and kids' crafts; 3–8 cm is plenty."),
+        makeYourOwn,
+      ],
+      faq: [
+        ...sharedFaq(locale, n),
+        locale === "en"
+          ? {
+              question: "How do I stencil a tile pattern on a floor?",
+              answer: "Clean and prime the floor, print the tile design at the size of one tile, and cut it from mylar. Tape it down, dab the paint on with a dense foam roller or sponge, lift it, and move to the next tile. Seal the finished floor with a clear floor varnish.",
+            }
+          : {
+              question: "怎么在地板上印花砖图案？",
+              answer: "先把地板清洁并刷底漆，按一块砖的大小打印图案，刻在 Mylar 膜上。用胶带固定，用高密度海绵滚筒或海绵拍颜料，揭下后移到下一块。全部印完后刷一层透明地板清漆保护。",
             },
       ],
     };

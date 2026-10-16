@@ -29,7 +29,8 @@ export type SiteRoute =
   | "halloweenStencils"
   | "christmasStencils"
   | "flowerStencils"
-  | "animalStencils";
+  | "animalStencils"
+  | "shapeStencils";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -60,6 +61,7 @@ const routeSuffix: Record<SiteRoute, string> = {
   christmasStencils: "/free-stencils/christmas",
   flowerStencils: "/free-stencils/flowers",
   animalStencils: "/free-stencils/animals",
+  shapeStencils: "/free-stencils/shapes",
 };
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {

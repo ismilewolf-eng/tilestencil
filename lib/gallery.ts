@@ -2,6 +2,7 @@ import animals from "@/lib/gallery/animals.json";
 import christmas from "@/lib/gallery/christmas.json";
 import flowers from "@/lib/gallery/flowers.json";
 import halloween from "@/lib/gallery/halloween.json";
+import shapes from "@/lib/gallery/shapes.json";
 import type { SiteRoute } from "@/lib/locale";
 
 /**
@@ -297,7 +298,62 @@ export const ANIMALS: GalleryCategory = {
   ],
 };
 
-export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS, FLOWERS, ANIMALS];
+export const SHAPES: GalleryCategory = {
+  id: "shapes",
+  route: "shapeStencils",
+  label: { en: "Heart, moon, mandala and pattern stencils", zh: "爱心、月亮、曼陀罗和花砖图案模板" },
+  blurb: { en: "Hearts, moons, suns, mandalas, Moroccan tiles, honeycomb, crowns, and anchors", zh: "爱心、月亮、太阳、曼陀罗、摩洛哥花砖、蜂窝、皇冠、船锚等" },
+  designs: shapes as GalleryDesign[],
+  groups: [
+    {
+      id: "heart",
+      heading: { en: "Heart stencils", zh: "爱心模板" },
+      tip: {
+        en: "Hearts are the most printed stencil of all: Valentine's cards, wedding signs, cookies, and kids' crafts. The outline heart keeps its centre thanks to a single bridge.",
+        zh: "爱心是最常用的模板：情人节贺卡、婚礼指示牌、饼干、儿童手工都能用。空心爱心中间那块靠一条连接桥固定。",
+      },
+      tool: "cricutStencil",
+    },
+    {
+      id: "sky",
+      heading: { en: "Moon, sun, cloud, and rainbow stencils", zh: "月亮、太阳、云朵和彩虹模板" },
+      tip: {
+        en: "Sky shapes suit nurseries and boho walls. Print a moon and a few stars at different sizes and scatter them across a ceiling or a dark accent wall.",
+        zh: "天空元素适合婴儿房和波西米亚风墙面。把月亮和几颗星星按不同大小打印，散布在天花板或深色墙上。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "mandala",
+      heading: { en: "Mandala stencils", zh: "曼陀罗模板" },
+      tip: {
+        en: "Mandalas are made of many separate pieces, so a spray adhesive on the back of the stencil keeps the small petals flat. Print at 20 cm or more for walls and tabletops.",
+        zh: "曼陀罗由很多分开的小块组成，模板背面喷一点喷胶，小花瓣才能贴平。墙面和桌面建议打印 20 厘米以上。",
+      },
+      tool: "sprayPaintStencil",
+    },
+    {
+      id: "pattern",
+      heading: { en: "Tile and pattern stencils for floors and walls", zh: "地板和墙面花砖图案模板" },
+      tip: {
+        en: "Each tile design is one repeat. Print it at the size of your floor or wall tiles, and stencil every tile, or every other tile for a checkerboard effect.",
+        zh: "每个花砖图案是一个重复单元。按地砖或墙砖的大小打印，每块都印，或者隔一块印一块做出棋盘效果。",
+      },
+      tool: "stencilGuide",
+    },
+    {
+      id: "symbol",
+      heading: { en: "Crown, anchor, compass, and arrow stencils", zh: "皇冠、船锚、罗盘和箭头模板" },
+      tip: {
+        en: "Symbols work on signs, shirts, tote bags, and furniture. The anchor and compass rose suit nautical rooms; the crown and arrow are popular on kids' and boho decor.",
+        zh: "这些符号适合招牌、T 恤、帆布袋和家具。船锚和罗盘适合航海风房间，皇冠和箭头常用在儿童房和波西米亚风装饰上。",
+      },
+      tool: "cricutStencil",
+    },
+  ],
+};
+
+export const GALLERY_CATEGORIES: GalleryCategory[] = [HALLOWEEN, CHRISTMAS, FLOWERS, ANIMALS, SHAPES];
 
 export function designFiles(design: GalleryDesign) {
   const base = `/stencils/${design.category}/${design.slug}`;

@@ -57,6 +57,8 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/free-stencils/flowers"),
       (SITE_URL + "/zh/free-stencils/animals"),
       (SITE_URL + "/free-stencils/animals"),
+      (SITE_URL + "/zh/free-stencils/shapes"),
+      (SITE_URL + "/free-stencils/shapes"),
       (SITE_URL + "/zh/pricing"),
       (SITE_URL + "/pricing"),
       (SITE_URL + "/zh/terms"),

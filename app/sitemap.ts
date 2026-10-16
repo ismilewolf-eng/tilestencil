@@ -42,6 +42,7 @@ const routes: Array<{
   { route: "christmasStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "flowerStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "animalStencils", changeFrequency: "weekly", priority: 0.9 },
+  { route: "shapeStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "pricing", changeFrequency: "monthly", priority: 0.5 },
   { route: "terms", changeFrequency: "yearly", priority: 0.3 },
   { route: "refundPolicy", changeFrequency: "yearly", priority: 0.3 },

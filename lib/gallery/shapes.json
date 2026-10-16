@@ -1,0 +1,340 @@
+[
+ {
+  "slug": "heart",
+  "category": "shapes",
+  "group": "heart",
+  "name": {
+   "en": "Heart",
+   "zh": "爱心"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1213,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "heart-outline",
+  "category": "shapes",
+  "group": "heart",
+  "name": {
+   "en": "Heart outline",
+   "zh": "空心爱心"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1213,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "hearts-double",
+  "category": "shapes",
+  "group": "heart",
+  "name": {
+   "en": "Two hearts",
+   "zh": "双心"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1023,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "heart-arrow",
+  "category": "shapes",
+  "group": "heart",
+  "name": {
+   "en": "Heart with arrow",
+   "zh": "一箭穿心"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1040,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "heart-of-hearts",
+  "category": "shapes",
+  "group": "heart",
+  "name": {
+   "en": "Heart of little hearts",
+   "zh": "小爱心拼成的心"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1119,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "moon-crescent",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Crescent moon",
+   "zh": "弯月"
+  },
+  "own": true,
+  "width": 1165,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "moon-and-stars",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Moon and stars",
+   "zh": "月亮和星星"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1214,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "sun",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Sun",
+   "zh": "太阳"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 12 specks too small to cut."
+ },
+ {
+  "slug": "sun-wavy",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Sun with wavy rays",
+   "zh": "火焰太阳"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 4 specks too small to cut."
+ },
+ {
+  "slug": "cloud",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Cloud",
+   "zh": "云朵"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 912,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "rainbow",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Rainbow",
+   "zh": "彩虹"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 682,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "lightning-bolt",
+  "category": "shapes",
+  "group": "sky",
+  "name": {
+   "en": "Lightning bolt",
+   "zh": "闪电"
+  },
+  "own": true,
+  "width": 814,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 1 speck too small to cut."
+ },
+ {
+  "slug": "mandala-flower",
+  "category": "shapes",
+  "group": "mandala",
+  "name": {
+   "en": "Flower mandala",
+   "zh": "花朵曼陀罗"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 8 specks too small to cut."
+ },
+ {
+  "slug": "mandala-star",
+  "category": "shapes",
+  "group": "mandala",
+  "name": {
+   "en": "Star mandala",
+   "zh": "星形曼陀罗"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 0 bridges and removed 4 specks too small to cut."
+ },
+ {
+  "slug": "mandala-lotus",
+  "category": "shapes",
+  "group": "mandala",
+  "name": {
+   "en": "Lotus mandala",
+   "zh": "莲花曼陀罗"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "moroccan-tile",
+  "category": "shapes",
+  "group": "pattern",
+  "name": {
+   "en": "Moroccan tile",
+   "zh": "摩洛哥花砖"
+  },
+  "own": true,
+  "width": 973,
+  "height": 1232,
+  "report": "Added 2 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "quatrefoil-tile",
+  "category": "shapes",
+  "group": "pattern",
+  "name": {
+   "en": "Quatrefoil tile",
+   "zh": "四叶花砖"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "star-tile",
+  "category": "shapes",
+  "group": "pattern",
+  "name": {
+   "en": "Eight-point star tile",
+   "zh": "八角星花砖"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 9 bridges and removed 4 specks too small to cut."
+ },
+ {
+  "slug": "honeycomb",
+  "category": "shapes",
+  "group": "pattern",
+  "name": {
+   "en": "Honeycomb pattern",
+   "zh": "蜂窝图案"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 16 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "harlequin-diamonds",
+  "category": "shapes",
+  "group": "pattern",
+  "name": {
+   "en": "Harlequin diamonds",
+   "zh": "菱形格图案"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "crown",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Crown",
+   "zh": "皇冠"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1174,
+  "report": "Added 3 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "anchor",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Anchor",
+   "zh": "船锚"
+  },
+  "own": true,
+  "width": 1140,
+  "height": 1232,
+  "report": "Added 1 bridge and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "compass-rose",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Compass rose",
+   "zh": "罗盘"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 4 bridges and removed 8 specks too small to cut."
+ },
+ {
+  "slug": "boho-arrow",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Boho arrow",
+   "zh": "波西米亚箭头"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 436,
+  "report": "Nothing will fall out. Ready to cut."
+ },
+ {
+  "slug": "peace-sign",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Peace sign",
+   "zh": "和平标志"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1232,
+  "report": "Added 4 bridges and removed 0 specks too small to cut."
+ },
+ {
+  "slug": "diamond-gem",
+  "category": "shapes",
+  "group": "symbol",
+  "name": {
+   "en": "Diamond",
+   "zh": "钻石"
+  },
+  "own": true,
+  "width": 1232,
+  "height": 1026,
+  "report": "Nothing will fall out. Ready to cut."
+ }
+]

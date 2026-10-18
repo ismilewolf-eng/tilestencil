@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GuideShell } from "@/components/GuideShell";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { QuickAnswer } from "@/components/QuickAnswer";
 import { languageAlternates } from "@/lib/locale";
 
 export const metadata: Metadata = {
@@ -49,12 +50,12 @@ const faqItems = [
     answer: "The Rasterbator is famous for converting photos into stylized halftone dot grids (Rasterized dots). While that creates a retro pop-art look, it destroys fine details, line drawings, text, and craft blueprints. TileStencil does NOT add any halftone dots — it preserves crisp, clean, full-resolution pixels and sharp vector-like edges.",
   },
   {
-    question: "Is TileStencil free and private like open-source tools?",
-    answer: "Yes, TileStencil is 100% free, open-source (MIT License), and processes everything directly in your browser. Unlike traditional online tools that upload your private photos to a remote server, TileStencil never transmits your images across the network.",
+    question: "Is TileStencil free and private?",
+    answer: "Tiling an image and downloading the multi-page PDF is free, with no sign-up, watermark or page limit; only the optional cut-ready SVG stencil export costs $1.99. Everything is processed in your browser and your image is never uploaded. The source code is public under the MIT License.",
   },
   {
     question: "How does TileStencil compare to Blockposters?",
-    answer: "Blockposters limits free downloads and restricts page counts and resolutions. TileStencil has no page limits, supports millimeter-exact physical sizing (cm & in), custom printer margins, tile overlap strips, and high-contrast B&W template modes for crafting.",
+    answer: "Blockposters is a long-running online poster tiler; its free version has had page and resolution limits, so check its current terms. TileStencil has no page limit and adds exact physical sizing in cm or inches, custom printer margins, overlap strips, and grayscale or black-and-white template modes for crafts.",
   },
 ];
 
@@ -74,29 +75,29 @@ export default function RasterbatorAlternativeEnPage() {
         title="Print large tiled posters without halftone dots or blur."
         lead="Looking for a modern alternative to The Rasterbator or Blockposters? TileStencil tiles any image across multiple A4, A3, or Letter sheets at 100% actual physical size with razor-sharp clarity and zero cloud uploads."
       >
+        <QuickAnswer heading="The best free Rasterbator alternative for sharp, true-size prints">
+          <p>
+            If you want the classic halftone-dot look, The Rasterbator is still the tool for it. If you want the picture to stay
+            sharp and come out at an exact size, use <Link href="/">TileStencil</Link>: choose a JPG or PNG, enter the finished
+            width and height in cm or inches, pick A4, A3 or US Letter, and download a numbered multi-page PDF. Tiling and the
+            PDF are free, with no sign-up, watermark or page limit, and the image is processed in your browser, never uploaded.
+          </p>
+          <p>Other free options: Blockposters (online) and PosteRazor (a desktop app for Windows, macOS and Linux).</p>
+        </QuickAnswer>
+
         <section>
           <h2>TileStencil vs. The Rasterbator: Key Differences</h2>
           <p>
-            The Rasterbator pioneered giant multi-sheet printing in the early 2000s, but its core feature — halftone dot rasterization — makes it unsuitable when you need photo clarity, legible text, woodworking templates, or stained glass blueprints.
+            The Rasterbator pioneered giant multi-sheet printing in the early 2000s and is best known for turning photos into
+            halftone dots. That look suits pop-art walls, but not jobs that need a clean photo, legible text, a woodworking
+            template or a stained glass pattern at a precise size.
           </p>
           <ul>
-            <li><strong>No Halftone Dots:</strong> Original pixel clarity is preserved. Line art and text stay sharp.</li>
-            <li><strong>Exact Physical Dimensions:</strong> Set target size in cm or inches with millimeter accuracy.</li>
-            <li><strong>100% Client-Side Privacy:</strong> All slicing and PDF generation happen in your browser memory. No photos are uploaded to any server.</li>
-            <li><strong>Crafting & Mural Modes:</strong> Built-in High-Contrast B&W and Grayscale modes save ink and highlight cutting paths.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>Feature Comparison Table</h2>
-          <p>
-            See how TileStencil stacks up against legacy tiling tools:
-          </p>
-          <ul>
-            <li><strong>Image Quality:</strong> TileStencil (Full Sharpness) vs Rasterbator (Halftone Dots Only) vs Blockposters (Compressed).</li>
-            <li><strong>Physical Scale Control:</strong> TileStencil (Exact cm / in input) vs Rasterbator (Page count estimates).</li>
-            <li><strong>Privacy & Security:</strong> TileStencil (Zero Uploads) vs Others (Server-side processing).</li>
-            <li><strong>Tile Overlap & Crosshairs:</strong> TileStencil (Custom mm Overlap + Registration marks).</li>
+            <li><strong>No halftone dots:</strong> original pixels are kept, so line art and text stay sharp.</li>
+            <li><strong>Exact physical size:</strong> set the finished width and height in cm or inches; the PDF prints at that size at 100% scale.</li>
+            <li><strong>Assembly marks:</strong> every page carries a grid label (A1, A2, B1…), trim marks and an adjustable overlap strip.</li>
+            <li><strong>Private:</strong> slicing and PDF generation happen in your browser; no photo is uploaded.</li>
+            <li><strong>Craft modes:</strong> grayscale and high-contrast black-and-white template modes save ink and show cutting lines.</li>
           </ul>
         </section>
 

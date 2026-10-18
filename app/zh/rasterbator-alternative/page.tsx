@@ -50,7 +50,7 @@ const faqItems = [
   },
   {
     question: "TileStencil 与 Blockposters 相比有哪些优势？",
-    answer: "Blockposters 免费版限制导出张数和图片清晰度，且需要把图片上传到其服务器处理。TileStencil 完全免费开源无限制，支持毫米级精准物理尺寸控制、重叠对齐调节与高对比黑白模板，且 100% 在本地浏览器离线完成，保护隐私。",
+    answer: "Blockposters 是老牌在线分页打印工具，免费版曾有张数和清晰度限制，具体以它当前的说明为准。TileStencil 分页打印和下载 PDF 免费、不限张数，支持毫米级精准物理尺寸、重叠对齐调节与高对比黑白模板，图片只在本地浏览器处理、不上传。只有可选的 SVG 切割文件收费（每张 1.99 美元）。",
   },
   {
     question: "拼接时如何避免出现白边和错位？",
@@ -84,15 +84,6 @@ export default function RasterbatorAlternativeZhPage() {
             <li><strong>精准物理长宽控制：</strong>支持直接输入厘米(cm)或英寸(in)，不再凭空猜测“放大几倍”。</li>
             <li><strong>纯本地离线隐私：</strong>全套算法在本地浏览器内存中运行，个人照片与设计草图绝不上云。</li>
             <li><strong>手作与墙绘模板：</strong>提供高对比黑白模板模式，专门优化木工下刀与墙绘描摹。</li>
-          </ul>
-        </section>
-
-        <section>
-          <h2>TileStencil 与传统工具对比</h2>
-          <ul>
-            <li><strong>画质保真度：</strong>TileStencil（原图高清无网点）vs Rasterbator（强制圆点波点）vs Blockposters（压缩降质）。</li>
-            <li><strong>尺寸控制：</strong>TileStencil（真实厘米/英寸输入，100% 实际大小）vs 传统工具（仅支持估算页数）。</li>
-            <li><strong>隐私安全：</strong>TileStencil（零上传，纯本地处理）vs 传统工具（需上传至第三方服务器）。</li>
           </ul>
         </section>
 

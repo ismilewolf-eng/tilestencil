@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { GuideShell } from "@/components/GuideShell";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
+import { QuickAnswer } from "@/components/QuickAnswer";
 import { languageAlternates } from "@/lib/locale";
+import { sheetsFor } from "@/lib/page-count";
+
+const usPoster = sheetsFor(609.6, 914.4, "letter");
+const a1Poster = sheetsFor(594, 841, "a4");
+const smallPoster = sheetsFor(457.2, 609.6, "letter");
 
 export const metadata: Metadata = {
   title: "Print an Image on Multiple Pages",
@@ -38,6 +44,14 @@ const howToSteps = [
 
 const faqItems = [
   {
+    question: "Is it free to print an image on multiple pages with TileStencil?",
+    answer: "Yes. Tiling a JPG or PNG across pages and downloading the PDF is free, with no sign-up, no watermark and no page limit. Only the optional cut-ready SVG stencil export is paid ($1.99 per image).",
+  },
+  {
+    question: "How many pages will my poster need?",
+    answer: `It depends on the finished size and paper. With TileStencil's default 8 mm margin and 5 mm overlap, a 24 × 36 in poster needs ${usPoster.sheets} US Letter sheets in ${usPoster.orientation} (${usPoster.columns} × ${usPoster.rows}), an 18 × 24 in poster needs ${smallPoster.sheets}, and an A1 poster (594 × 841 mm) needs ${a1Poster.sheets} A4 sheets in ${a1Poster.orientation}. The tool shows the exact count before you export.`,
+  },
+  {
     question: "Is TileStencil a good alternative to The Rasterbator or Blockposters?",
     answer: "Yes. Unlike The Rasterbator which converts images into stylized raster halftone dots, TileStencil preserves full pixel sharpness and exact physical dimensions without any dot rasterization. It also runs 100% locally in your browser with zero image uploads.",
   },
@@ -71,6 +85,19 @@ export default function EnglishPrintImageOnMultiplePagesPage() {
       title="Print one image across multiple pages for a real poster."
       lead="When your home printer only handles standard paper, you can split a JPG or PNG across A4, A3, or US Letter pages, then assemble it into one full-size image."
     >
+      <QuickAnswer heading="How to print a large image across multiple pages at actual size (free)">
+        <p>
+          Open <Link href="/">TileStencil</Link>, choose your JPG or PNG, type the finished width and height in cm or inches,
+          pick A4, A3 or US Letter, and download the multi-page PDF. Print every page at <strong>100% / Actual Size</strong>,
+          trim along the marks and tape the sheets together from the back. It is free, needs no sign-up, adds no watermark,
+          and your image never leaves your browser.
+        </p>
+        <p>
+          Example: a 24 × 36 in poster takes {usPoster.sheets} US Letter sheets in {usPoster.orientation} ({usPoster.columns} across × {usPoster.rows} down);
+          an A1 poster takes {a1Poster.sheets} A4 sheets. Each page is numbered by grid position (A1, A2, B1…) so you assemble it in order.
+        </p>
+      </QuickAnswer>
+
       <section>
         <h2>When is multi-page image printing useful?</h2>
         <p>

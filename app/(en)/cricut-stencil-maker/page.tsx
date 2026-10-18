@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
 import { StencilExampleSection } from "@/components/StencilExample";
+import { QuickAnswer } from "@/components/QuickAnswer";
 import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
@@ -98,6 +99,15 @@ export default function EnglishCricutStencilPage() {
       <FaqJsonLd items={faqItems} />
       <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
         <article className="app-guide">
+          <QuickAnswer heading="How to make a cut-ready Cricut stencil SVG with bridges from a photo">
+            <ol>
+              <li>Choose your photo in the tool above. It is processed in your browser, not uploaded.</li>
+              <li>Drag the threshold until the black-and-white preview reads clearly. Bridges are on by default: any piece that would fall out, like the middle of an O or an eye, is joined to the sheet automatically (2 mm for vinyl, 3–4 mm for mylar or card).</li>
+              <li>Enter the finished width, for example 20 cm for a tote bag.</li>
+              <li>Click Export SVG and, in Cricut Design Space, use Upload → Upload Image. The file is sized in millimetres and cuts as-is.</li>
+            </ol>
+            <p>Preview and a printable tiled PDF are free; the SVG is $1.99 per image, paid once with no account or subscription.</p>
+          </QuickAnswer>
           <StencilExampleSection locale="en" name="cricut" />
           <h2>Why this beats tracing in Design Space</h2>
           <p>

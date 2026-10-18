@@ -1392,6 +1392,42 @@ select {
   line-height: 1.7;
 }
 
+.quick-answer {
+  margin-top: 26px;
+  padding: 20px 22px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--rule));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent-soft) 35%, var(--surface));
+}
+
+.quick-answer h2,
+.app-guide .quick-answer h2 {
+  margin: 0 0 10px;
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.quick-answer p,
+.quick-answer li {
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.quick-answer p {
+  margin: 0 0 10px;
+}
+
+.quick-answer ol,
+.quick-answer ul {
+  margin: 0 0 10px;
+  padding-left: 1.3em;
+}
+
+.quick-answer > :last-child {
+  margin-bottom: 0;
+}
+
 .guide-callout {
   display: grid;
   gap: 9px;

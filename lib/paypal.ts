@@ -53,7 +53,8 @@ async function accessToken(env: PaymentEnv, fetchImpl: Fetch): Promise<string> {
   return ((await response.json()) as { access_token: string }).access_token;
 }
 
-export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch): Promise<{ id: string }> {
+/** customId: optional first-referrer tag shown as "Custom" on the PayPal transaction (max 127 chars). */
+export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, customId = ""): Promise<{ id: string }> {
   const token = await accessToken(env, fetchImpl);
   const response = await fetchImpl(`${apiBase(env)}/v2/checkout/orders`, {
     method: "POST",
@@ -64,6 +65,7 @@ export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch): Pr
         {
           description: "TileStencil cut-ready SVG stencil export",
           amount: { currency_code: "USD", value: price(env) },
+          ...(customId ? { custom_id: customId.slice(0, 127) } : {}),
         },
       ],
       application_context: { brand_name: "TileStencil", shipping_preference: "NO_SHIPPING", user_action: "PAY_NOW" },

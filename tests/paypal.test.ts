@@ -50,6 +50,16 @@ describe("createOrder", () => {
     expect(JSON.parse(String(create.init?.body)).purchase_units[0].amount).toEqual({ currency_code: "USD", value: "2.99" });
   });
 
+  it("attaches the buyer's source tag as custom_id only when given", async () => {
+    const tagged = fakePaypal({ "/v2/checkout/orders": { body: { id: "ORDER123ABC" } } });
+    await createOrder(env, tagged.fetchImpl, "ref=chatgpt.com;buy=/");
+    const unit = JSON.parse(String(tagged.calls.find((c) => c.url.endsWith("/v2/checkout/orders"))!.init?.body)).purchase_units[0];
+    expect(unit.custom_id).toBe("ref=chatgpt.com;buy=/");
+    const plain = fakePaypal({ "/v2/checkout/orders": { body: { id: "ORDER123ABC" } } });
+    await createOrder(env, plain.fetchImpl);
+    expect(JSON.parse(String(plain.calls.find((c) => c.url.endsWith("/v2/checkout/orders"))!.init?.body)).purchase_units[0]).not.toHaveProperty("custom_id");
+  });
+
   it("uses the live API only when PAYPAL_ENV=live", async () => {
     const { fetchImpl, calls } = fakePaypal({ "/v2/checkout/orders": { body: { id: "ORDER123ABC" } } });
     await createOrder({ ...env, PAYPAL_ENV: "live" }, fetchImpl);

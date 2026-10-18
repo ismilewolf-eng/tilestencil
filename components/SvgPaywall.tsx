@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { readFirstTouch, sourceTag } from "@/lib/attribution";
 import type { Locale } from "@/lib/locale";
 
 export type SvgPaymentConfig =
@@ -86,7 +87,11 @@ export function SvgPaywall({
         buttons = window.paypal.Buttons({
           style: { layout: "vertical", shape: "rect", label: "pay", height: 44 },
           createOrder: async () => {
-            const response = await fetch("/api/svg/order", { method: "POST" });
+            const response = await fetch("/api/svg/order", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ source: sourceTag(readFirstTouch(), location.pathname) }),
+            });
             if (!response.ok) throw new Error("order");
             return ((await response.json()) as { id: string }).id;
           },

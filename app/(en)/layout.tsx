@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CloudflareWebAnalytics } from "@/components/CloudflareWebAnalytics";
+import { FirstTouch } from "@/components/FirstTouch";
 import { DomainRedirect } from "@/components/DomainRedirect";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
@@ -66,6 +67,7 @@ export default function EnglishRootLayout({ children }: Readonly<{ children: Rea
         <DomainRedirect />
         {children}
         <CloudflareWebAnalytics />
+        <FirstTouch />
       </body>
     </html>
   );

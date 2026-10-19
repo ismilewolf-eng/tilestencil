@@ -10,7 +10,9 @@
  *   SVG_PRICE_USD                     price per stencil, default "1.99"
  */
 
-export interface PaymentEnv {
+import { waffoEnabled, waffoTestMode, type WaffoEnv } from "./waffo";
+
+export interface PaymentEnv extends WaffoEnv {
   PAYPAL_CLIENT_ID?: string;
   PAYPAL_SECRET?: string;
   PAYPAL_ENV?: string;
@@ -35,11 +37,20 @@ export function paidEnabled(env: PaymentEnv): boolean {
   return env.SVG_PAID === "1" && Boolean(env.PAYPAL_CLIENT_ID) && Boolean(env.PAYPAL_SECRET);
 }
 
-/** What the browser needs to show the PayPal button. Never includes the secret. */
+/**
+ * What the browser needs to show the checkout: the PayPal button, plus the Waffo card /
+ * wallet checkout when it is configured. Never includes a secret.
+ */
 export function publicConfig(env: PaymentEnv) {
-  return paidEnabled(env)
-    ? { paid: true, clientId: env.PAYPAL_CLIENT_ID, price: price(env), currency: "USD", sandbox: env.PAYPAL_ENV !== "live" }
-    : { paid: false };
+  if (!paidEnabled(env)) return { paid: false };
+  return {
+    paid: true,
+    clientId: env.PAYPAL_CLIENT_ID,
+    price: price(env),
+    currency: "USD",
+    sandbox: env.PAYPAL_ENV !== "live",
+    ...(waffoEnabled(env) ? { waffo: { test: waffoTestMode(env) } } : {}),
+  };
 }
 
 async function accessToken(env: PaymentEnv, fetchImpl: Fetch): Promise<string> {

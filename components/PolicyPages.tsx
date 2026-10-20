@@ -4,7 +4,7 @@ import { localizedPath, otherLocale, type Locale, type SiteRoute } from "@/lib/l
 import { SiteFooter } from "@/components/SiteFooter";
 
 export const CONTACT_EMAIL = "ismilewolf@gmail.com";
-const UPDATED = "2026-10-15";
+const UPDATED = "2026-10-20";
 
 type Section = { heading: string; body: ReactNode };
 
@@ -105,6 +105,12 @@ export function TermsPage({ locale }: { locale: Locale }) {
           body: en
             ? "Do not use TileStencil to infringe others' rights, to attack or overload the site, or to resell access to the tool itself."
             : "不得用 TileStencil 侵犯他人权利、攻击网站或使其过载，也不得转售本工具的使用权。",
+        },
+        {
+          heading: en ? "Breach and termination" : "违约与终止",
+          body: en
+            ? "If you break these terms, we may, depending on how serious the breach is, warn you; limit or end your access to the site and its paid exports (for example by blocking abusive requests); cancel a paid download that has not been delivered yet and refund it; refuse future purchases; and take legal action where necessary. You can stop using TileStencil at any time. If your access ends, or if we stop offering the service, files you have already downloaded remain yours to use under these terms, and purchases made in the last 14 days can still be refunded under the refund policy."
+            : "如果你违反本条款，我们可以视情节轻重采取以下措施：发出警告；限制或终止你使用本网站和付费导出（例如拦截滥用请求）；取消尚未交付的付费下载并退款；拒绝你之后的购买；必要时依法追究责任。你可以随时停止使用 TileStencil。使用权终止后，或我们停止提供服务时，你已经下载的文件仍可按本条款继续使用；14 天内的购买仍可按退款政策申请退款。",
         },
         {
           heading: en ? "No warranty" : "免责声明",

@@ -91,8 +91,8 @@ export function TermsPage({ locale }: { locale: Locale }) {
         {
           heading: en ? "Payments and delivery" : "付款与交付",
           body: en
-            ? "Paid downloads are processed by a third-party payment provider (such as PayPal); we never see or store your card details. Files are delivered digitally in your browser immediately after payment is confirmed."
-            : "付费下载由第三方支付服务商（例如 PayPal）处理，我们看不到也不会保存你的银行卡信息。付款确认后，文件会立即在你的浏览器里交付下载。",
+            ? "Paid downloads are processed by PayPal, or by Waffo when you pay with a card, Apple Pay, Google Pay or another wallet. For Waffo orders, Waffo is the merchant of record: it sells the download to you on our behalf, handles sales tax, and its name may appear on your statement. We never see or store your card details. Files are delivered digitally in your browser immediately after payment is confirmed."
+            : "付费下载由 PayPal 处理；用银行卡、Apple Pay、Google Pay 等方式付款时由 Waffo 处理。通过 Waffo 付款的订单，Waffo 是这笔订单的销售方（merchant of record）：它代我们向你出售下载、处理销售税，你的账单上可能显示 Waffo 的名称。我们看不到也不会保存你的银行卡信息。付款确认后，文件会立即在你的浏览器里交付下载。",
         },
         {
           heading: en ? "Refunds" : "退款",
@@ -195,8 +195,8 @@ export function PricingPage({ locale }: { locale: Locale }) {
         {
           heading: en ? "Cut-ready SVG export" : "可切割 SVG 导出",
           body: en
-            ? "Closed cut paths for Cricut, Silhouette, and laser cutters, with bridges included and sized in millimetres. $1.99 per image, paid once through PayPal or a debit/credit card; after that you can re-export the same image as often as you like while you adjust it. No account and no subscription, with a 14-day money-back guarantee."
-            : "给 Cricut、Silhouette 刻字机和激光切割机用的闭合切割路径，带连接桥，按毫米标注尺寸。每张图 1.99 美元，用 PayPal 或银行卡付一次，之后同一张图怎么调都可以反复导出。不用注册，没有订阅，14 天内可全额退款。",
+            ? "Closed cut paths for Cricut, Silhouette, and laser cutters, with bridges included and sized in millimetres. $1.99 per image, paid once through PayPal, or by card, Apple Pay, Google Pay or WeChat Pay through Waffo; after that you can re-export the same image as often as you like while you adjust it. No account and no subscription, with a 14-day money-back guarantee."
+            : "给 Cricut、Silhouette 刻字机和激光切割机用的闭合切割路径，带连接桥，按毫米标注尺寸。每张图 1.99 美元，用 PayPal 付一次，或通过 Waffo 用银行卡、Apple Pay、Google Pay、微信支付付一次，之后同一张图怎么调都可以反复导出。不用注册，没有订阅，14 天内可全额退款。",
         },
         {
           heading: en ? "Questions" : "有问题",

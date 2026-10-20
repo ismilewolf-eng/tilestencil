@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { publicConfig } from "@/lib/paypal";
-import { checkOrder, createCheckout, isWaffoRef, signedPost, waffoEnabled, type WaffoEnv } from "@/lib/waffo";
+import { checkOrder, createCheckout, isWaffoRef, signedPost, verifyWebhook, waffoEnabled, type WaffoEnv } from "@/lib/waffo";
 
 async function keyPair() {
   const pair = await crypto.subtle.generateKey(
@@ -97,5 +97,34 @@ describe("waffo checkout and order check", () => {
     const { fetchImpl, calls } = fakeWaffo({ onetimeOrders: [order()] });
     await expect(checkOrder({ ...ids, WAFFO_PRIVATE_KEY: "x" }, "ORD_1", fetchImpl)).resolves.toEqual({ ok: false, reason: "bad ref" });
     expect(calls).toHaveLength(0);
+  });
+});
+
+describe("waffo webhook signature", () => {
+  const body = JSON.stringify({ id: "dlv_1", eventType: "order.completed", mode: "test", data: { orderMerchantExternalId: "ts_x" } });
+
+  async function setup() {
+    const pair = await crypto.subtle.generateKey({ name: "RSASSA-PKCS1-v1_5", modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: "SHA-256" }, true, ["sign", "verify"]);
+    const publicKey = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.exportKey("spki", pair.publicKey))));
+    const sign = async (t: number, text = body) => {
+      const sig = await crypto.subtle.sign("RSASSA-PKCS1-v1_5", pair.privateKey, new TextEncoder().encode(`${t}.${text}`));
+      return `t=${t},v1=${btoa(String.fromCharCode(...new Uint8Array(sig)))}`;
+    };
+    return { publicKey, sign };
+  }
+
+  it("accepts a fresh, correctly signed event for this environment", async () => {
+    const { publicKey, sign } = await setup();
+    const now = 1_800_000_000_000;
+    expect((await verifyWebhook({}, body, await sign(now - 1000), now, publicKey)).eventType).toBe("order.completed");
+  });
+
+  it("rejects tampering, stale or missing signatures and the wrong environment", async () => {
+    const { publicKey, sign } = await setup();
+    const now = 1_800_000_000_000;
+    await expect(verifyWebhook({}, body.replace("ts_x", "ts_y"), await sign(now), now, publicKey)).rejects.toThrow(/bad signature/);
+    await expect(verifyWebhook({}, body, await sign(now - 60 * 60 * 1000), now, publicKey)).rejects.toThrow(/stale/);
+    await expect(verifyWebhook({}, body, null, now, publicKey)).rejects.toThrow(/missing/);
+    await expect(verifyWebhook({ WAFFO_ENV: "live" }, body, await sign(now), now, publicKey)).rejects.toThrow(/wrong environment/);
   });
 });

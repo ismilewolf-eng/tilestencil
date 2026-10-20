@@ -141,3 +141,47 @@ export async function checkOrder(env: WaffoEnv, ref: string, fetchImpl: Fetch = 
   }
   return { ok: true, orderId: paid.id ?? ref };
 }
+
+// Waffo's webhook signing keys, as embedded in @waffo/pancake-ts 0.26.0 (same as video-starter).
+const WEBHOOK_KEYS = {
+  test:
+    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxnmRY6yMMA3lVqmAU6ZGb1sjL/+r/z6E+ZjkXaDAKiqOhk9rpazni0bNsGXwmftTPk9jy2wn+j6JHODD/WH/SCnSfvKkLIjy4Hk7BuCgB174C0ydan7J+KgXLkOwgCAxxB68t2tezldwo74ZpXgnF49opzMvQ9prEwIAWOE+kV9iK6gx/AckSMtHIHpUesoPDkldpmFHlB2qpf1vsFTZ5kD6DmGl+2GIVK01aChy2lk8pLv0yUMu18v44sLkO5M44TkGPJD9qG09wrvVG2wpOTVCn1n5pP8P+HRLcgzbUB3OlZVfdFurn6EZwtyL4ZD9kdkQ4EZE/9inKcp3c1h4xwIDAQAB",
+  live:
+    "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz+xApdTIb4ua+DgZKQ54iBsD82ybyhGCLRETONW4Jgbb3A8DUM1LqBk6r/CmTOCHqLalTQHNigvP3R5zkDNXiRJz6gA4MJ/+8K0+mnEE2RISQzN+Qu65TNd6svb+INm/kMaftY4uIXr6y6kchtTJdwnQhcKdAL2v7h7IFnkVelQsKxDdb2PqX8xX/qwd01iXvMcpCCaXovUwZsxH2QN5ZKBTseJivbhUeyJCco4fdUyxOMHe2ybCVhyvim2uxAl1nkvL5L8RCWMCAV55LLo09OhmLahz/DYNu13YLVP6dvIT09ZFBYU6Owj1NxdinTynlJCFS9VYwBgmftosSE1UdwIDAQAB",
+};
+
+const WEBHOOK_TOLERANCE_MS = 45 * 60 * 1000;
+
+export interface WaffoWebhookEvent {
+  id: string;
+  eventType: string;
+  mode: "test" | "prod";
+  data: { orderId?: string; orderMerchantExternalId?: string; productId?: string; amount?: number; currency?: string; orderMetadata?: Record<string, string> };
+}
+
+const bytes = (base64: string) => Uint8Array.from(atob(base64.replace(/-----[^-]+-----|\s/g, "")), (c) => c.charCodeAt(0));
+
+/**
+ * Verify "X-Waffo-Signature: t=<ms>,v1=<base64>" over `${t}.${rawBody}` and that the event
+ * belongs to this environment. Throws on anything wrong. `publicKey` overrides the key (tests).
+ */
+export async function verifyWebhook(env: WaffoEnv, rawBody: string, header: string | null, now = Date.now(), publicKey?: string): Promise<WaffoWebhookEvent> {
+  if (!header) throw new Error("missing signature");
+  let t = "";
+  let v1 = "";
+  for (const pair of header.split(",")) {
+    const at = pair.indexOf("=");
+    if (at === -1) continue;
+    const name = pair.slice(0, at).trim();
+    if (name === "t") t = pair.slice(at + 1).trim();
+    else if (name === "v1") v1 = pair.slice(at + 1).trim();
+  }
+  if (!t || !v1) throw new Error("malformed signature");
+  const age = now - Number(t);
+  if (!Number.isFinite(age) || age > WEBHOOK_TOLERANCE_MS || age < -60_000) throw new Error("stale signature");
+  const key = await crypto.subtle.importKey("spki", bytes(publicKey ?? (waffoTestMode(env) ? WEBHOOK_KEYS.test : WEBHOOK_KEYS.live)), { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" }, false, ["verify"]);
+  if (!(await crypto.subtle.verify("RSASSA-PKCS1-v1_5", key, bytes(v1), new TextEncoder().encode(`${t}.${rawBody}`)))) throw new Error("bad signature");
+  const event = JSON.parse(rawBody) as WaffoWebhookEvent;
+  if ((event.mode === "test") !== waffoTestMode(env)) throw new Error("wrong environment");
+  return event;
+}

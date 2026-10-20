@@ -193,6 +193,12 @@ a {
   text-underline-offset: 4px;
 }
 
+.language-switches {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .topbar nav .language-switch,
 .guide-nav .language-switch,
 .legal-nav .language-switch {
@@ -752,6 +758,8 @@ select {
 
 .page-badge {
   display: inline-flex;
+  flex: none;
+  white-space: nowrap;
   min-height: 28px;
   align-items: center;
   padding: 3px 9px;

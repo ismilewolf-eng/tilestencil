@@ -14,7 +14,7 @@ import {
   type PaperSize,
   type TilePlan,
 } from "@/lib/geometry";
-import { localizedPath, otherLocale, type Locale } from "@/lib/locale";
+import { hasPage, languageLinks, localDecimal, LOCALE_TAG, localizedPath, tr, type Locale, type SiteRoute } from "@/lib/locale";
 import { LetterStencilSource } from "@/components/LetterStencilSource";
 import { loadSvgPaymentConfig, SvgPaywall, type SvgPaymentConfig } from "@/components/SvgPaywall";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -37,10 +37,6 @@ type Status =
   | null;
 
 const supportedTypes = new Set(["image/jpeg", "image/png"]);
-
-function text(locale: Locale, chinese: string, english: string): string {
-  return locale === "en" ? english : chinese;
-}
 
 function cleanNumber(value: number, maximumFractionDigits = 2): string {
   return Number(value.toFixed(maximumFractionDigits)).toString();
@@ -72,29 +68,31 @@ function DisplayPlan({ plan, unit, locale }: { plan: TilePlan; unit: Measurement
   return (
     <dl className="plan-stats">
       <div>
-        <dt>{text(locale, "最终尺寸", "Final size")}</dt>
+        <dt>{tr(locale, "最终尺寸", "Final size")}</dt>
         <dd>
-          {formatMeasurement(plan.targetWidthMm, unit)} × {formatMeasurement(plan.targetHeightMm, unit)}
+          {localDecimal(locale, formatMeasurement(plan.targetWidthMm, unit))} × {localDecimal(locale, formatMeasurement(plan.targetHeightMm, unit))}
         </dd>
       </div>
       <div>
-        <dt>{text(locale, "纸张方向", "Paper orientation")}</dt>
+        <dt>{tr(locale, "纸张方向", "Paper orientation")}</dt>
         <dd>
-          {plan.paper.label} · {plan.orientation === "portrait" ? text(locale, "纵向", "Portrait") : text(locale, "横向", "Landscape")}
+          {plan.paper.label} · {plan.orientation === "portrait" ? tr(locale, "纵向", "Portrait") : tr(locale, "横向", "Landscape")}
         </dd>
       </div>
       <div>
-        <dt>{text(locale, "可打印区域", "Printable area")}</dt>
+        <dt>{tr(locale, "可打印区域", "Printable area")}</dt>
         <dd>
-          {formatMeasurement(plan.printableWidthMm, unit)} × {formatMeasurement(plan.printableHeightMm, unit)}
+          {localDecimal(locale, formatMeasurement(plan.printableWidthMm, unit))} × {localDecimal(locale, formatMeasurement(plan.printableHeightMm, unit))}
         </dd>
       </div>
       <div>
-        <dt>{text(locale, "分页结果", "Tiling result")}</dt>
+        <dt>{tr(locale, "分页结果", "Tiling result")}</dt>
         <dd>
-          {locale === "en"
-            ? `${plan.columns} columns × ${plan.rows} rows · ${plan.tiles.length} pages`
-            : `${plan.columns} 列 × ${plan.rows} 行 · ${plan.tiles.length} 页`}
+          {tr(locale, "{c} 列 × {r} 行 · {n} 页", "{c} columns × {r} rows · {n} pages", {
+            c: plan.columns,
+            r: plan.rows,
+            n: plan.tiles.length,
+          })}
         </dd>
       </div>
     </dl>
@@ -118,7 +116,7 @@ function TilePreview({
         <span className="preview-empty-mark" aria-hidden="true">
           +
         </span>
-        <p>{text(locale, "填写有效尺寸后，这里会显示分页布局。", "Enter a valid size to see the tiling layout here.")}</p>
+        <p>{tr(locale, "填写有效尺寸后，这里会显示分页布局。", "Enter a valid size to see the tiling layout here.")}</p>
       </div>
     );
   }
@@ -128,19 +126,18 @@ function TilePreview({
     <div className="tile-preview-wrap">
       <div className="tile-preview" style={{ aspectRatio: String(ratio) }}>
         {image ? (
-          <img src={displayUrl ?? image.dataUrl} alt={text(locale, `已选择图片：${image.name}`, `Selected image: ${image.name}`)} />
+          <img src={displayUrl ?? image.dataUrl} alt={tr(locale, "已选择图片：{name}", "Selected image: {name}", { name: image.name })} />
         ) : (
           <div className="preview-placeholder">
-            <span>{text(locale, "本地图片预览", "Local image preview")}</span>
+            <span>{tr(locale, "本地图片预览", "Local image preview")}</span>
           </div>
         )}
         <div
           className="tile-grid"
-          aria-label={
-            locale === "en"
-              ? `Tiling preview with ${plan.rows} rows and ${plan.columns} columns`
-              : `${plan.rows} 行 ${plan.columns} 列的分页预览`
-          }
+          aria-label={tr(locale, "{r} 行 {c} 列的分页预览", "Tiling preview with {r} rows and {c} columns", {
+            r: plan.rows,
+            c: plan.columns,
+          })}
         >
           {plan.tiles.map((tile) => (
             <span
@@ -159,8 +156,8 @@ function TilePreview({
         </div>
       </div>
       <div className="preview-ruler" aria-hidden="true">
-        <span>{text(locale, "起点", "Origin")}</span>
-        <span>{text(locale, "末页保留真实边缘尺寸", "Final tiles keep the true remaining edge size")}</span>
+        <span>{tr(locale, "起点", "Origin")}</span>
+        <span>{tr(locale, "末页保留真实边缘尺寸", "Final tiles keep the true remaining edge size")}</span>
       </div>
     </div>
   );
@@ -180,7 +177,57 @@ export type AppDefaults = {
   bridges?: boolean;
   /** Initial bridge width in mm (default 2). */
   bridgeMm?: number;
+  /** Initial paper (default A4); Mexico and most of Latin America print on Letter ("tamaño carta"). */
+  paperSize?: PaperSize;
 };
+
+type NavItem = { route: SiteRoute; zh: string; en: string };
+
+const MAIN_NAV: NavItem[] = [
+  { route: "posterGuide", zh: "分页打印", en: "Print posters" },
+  { route: "stencilGuide", zh: "模板放大", en: "Enlarge stencils" },
+  { route: "patternGuide", zh: "纸样打印", en: "Craft patterns" },
+  { route: "bannerGuide", zh: "横幅大字", en: "Banner letters" },
+  { route: "stainedGlassGuide", zh: "彩色玻璃", en: "Stained glass" },
+  { route: "scrollSawGuide", zh: "木工线锯", en: "Scroll saw" },
+  { route: "privacy", zh: "隐私", en: "Privacy" },
+];
+
+/** Portuguese and Spanish pages (see LOCAL_SLUGS in lib/locale.ts). */
+const LOCAL_NAV: NavItem[] = [
+  { route: "home", zh: "分页打印", en: "Print posters" },
+  { route: "blockpostersAlternative", zh: "Block Posters", en: "Block Posters" },
+  { route: "rasterbatorAlternative", zh: "Rasterbator 替代", en: "Rasterbator alternative" },
+  { route: "photoToStencil", zh: "照片转模板", en: "Photo to stencil" },
+  { route: "letterStencils", zh: "字母模板", en: "Letter stencils" },
+];
+
+type HubCard = { route: SiteRoute; icon: string; title: [string, string]; body: [string, string]; cta: [string, string] };
+
+const HUB_CARDS: HubCard[] = [
+  { route: "photoToStencil", icon: "✂️", title: ["照片转镂空模板", "Photo to Stencil Maker"], body: ["把照片变成可调黑白分界的镂空模板，按真实尺寸分页打印。", "Turn any photo into an adjustable black-and-white stencil and print it at actual size."], cta: ["开始制作 →", "Make a stencil →"] },
+  { route: "pumpkinStencil", icon: "🎃", title: ["南瓜雕刻模板生成器", "Pumpkin Stencil Maker"], body: ["用任意照片做万圣节南瓜雕刻模板，按南瓜实际大小打印。", "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin."], cta: ["制作南瓜模板 →", "Make a pumpkin stencil →"] },
+  { route: "cricutStencil", icon: "✂️", title: ["Cricut 刻字机模板", "Cricut Stencil Maker"], body: ["照片转可切割 SVG，自带连接桥，按毫米标注尺寸。", "Photo to cut-ready SVG with bridges, sized for Cricut and laser cutters."], cta: ["制作 SVG 模板 →", "Make an SVG stencil →"] },
+  { route: "sprayPaintStencil", icon: "🎨", title: ["喷漆模板", "Spray Paint Stencil Maker"], body: ["照片或标志做成喷漆模板，含双层模板做法。", "Photo or logo to a spray paint stencil, including two-layer stencils."], cta: ["制作喷漆模板 →", "Make a spray paint stencil →"] },
+  { route: "woodBurningStencil", icon: "🔥", title: ["烙画图样", "Wood Burning Stencil Maker"], body: ["照片转烙画轮廓，按木板大小打印，附转印方法。", "Photo to pyrography outlines at the size of your board, with transfer methods."], cta: ["制作烙画图样 →", "Make a wood burning pattern →"] },
+  { route: "airbrushStencil", icon: "💨", title: ["喷笔模板", "Airbrush Stencil Maker"], body: ["一键切换正片和负片，做喷笔模板和遮罩。", "Positive and negative airbrush stencils and masks from any image."], cta: ["制作喷笔模板 →", "Make an airbrush stencil →"] },
+  { route: "halloweenStencils", icon: "🎃", title: ["免费万圣节模板", "Free Halloween Stencils"], body: ["南瓜脸、蝙蝠、骷髅、蜘蛛网等，已加连接桥，免费下载 PDF。", "Pumpkin faces, bats, skulls, spider webs and more, with bridges. Free PDF downloads."], cta: ["下载免费模板 →", "Get free stencils →"] },
+  { route: "christmasStencils", icon: "❄️", title: ["免费圣诞模板", "Free Christmas Stencils"], body: ["雪花、星星、圣诞树、驯鹿等，已加连接桥，免费下载 PDF。", "Snowflakes, stars, trees, reindeer and more, with bridges. Free PDF downloads."], cta: ["下载免费模板 →", "Get free stencils →"] },
+  { route: "flowerStencils", icon: "🌼", title: ["免费花朵模板", "Free Flower Stencils"], body: ["雏菊、玫瑰、蝴蝶、叶子等，已加连接桥，免费下载 PDF。", "Daisies, roses, butterflies, leaves and more, with bridges. Free PDF downloads."], cta: ["下载免费模板 →", "Get free stencils →"] },
+  { route: "animalStencils", icon: "🐾", title: ["免费动物模板", "Free Animal Stencils"], body: ["狗、猫、狼、马、独角兽、恐龙等，已加连接桥，免费下载 PDF。", "Dogs, cats, wolves, horses, unicorns, dinosaurs and more. Free PDF downloads."], cta: ["下载免费模板 →", "Get free stencils →"] },
+  { route: "letterStencils", icon: "🔠", title: ["字母模板生成器", "Letter Stencil Generator"], body: ["输入文字，生成任意大小的镂空字母和数字，分页打印。", "Type any word and print stencil letters or numbers at any size across pages."], cta: ["生成字母模板 →", "Make letter stencils →"] },
+  { route: "tattooStencil", icon: "🖋️", title: ["纹身转印模板", "Tattoo Stencil Maker"], body: ["把图案转成清晰线稿，按身体部位的真实尺寸打印。", "Turn a design into a clean stencil and print it at the exact size for the placement."], cta: ["制作纹身模板 →", "Make a tattoo stencil →"] },
+  { route: "posterGuide", icon: "🖼️", title: ["大图分页打印海报", "Multi-Page Poster Printing"], body: ["将高分辨率照片无损拆切为多张 A4/A3 拼接海报，支持自定义重叠与边距。", "Split high-resolution photos across standard A4/A3 sheets for giant wall posters."], cta: ["查看海报教程 →", "Read poster guide →"] },
+  { route: "stencilGuide", icon: "🎨", title: ["墙绘与描摹模板放大", "Wall Stencils & Murals"], body: ["一键转为高对比度黑白线条，方便投影、复写纸描摹与艺术喷涂。", "Generate crisp high-contrast monochrome contours for mural transfers and tracing."], cta: ["查看墙绘教程 →", "Read mural guide →"] },
+  { route: "patternGuide", icon: "📐", title: ["手工皮具与缝纫纸样 1:1 打印", "1:1 Craft & Sewing Patterns"], body: ["严格保留物理毫米精度，杜绝缩放形变，皮具木工开料不出错。", "Preserve exact physical mm scale for leathercraft, sewing blocks, and Cosplay."], cta: ["查看纸样教程 →", "Read pattern guide →"] },
+  { route: "bannerGuide", icon: "🏷️", title: ["派对大字与活动长横幅", "Event Signs & Large Banners"], body: ["横向 A4 快速拼接数米长大字标语与节日条幅，排版省纸更平整。", "Tile multi-meter slogan banners horizontally across standard printer paper."], cta: ["查看横幅教程 →", "Read banner guide →"] },
+  { route: "stainedGlassGuide", icon: "🪟", title: ["彩色玻璃与马赛克拼花纸样", "Stained Glass Patterns"], body: ["精准配合铅条和铜箔框架的 100% 比例线稿输出，十字对齐不跑位。", "Output 100% actual size line art tailored for foil and came assembly."], cta: ["查看玻璃教程 →", "Read stained glass guide →"] },
+  { route: "scrollSawGuide", icon: "🪵", title: ["木工线锯与镂铣图纸等比打印", "Scroll Saw Woodworking"], body: ["直接贴在木料表面进行无形变曲线切割与雕刻，省墨下刀轮廓分明。", "Full-scale adhesive templates for precision scroll sawing and router engraving."], cta: ["查看木工教程 →", "Read scroll saw guide →"] },
+  { route: "rasterbatorAlternative", icon: "⚡", title: ["The Rasterbator 高清替代", "The Rasterbator Alternative"], body: ["无波点网格与像素化杂点，保留原图高清细节，1:1 毫米级厘米尺寸物理切片。", "Tile print large posters with original clarity and zero halftone dot pixelation."], cta: ["查看对比说明 →", "Read comparison →"] },
+  { route: "acrobatAlternative", icon: "🖨️", title: ["免 Adobe Acrobat 多页打印", "Print Without Adobe Acrobat"], body: ["告别昂贵订阅与复杂打印设置，在浏览器免费生成带对齐重叠线的多页 PDF。", "Free visual multi-sheet tiling without paying for Adobe Acrobat Pro."], cta: ["查看免费指南 →", "Read free guide →"] },
+  { route: "blockpostersAlternative", icon: "🖼️", title: ["Blockposters 免费替代", "Blockposters Alternative"], body: ["无页数限制与水印，免费将大图切片为多张 A4/A3 纸打印。", "Free multi-page poster tiling with zero watermarks and no 7-page limit."], cta: ["查看替代说明 →", "Read alternative guide →"] },
+  { route: "a0SewingGuide", icon: "🧵", title: ["A0 服装纸样打印为 A4", "Print A0 Patterns on A4"], body: ["100% 实际大小切片打印 Etsy 电子纸样，带 10x10cm 校准方块。", "Tile large A0 sewing and cosplay patterns at 100% scale on home printers."], cta: ["查看纸样打印 →", "Read sewing guide →"] },
+];
 
 const PREVIEW_MAX_PX = 900;
 /** Working resolution for stencil cleanup; also the resolution of a bridged export. */
@@ -317,6 +364,7 @@ async function renderPreview(
 }
 
 function stencilReport(build: StencilBuild, bridgesOn: boolean, locale: Locale): string {
+  if (locale === "pt-BR" || locale === "es") return stencilReportLocal(build, bridgesOn, locale);
   const en = locale === "en";
   const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
   if (bridgesOn) {
@@ -340,14 +388,44 @@ function stencilReport(build: StencilBuild, bridgesOn: boolean, locale: Locale):
     : `有 ${build.islands} 块（红色）刻完会掉下来。打开连接桥即可保住。`;
 }
 
+function stencilReportLocal(build: StencilBuild, bridgesOn: boolean, locale: "pt-BR" | "es"): string {
+  const pt = locale === "pt-BR";
+  const count = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+  const bridges = (n: number) => (pt ? count(n, "ponte", "pontes") : count(n, "puente", "puentes"));
+  const pieces = (n: number) => (pt ? count(n, "pedaço", "pedaços") : count(n, "pieza", "piezas"));
+  const specks = (n: number) => (pt ? count(n, "pontinho", "pontinhos") : count(n, "puntito", "puntitos"));
+  if (bridgesOn) {
+    if (build.unbridged > 0) {
+      return pt
+        ? `Adicionamos ${bridges(build.bridged)}, mas ${pieces(build.unbridged)} ainda pode${build.unbridged === 1 ? "" : "m"} cair. O fundo está muito carregado: mexa no limite ou recorte a foto só no tema principal.`
+        : `Agregamos ${bridges(build.bridged)}, pero ${pieces(build.unbridged)} todavía se puede${build.unbridged === 1 ? "" : "n"} caer. El fondo tiene demasiado detalle: mueve el umbral o recorta la foto al motivo principal.`;
+    }
+    if (build.bridged === 0 && build.specksRemoved === 0) {
+      return pt ? "Nenhuma parte vai cair. Pronto para cortar." : "No se va a caer ninguna parte. Listo para cortar.";
+    }
+    return pt
+      ? `Adicionamos ${bridges(build.bridged)} e tiramos ${specks(build.specksRemoved)} pequenos demais para cortar.`
+      : `Agregamos ${bridges(build.bridged)} y quitamos ${specks(build.specksRemoved)} demasiado pequeños para cortar.`;
+  }
+  if (build.islands === 0) {
+    return pt ? "Nenhuma parte vai cair ao cortar." : "No se va a caer ninguna parte al cortar.";
+  }
+  return pt
+    ? `${pieces(build.islands)} (em vermelho) ${build.islands === 1 ? "vai" : "vão"} cair ao cortar. Ative as pontes para segurar.`
+    : `${pieces(build.islands)} (en rojo) se caerá${build.islands === 1 ? "" : "n"} al cortar. Activa los puentes para sostenerlas.`;
+}
+
 export function TileStencilApp({
   locale = "zh-CN",
   intro,
   defaults,
   source = "image",
+  route = "home",
   children,
 }: {
   locale?: Locale;
+  /** This page, so the language switch links to the same page in the other languages. */
+  route?: SiteRoute;
   intro?: AppIntro;
   defaults?: AppDefaults;
   /** "text" swaps the photo upload for the stencil lettering generator. */
@@ -360,7 +438,7 @@ export function TileStencilApp({
   const [widthInput, setWidthInput] = useState(String(defaults?.widthCm ?? 30));
   const [heightInput, setHeightInput] = useState(String(defaults?.heightCm ?? 20));
   const [keepAspectRatio, setKeepAspectRatio] = useState(true);
-  const [paperSize, setPaperSize] = useState<PaperSize>("a4");
+  const [paperSize, setPaperSize] = useState<PaperSize>(defaults?.paperSize ?? "a4");
   const [orientation, setOrientation] = useState<PageOrientation>("portrait");
   const [marginInput, setMarginInput] = useState("0.8");
   const [overlapInput, setOverlapInput] = useState("0.5");
@@ -384,8 +462,9 @@ export function TileStencilApp({
   const [status, setStatus] = useState<Status>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
-  const alternateLocale = otherLocale(locale);
-  const t = (chinese: string, english: string) => text(locale, chinese, english);
+  const t = (chinese: string, english: string, vars?: Record<string, string | number>) => tr(locale, chinese, english, vars);
+  // Portuguese and Spanish have a handful of pages; their nav and project cards only list those.
+  const localOnly = locale === "pt-BR" || locale === "es";
 
   const planResult = useMemo(() => {
     try {
@@ -623,10 +702,11 @@ export function TileStencilApp({
     window.setTimeout(() => URL.revokeObjectURL(url), 10000);
     setStatus({
       kind: "success",
-      message:
-        locale === "en"
-          ? `SVG ready: ${trace.loops} cut paths at ${cleanNumber(planResult.plan.targetWidthMm / 10)} × ${cleanNumber(planResult.plan.targetHeightMm / 10)} cm.`
-          : `SVG 已生成：${trace.loops} 条切割路径，尺寸 ${cleanNumber(planResult.plan.targetWidthMm / 10)} × ${cleanNumber(planResult.plan.targetHeightMm / 10)} 厘米。`,
+      message: t("SVG 已生成：{paths} 条切割路径，尺寸 {w} × {h} 厘米。", "SVG ready: {paths} cut paths at {w} × {h} cm.", {
+        paths: trace.loops,
+        w: cleanNumber(planResult.plan.targetWidthMm / 10),
+        h: cleanNumber(planResult.plan.targetHeightMm / 10),
+      }),
     });
   }
 
@@ -653,7 +733,7 @@ export function TileStencilApp({
         onProgress: (completed, total) => {
           setStatus({
             kind: "progress",
-            message: locale === "en" ? `Generating page ${completed}/${total}…` : `正在生成第 ${completed}/${total} 页…`,
+            message: t("正在生成第 {done}/{total} 页…", "Generating page {done}/{total}…", { done: completed, total }),
           });
         },
       });
@@ -698,16 +778,18 @@ export function TileStencilApp({
           <span>TileStencil</span>
         </Link>
         <nav aria-label={t("主导航", "Main navigation")}>
-          <Link href={localizedPath(locale, "posterGuide")}>{t("分页打印", "Print posters")}</Link>
-          <Link href={localizedPath(locale, "stencilGuide")}>{t("模板放大", "Enlarge stencils")}</Link>
-          <Link href={localizedPath(locale, "patternGuide")}>{t("纸样打印", "Craft patterns")}</Link>
-          <Link href={localizedPath(locale, "bannerGuide")}>{t("横幅大字", "Banner letters")}</Link>
-          <Link href={localizedPath(locale, "stainedGlassGuide")}>{t("彩色玻璃", "Stained glass")}</Link>
-          <Link href={localizedPath(locale, "scrollSawGuide")}>{t("木工线锯", "Scroll saw")}</Link>
-          <Link href={localizedPath(locale, "privacy")}>{t("隐私", "Privacy")}</Link>
-          <Link className="language-switch" href={localizedPath(alternateLocale, "home")}>
-            {alternateLocale === "en" ? "English" : "中文"}
-          </Link>
+          {(localOnly ? LOCAL_NAV : MAIN_NAV).map((item) => (
+            <Link key={item.route} href={localizedPath(locale, item.route)}>
+              {t(item.zh, item.en)}
+            </Link>
+          ))}
+          <span className="language-switches">
+            {languageLinks(locale, route).map((link) => (
+              <Link key={link.locale} className="language-switch" href={link.href} hrefLang={link.locale} lang={link.locale}>
+                {link.label}
+              </Link>
+            ))}
+          </span>
         </nav>
       </header>
 
@@ -791,7 +873,7 @@ export function TileStencilApp({
                     <div>
                       <strong title={image.name}>{image.name}</strong>
                       <span>
-                        {image.widthPx.toLocaleString(locale === "en" ? "en-US" : "zh-CN")} × {image.heightPx.toLocaleString(locale === "en" ? "en-US" : "zh-CN")} px
+                        {image.widthPx.toLocaleString(LOCALE_TAG[locale])} × {image.heightPx.toLocaleString(LOCALE_TAG[locale])} px
                       </span>
                     </div>
                     <label className="secondary-button" htmlFor="image-upload">
@@ -819,7 +901,7 @@ export function TileStencilApp({
                         className="preset-pill"
                         onClick={() => applyPreset(preset)}
                       >
-                        {locale === "en" ? preset.label.en : preset.label.zh}
+                        {t(preset.label.zh, preset.label.en)}
                       </button>
                     ))}
                   </div>
@@ -881,7 +963,7 @@ export function TileStencilApp({
                   <select value={paperSize} onChange={(event) => setPaperSize(event.target.value as PaperSize)}>
                     <option value="a4">A4 · 210 × 297 mm</option>
                     <option value="a3">A3 · 297 × 420 mm</option>
-                    <option value="letter">US Letter · 8.5 × 11 in</option>
+                    <option value="letter">{t("US Letter · 8.5 × 11 in", "US Letter · 8.5 × 11 in")}</option>
                   </select>
                 </label>
                 <fieldset className="radio-fieldset">
@@ -918,7 +1000,7 @@ export function TileStencilApp({
                 </label>
               </div>
               <p className="paper-footnote">
-                {locale === "en" ? "Current paper:" : "当前纸张："} {cleanNumber(paper.widthMm)} × {cleanNumber(paper.heightMm)} mm{locale === "en" ? "." : "。"}
+                {t("当前纸张：{w} × {h} mm。", "Current paper: {w} × {h} mm.", { w: cleanNumber(paper.widthMm), h: cleanNumber(paper.heightMm) })}
               </p>
             </section>
 
@@ -1008,7 +1090,7 @@ export function TileStencilApp({
                   <p className="section-kicker">{t("分页预览", "TILING PREVIEW")}</p>
                   <h2>{t("这会是你的拼接顺序", "This will be your assembly order")}</h2>
                 </div>
-                {planResult.plan ? <span className="page-badge">{locale === "en" ? `${planResult.plan.tiles.length} pages` : `${planResult.plan.tiles.length} 页`}</span> : null}
+                {planResult.plan ? <span className="page-badge">{t("{n} 页", "{n} pages", { n: planResult.plan.tiles.length })}</span> : null}
               </div>
               <TilePreview image={image} displayUrl={previewUrl} plan={planResult.plan} locale={locale} />
               {planResult.plan ? <DisplayPlan plan={planResult.plan} unit={unit} locale={locale} /> : null}
@@ -1044,7 +1126,7 @@ export function TileStencilApp({
                   disabled={!image || !planResult.plan || !stencilBuild || !svgPayment}
                 >
                   {t("导出 SVG（刻字机 / 激光切割）", "Export SVG for Cricut / laser cutters")}
-                  {svgPayment?.paid === true && unlockedImage !== image ? ` · $${svgPayment.price}` : ""}
+                  {svgPayment?.paid === true && unlockedImage !== image ? t(" · ${price}", " · ${price}", { price: svgPayment.price }) : ""}
                 </button>
               ) : null}
               {paywallOpen && svgPayment?.paid === true ? (
@@ -1083,138 +1165,14 @@ export function TileStencilApp({
             </p>
           </div>
           <div className="guides-hub-grid">
-            <Link className="guide-card" href={localizedPath(locale, "photoToStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">✂️</span>
-              <h3>{t("照片转镂空模板", "Photo to Stencil Maker")}</h3>
-              <p>{t("把照片变成可调黑白分界的镂空模板，按真实尺寸分页打印。", "Turn any photo into an adjustable black-and-white stencil and print it at actual size.")}</p>
-              <span className="guide-card-cta">{t("开始制作 →", "Make a stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "pumpkinStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">🎃</span>
-              <h3>{t("南瓜雕刻模板生成器", "Pumpkin Stencil Maker")}</h3>
-              <p>{t("用任意照片做万圣节南瓜雕刻模板，按南瓜实际大小打印。", "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.")}</p>
-              <span className="guide-card-cta">{t("制作南瓜模板 →", "Make a pumpkin stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "cricutStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">✂️</span>
-              <h3>{t("Cricut 刻字机模板", "Cricut Stencil Maker")}</h3>
-              <p>{t("照片转可切割 SVG，自带连接桥，按毫米标注尺寸。", "Photo to cut-ready SVG with bridges, sized for Cricut and laser cutters.")}</p>
-              <span className="guide-card-cta">{t("制作 SVG 模板 →", "Make an SVG stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "sprayPaintStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">🎨</span>
-              <h3>{t("喷漆模板", "Spray Paint Stencil Maker")}</h3>
-              <p>{t("照片或标志做成喷漆模板，含双层模板做法。", "Photo or logo to a spray paint stencil, including two-layer stencils.")}</p>
-              <span className="guide-card-cta">{t("制作喷漆模板 →", "Make a spray paint stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "woodBurningStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">🔥</span>
-              <h3>{t("烙画图样", "Wood Burning Stencil Maker")}</h3>
-              <p>{t("照片转烙画轮廓，按木板大小打印，附转印方法。", "Photo to pyrography outlines at the size of your board, with transfer methods.")}</p>
-              <span className="guide-card-cta">{t("制作烙画图样 →", "Make a wood burning pattern →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "airbrushStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">💨</span>
-              <h3>{t("喷笔模板", "Airbrush Stencil Maker")}</h3>
-              <p>{t("一键切换正片和负片，做喷笔模板和遮罩。", "Positive and negative airbrush stencils and masks from any image.")}</p>
-              <span className="guide-card-cta">{t("制作喷笔模板 →", "Make an airbrush stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "halloweenStencils")}>
-              <span className="guide-card-icon" aria-hidden="true">🎃</span>
-              <h3>{t("免费万圣节模板", "Free Halloween Stencils")}</h3>
-              <p>{t("南瓜脸、蝙蝠、骷髅、蜘蛛网等，已加连接桥，免费下载 PDF。", "Pumpkin faces, bats, skulls, spider webs and more, with bridges. Free PDF downloads.")}</p>
-              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "christmasStencils")}>
-              <span className="guide-card-icon" aria-hidden="true">❄️</span>
-              <h3>{t("免费圣诞模板", "Free Christmas Stencils")}</h3>
-              <p>{t("雪花、星星、圣诞树、驯鹿等，已加连接桥，免费下载 PDF。", "Snowflakes, stars, trees, reindeer and more, with bridges. Free PDF downloads.")}</p>
-              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "flowerStencils")}>
-              <span className="guide-card-icon" aria-hidden="true">🌼</span>
-              <h3>{t("免费花朵模板", "Free Flower Stencils")}</h3>
-              <p>{t("雏菊、玫瑰、蝴蝶、叶子等，已加连接桥，免费下载 PDF。", "Daisies, roses, butterflies, leaves and more, with bridges. Free PDF downloads.")}</p>
-              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "animalStencils")}>
-              <span className="guide-card-icon" aria-hidden="true">🐾</span>
-              <h3>{t("免费动物模板", "Free Animal Stencils")}</h3>
-              <p>{t("狗、猫、狼、马、独角兽、恐龙等，已加连接桥，免费下载 PDF。", "Dogs, cats, wolves, horses, unicorns, dinosaurs and more. Free PDF downloads.")}</p>
-              <span className="guide-card-cta">{t("下载免费模板 →", "Get free stencils →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "letterStencils")}>
-              <span className="guide-card-icon" aria-hidden="true">🔠</span>
-              <h3>{t("字母模板生成器", "Letter Stencil Generator")}</h3>
-              <p>{t("输入文字，生成任意大小的镂空字母和数字，分页打印。", "Type any word and print stencil letters or numbers at any size across pages.")}</p>
-              <span className="guide-card-cta">{t("生成字母模板 →", "Make letter stencils →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "tattooStencil")}>
-              <span className="guide-card-icon" aria-hidden="true">🖋️</span>
-              <h3>{t("纹身转印模板", "Tattoo Stencil Maker")}</h3>
-              <p>{t("把图案转成清晰线稿，按身体部位的真实尺寸打印。", "Turn a design into a clean stencil and print it at the exact size for the placement.")}</p>
-              <span className="guide-card-cta">{t("制作纹身模板 →", "Make a tattoo stencil →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "posterGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🖼️</span>
-              <h3>{t("大图分页打印海报", "Multi-Page Poster Printing")}</h3>
-              <p>{t("将高分辨率照片无损拆切为多张 A4/A3 拼接海报，支持自定义重叠与边距。", "Split high-resolution photos across standard A4/A3 sheets for giant wall posters.")}</p>
-              <span className="guide-card-cta">{t("查看海报教程 →", "Read poster guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "stencilGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🎨</span>
-              <h3>{t("墙绘与描摹模板放大", "Wall Stencils & Murals")}</h3>
-              <p>{t("一键转为高对比度黑白线条，方便投影、复写纸描摹与艺术喷涂。", "Generate crisp high-contrast monochrome contours for mural transfers and tracing.")}</p>
-              <span className="guide-card-cta">{t("查看墙绘教程 →", "Read mural guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "patternGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">📐</span>
-              <h3>{t("手工皮具与缝纫纸样 1:1 打印", "1:1 Craft & Sewing Patterns")}</h3>
-              <p>{t("严格保留物理毫米精度，杜绝缩放形变，皮具木工开料不出错。", "Preserve exact physical mm scale for leathercraft, sewing blocks, and Cosplay.")}</p>
-              <span className="guide-card-cta">{t("查看纸样教程 →", "Read pattern guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "bannerGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🏷️</span>
-              <h3>{t("派对大字与活动长横幅", "Event Signs & Large Banners")}</h3>
-              <p>{t("横向 A4 快速拼接数米长大字标语与节日条幅，排版省纸更平整。", "Tile multi-meter slogan banners horizontally across standard printer paper.")}</p>
-              <span className="guide-card-cta">{t("查看横幅教程 →", "Read banner guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "stainedGlassGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🪟</span>
-              <h3>{t("彩色玻璃与马赛克拼花纸样", "Stained Glass Patterns")}</h3>
-              <p>{t("精准配合铅条和铜箔框架的 100% 比例线稿输出，十字对齐不跑位。", "Output 100% actual size line art tailored for foil and came assembly.")}</p>
-              <span className="guide-card-cta">{t("查看玻璃教程 →", "Read stained glass guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "scrollSawGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🪵</span>
-              <h3>{t("木工线锯与镂铣图纸等比打印", "Scroll Saw Woodworking")}</h3>
-              <p>{t("直接贴在木料表面进行无形变曲线切割与雕刻，省墨下刀轮廓分明。", "Full-scale adhesive templates for precision scroll sawing and router engraving.")}</p>
-              <span className="guide-card-cta">{t("查看木工教程 →", "Read scroll saw guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "rasterbatorAlternative")}>
-              <span className="guide-card-icon" aria-hidden="true">⚡</span>
-              <h3>{t("The Rasterbator 高清替代", "The Rasterbator Alternative")}</h3>
-              <p>{t("无波点网格与像素化杂点，保留原图高清细节，1:1 毫米级厘米尺寸物理切片。", "Tile print large posters with original clarity and zero halftone dot pixelation.")}</p>
-              <span className="guide-card-cta">{t("查看对比说明 →", "Read comparison →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "acrobatAlternative")}>
-              <span className="guide-card-icon" aria-hidden="true">🖨️</span>
-              <h3>{t("免 Adobe Acrobat 多页打印", "Print Without Adobe Acrobat")}</h3>
-              <p>{t("告别昂贵订阅与复杂打印设置，在浏览器免费生成带对齐重叠线的多页 PDF。", "Free visual multi-sheet tiling without paying for Adobe Acrobat Pro.")}</p>
-              <span className="guide-card-cta">{t("查看免费指南 →", "Read free guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "blockpostersAlternative")}>
-              <span className="guide-card-icon" aria-hidden="true">🖼️</span>
-              <h3>{t("Blockposters 免费替代", "Blockposters Alternative")}</h3>
-              <p>{t("无页数限制与水印，免费将大图切片为多张 A4/A3 纸打印。", "Free multi-page poster tiling with zero watermarks and no 7-page limit.")}</p>
-              <span className="guide-card-cta">{t("查看替代说明 →", "Read alternative guide →")}</span>
-            </Link>
-            <Link className="guide-card" href={localizedPath(locale, "a0SewingGuide")}>
-              <span className="guide-card-icon" aria-hidden="true">🧵</span>
-              <h3>{t("A0 服装纸样打印为 A4", "Print A0 Patterns on A4")}</h3>
-              <p>{t("100% 实际大小切片打印 Etsy 电子纸样，带 10x10cm 校准方块。", "Tile large A0 sewing and cosplay patterns at 100% scale on home printers.")}</p>
-              <span className="guide-card-cta">{t("查看纸样打印 →", "Read sewing guide →")}</span>
-            </Link>
+            {HUB_CARDS.filter((card) => !localOnly || hasPage(locale, card.route)).map((card) => (
+              <Link className="guide-card" href={localizedPath(locale, card.route)} key={card.route}>
+                <span className="guide-card-icon" aria-hidden="true">{card.icon}</span>
+                <h3>{t(...card.title)}</h3>
+                <p>{t(...card.body)}</p>
+                <span className="guide-card-cta">{t(...card.cta)}</span>
+              </Link>
+            ))}
           </div>
         </section>
       </main>

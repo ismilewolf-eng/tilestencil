@@ -95,7 +95,7 @@ export default function EnglishLetterStencilsPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} source="text" defaults={{ renderMode: "template", widthCm: 60, heightCm: 20 }}>
+      <TileStencilApp route="letterStencils" locale="en" intro={intro} source="text" defaults={{ renderMode: "template", widthCm: 60, heightCm: 20 }}>
         <article className="app-guide">
           <h2>Letter stencils without downloading a whole alphabet</h2>
           <p>

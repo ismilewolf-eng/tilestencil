@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Locale } from "@/lib/locale";
+import { tr, type Locale } from "@/lib/locale";
 import type { ExportImage } from "@/lib/pdf-export";
 
 /** Open Font License stencil faces, self-hosted in /public/fonts (licences alongside). */
@@ -90,10 +90,11 @@ export function LetterStencilSource({
   locale: Locale;
   onImage: (image: ExportImage | null) => void;
 }) {
-  const [text, setText] = useState("HELLO");
+  // A sample word in the reader's language, without accents the stencil fonts may lack.
+  const [text, setText] = useState(locale === "pt-BR" ? "FESTA" : locale === "es" ? "FIESTA" : "HELLO");
   const [fontId, setFontId] = useState<StencilFontId>("stardos");
   const [error, setError] = useState<string | null>(null);
-  const t = (chinese: string, english: string) => (locale === "en" ? english : chinese);
+  const t = (chinese: string, english: string, vars?: Record<string, string | number>) => tr(locale, chinese, english, vars);
 
   useEffect(() => {
     // Load every face once so the font picker previews render in the real typeface.
@@ -137,8 +138,9 @@ export function LetterStencilSource({
         />
         <small>
           {t(
-            `最多 ${MAX_CHARS} 个字符、4 行。模板字体只含拉丁字母和数字。`,
-            `Up to ${MAX_CHARS} characters and 4 lines. Stencil fonts cover Latin letters, numbers, and common punctuation.`,
+            "最多 {max} 个字符、4 行。模板字体只含拉丁字母和数字。",
+            "Up to {max} characters and 4 lines. Stencil fonts cover Latin letters, numbers, and common punctuation.",
+            { max: MAX_CHARS },
           )}
         </small>
       </label>

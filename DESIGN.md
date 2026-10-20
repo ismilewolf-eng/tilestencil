@@ -44,3 +44,10 @@ Inputs use a single column on compact screens. The tile preview scrolls horizont
 ## 9. Motion philosophy
 
 Use only brief opacity/transform feedback (100–180ms) for buttons, status changes, and drag-over state. Respect `prefers-reduced-motion`; never use `transition: all`.
+
+## Languages (2026-10-21)
+
+- Chinese and English cover every page. Brazilian Portuguese (`/pt`) and Latin American Spanish (`/es`) cover five pages each, listed in `LOCAL_SLUGS` (lib/locale.ts); their nav, project cards and footer only show those pages, and policies link to the English versions marked "(em inglês)" / "(en inglés)".
+- Components pass Chinese and English to `tr()`; Portuguese and Spanish come from `lib/i18n/pt.ts` and `es.ts`, keyed by the English text. `tests/i18n.test.ts` fails when a string has no translation.
+- Language switch: one pill per other language the page exists in (`.language-switches`).
+- Spanish defaults to Letter paper ("tamaño carta", Mexico); Brazil writes decimals with a comma and prices as "US$ 1,99".

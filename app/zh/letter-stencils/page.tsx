@@ -57,7 +57,7 @@ export default function ChineseLetterStencilsPage() {
     <>
       <HowToJsonLd name="如何在家打印大号字母模板" description="生成任意大小的镂空字母，并按真实尺寸分页打印。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} source="text" defaults={{ renderMode: "template", widthCm: 60, heightCm: 20 }}>
+      <TileStencilApp route="letterStencils" locale="zh-CN" intro={intro} source="text" defaults={{ renderMode: "template", widthCm: 60, heightCm: 20 }}>
         <article className="app-guide">
           <h2>常见用途</h2>
           <ul>

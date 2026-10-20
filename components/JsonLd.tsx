@@ -1,14 +1,32 @@
-import type { Locale } from "@/lib/locale";
+import { absoluteLocalizedPath, LOCALE_TAG, type Locale } from "@/lib/locale";
 import { SITE_URL } from "@/lib/site";
 
+/** Portuguese and Spanish homepage descriptions; other fields stay English for them. */
+const LOCAL_APP: Partial<Record<Locale, { names: string[]; description: string; site: string }>> = {
+  "pt-BR": {
+    names: ["Imprimir imagem em várias folhas", "Pôster em folhas A4"],
+    description:
+      "Ferramenta grátis no navegador para dividir uma imagem JPG ou PNG em várias folhas A4, A3 ou Carta no tamanho real, com marcas de corte e sobreposição. A imagem não é enviada para nenhum servidor.",
+    site: "Ferramenta grátis para imprimir imagens grandes em várias folhas A4, A3 ou Carta, no tamanho real.",
+  },
+  es: {
+    names: ["Imprimir imagen en varias hojas", "Block poster gratis"],
+    description:
+      "Herramienta gratis en el navegador para dividir una imagen JPG o PNG en varias hojas A4, A3 o Carta a tamaño real, con marcas de corte y solapamiento. La imagen no se sube a ningún servidor.",
+    site: "Herramienta gratis para imprimir imágenes grandes en varias hojas A4, A3 o Carta, a tamaño real.",
+  },
+};
+
 export function WebApplicationJsonLd({ locale }: { locale: Locale }) {
-  const isEn = locale === "en";
+  const isEn = locale !== "zh-CN";
+  const local = LOCAL_APP[locale];
   const data = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "TileStencil",
-    alternateName: isEn ? ["Tile Stencil", "Tile Print Tool", "Multi-Page Poster Printer"] : ["图片分页打印工具", "A4拼接海报生成器"],
-    url: isEn ? SITE_URL : `${SITE_URL}/zh`,
+    alternateName: local?.names ?? (isEn ? ["Tile Stencil", "Tile Print Tool", "Multi-Page Poster Printer"] : ["图片分页打印工具", "A4拼接海报生成器"]),
+    url: absoluteLocalizedPath(locale, "home"),
+    inLanguage: LOCALE_TAG[locale],
     applicationCategory: "DesignApplication",
     applicationSubCategory: "Printing & Imaging",
     operatingSystem: "All",
@@ -22,9 +40,9 @@ export function WebApplicationJsonLd({ locale }: { locale: Locale }) {
     license: "https://opensource.org/licenses/MIT",
     citation: `${SITE_URL}/llms.txt`,
     softwareVersion: "1.0.0",
-    description: isEn
+    description: local?.description ?? (isEn
       ? "Free browser-based multi-page poster and stencil printer. Split JPG and PNG images across multiple A4, A3, or US Letter pages at 100% actual physical size with alignment marks and tile overlap."
-      : "在浏览器本地把 JPG 或 PNG 按真实尺寸拆成 A4、A3 或 US Letter 多页 PDF，带页码、裁切标记和拼接提示。图片不会上传。",
+      : "在浏览器本地把 JPG 或 PNG 按真实尺寸拆成 A4、A3 或 US Letter 多页 PDF，带页码、裁切标记和拼接提示。图片不会上传。"),
     featureList: isEn
       ? [
           "Browser-local client-side image processing",
@@ -55,16 +73,17 @@ export function WebApplicationJsonLd({ locale }: { locale: Locale }) {
 }
 
 export function WebSiteJsonLd({ locale }: { locale: Locale }) {
-  const isEn = locale === "en";
+  const isEn = locale !== "zh-CN";
+  const local = LOCAL_APP[locale];
   const data = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "TileStencil",
-    url: isEn ? SITE_URL : `${SITE_URL}/zh`,
-    inLanguage: isEn ? "en-US" : "zh-CN",
-    description: isEn
+    url: absoluteLocalizedPath(locale, "home"),
+    inLanguage: LOCALE_TAG[locale],
+    description: local?.site ?? (isEn
       ? "Free online multi-page poster and stencil printing tool for A4, A3, and Letter sheets."
-      : "免费在线大图分页打印与 1:1 物理尺寸拼接工具。",
+      : "免费在线大图分页打印与 1:1 物理尺寸拼接工具。"),
   };
 
   return (

@@ -98,7 +98,7 @@ export default function EnglishPhotoToStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
+      <TileStencilApp route="photoToStencil" locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
           <StencilExampleSection locale="en" name="photo-to-stencil" />
           <h2>What this stencil maker does</h2>

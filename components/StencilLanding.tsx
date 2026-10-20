@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import { FaqJsonLd, HowToJsonLd } from "@/components/JsonLd";
 import { TileStencilApp, type AppDefaults, type AppIntro } from "@/components/TileStencilApp";
+import { QuickAnswer } from "@/components/QuickAnswer";
 import { StencilExampleSection } from "@/components/StencilExample";
 import type { ExampleKey } from "@/lib/examples";
-import type { Locale } from "@/lib/locale";
+import { tr, type Locale, type SiteRoute } from "@/lib/locale";
 
 export type LandingSection = { heading: string; body?: ReactNode; items?: ReactNode[] };
 export type FaqItem = { question: string; answer: string };
@@ -19,8 +20,16 @@ export function StencilLanding({
   sections,
   faqItems,
   example,
+  route,
+  source,
+  quick,
 }: {
   locale: Locale;
+  route?: SiteRoute;
+  /** "text" for the lettering generator instead of a photo upload. */
+  source?: "image" | "text";
+  /** Direct answer shown first (see QuickAnswer). */
+  quick?: { heading: string; paragraphs: ReactNode[] };
   intro: AppIntro;
   defaults: AppDefaults;
   howToName: string;
@@ -34,8 +43,15 @@ export function StencilLanding({
     <>
       <HowToJsonLd name={howToName} description={howToDescription} steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale={locale} intro={intro} defaults={defaults}>
+      <TileStencilApp locale={locale} intro={intro} defaults={defaults} route={route} source={source}>
         <article className="app-guide">
+          {quick ? (
+            <QuickAnswer heading={quick.heading}>
+              {quick.paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </QuickAnswer>
+          ) : null}
           {example ? <StencilExampleSection locale={locale} name={example} /> : null}
           {sections.map((section) => (
             <section key={section.heading}>
@@ -50,7 +66,7 @@ export function StencilLanding({
               ) : null}
             </section>
           ))}
-          <h2>{locale === "en" ? "Frequently asked questions" : "常见问题"}</h2>
+          <h2>{tr(locale, "常见问题", "Frequently asked questions")}</h2>
           {faqItems.map((item) => (
             <div className="guide-faq-item" key={item.question}>
               <h3 className="guide-faq-question">{item.question}</h3>

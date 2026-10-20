@@ -15,7 +15,7 @@ export async function onRequestPost({ env, request }: Context): Promise<Response
     const session = await createCheckout(env, {
       source: sanitizeCustomId(body.source),
       returnUrl: new URL("/payment-complete", request.url).toString(),
-      language: body.locale === "en" ? "en" : "zh-Hans",
+      language: body.locale === "zh-CN" ? "zh-Hans" : "en",
     });
     return Response.json(session, { headers: { "cache-control": "no-store" } });
   } catch (error) {

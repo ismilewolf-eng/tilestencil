@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PaymentMarks } from "@/components/PaymentMarks";
 import { readFirstTouch, sourceTag } from "@/lib/attribution";
-import type { Locale } from "@/lib/locale";
+import { tr, type Locale } from "@/lib/locale";
 
 export type SvgPaymentConfig =
   | { paid: false }
@@ -81,7 +81,7 @@ export function SvgPaywall({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [message, setMessage] = useState<string | null>(null);
-  const t = (zh: string, en: string) => (locale === "en" ? en : zh);
+  const t = (zh: string, en: string, vars?: Record<string, string | number>) => tr(locale, zh, en, vars);
   const waffo = useWaffoCheckout(locale, onPaid);
 
   useEffect(() => {
@@ -132,7 +132,7 @@ export function SvgPaywall({
   return (
     <div className="svg-paywall" role="dialog" aria-label={t("购买 SVG", "Buy SVG")}>
       <p className="svg-paywall-title">
-        <strong>{t(`可切割 SVG · $${config.price}`, `Cut-ready SVG · $${config.price}`)}</strong>
+        <strong>{t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: config.price })}</strong>
         <button type="button" className="text-button" onClick={onClose}>
           {t("关闭", "Close")}
         </button>
@@ -210,7 +210,7 @@ const POLL_LIMIT_MS = 45 * 60 * 1000;
  * poll our server until Waffo reports the order as paid.
  */
 function useWaffoCheckout(locale: Locale, onPaid: (orderId: string) => void) {
-  const t = (zh: string, en: string) => (locale === "en" ? en : zh);
+  const t = (zh: string, en: string, vars?: Record<string, string | number>) => tr(locale, zh, en, vars);
   const [state, setState] = useState<WaffoState>({ kind: "idle" });
   const paidRef = useRef(onPaid);
   paidRef.current = onPaid;

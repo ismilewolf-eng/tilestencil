@@ -62,7 +62,7 @@ export default function ChinesePhotoToStencilPage() {
     <>
       <HowToJsonLd name="如何把照片做成可打印的镂空模板" description="把照片转成黑白镂空模板，并按真实尺寸分页打印。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
+      <TileStencilApp route="photoToStencil" locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 40, heightCm: 30 }}>
         <article className="app-guide">
           <StencilExampleSection locale="zh-CN" name="photo-to-stencil" />
           <h2>做出干净模板的几个要点</h2>

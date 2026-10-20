@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { localizedPath, otherLocale, type Locale, type SiteRoute } from "@/lib/locale";
+import { languageLinks, localizedPath, tr, type Locale, type SiteRoute } from "@/lib/locale";
 import { SiteFooter } from "@/components/SiteFooter";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { absoluteLocalizedPath } from "@/lib/locale";
@@ -14,12 +14,9 @@ type GuideShellProps = {
   children: ReactNode;
 };
 
-function text(locale: Locale, chinese: string, english: string): string {
-  return locale === "en" ? english : chinese;
-}
+const text = tr;
 
 export function GuideShell({ locale, route, kicker, title, lead, children }: GuideShellProps) {
-  const alternateLocale = otherLocale(locale);
   const homeUrl = absoluteLocalizedPath(locale, "home");
   const currentUrl = absoluteLocalizedPath(locale, route);
 
@@ -51,9 +48,13 @@ export function GuideShell({ locale, route, kicker, title, lead, children }: Gui
           <Link href={localizedPath(locale, "bannerGuide")}>{text(locale, "横幅大字", "Banner letters")}</Link>
           <Link href={localizedPath(locale, "stainedGlassGuide")}>{text(locale, "彩色玻璃", "Stained glass")}</Link>
           <Link href={localizedPath(locale, "scrollSawGuide")}>{text(locale, "木工线锯", "Scroll saw")}</Link>
-          <Link className="language-switch" href={localizedPath(alternateLocale, route)}>
-            {alternateLocale === "en" ? "English" : "中文"}
-          </Link>
+          <span className="language-switches">
+            {languageLinks(locale, route).map((link) => (
+              <Link key={link.locale} className="language-switch" href={link.href} hrefLang={link.locale} lang={link.locale}>
+                {link.label}
+              </Link>
+            ))}
+          </span>
         </nav>
       </header>
 

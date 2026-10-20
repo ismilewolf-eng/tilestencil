@@ -61,6 +61,8 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 ## Alternative Language Endpoints
 
 - Simplified Chinese (`zh-CN`): Available under `https://tilestencil.com/zh` (e.g. `https://tilestencil.com/zh/print-pattern-actual-size`).
+- Brazilian Portuguese (`pt-BR`), five pages: [Imprimir imagem em várias folhas A4](https://tilestencil.com/pt), [Alternativa ao Rasterbator](https://tilestencil.com/pt/alternativa-ao-rasterbator), [Block Posters grátis](https://tilestencil.com/pt/block-posters-gratis), [Estêncil de foto](https://tilestencil.com/pt/estencil-de-foto), [Moldes de letras para imprimir](https://tilestencil.com/pt/moldes-de-letras).
+- Spanish for Latin America (`es`, Letter paper by default), five pages: [Imprimir imagen en varias hojas](https://tilestencil.com/es), [Block posters gratis](https://tilestencil.com/es/block-posters-gratis) (also for piñata patterns), [Alternativa a Rasterbator](https://tilestencil.com/es/alternativa-a-rasterbator), [Stencil de una foto](https://tilestencil.com/es/stencil-de-foto), [Plantillas de letras para imprimir](https://tilestencil.com/es/plantillas-de-letras).
 
 ## Canonical Links
 

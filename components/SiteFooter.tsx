@@ -1,12 +1,30 @@
 import Link from "next/link";
-import { localizedPath, type Locale } from "@/lib/locale";
+import { localizedPath, tr, type Locale } from "@/lib/locale";
 
 type SiteFooterProps = {
   locale: Locale;
 };
 
-function text(locale: Locale, chinese: string, english: string): string {
-  return locale === "en" ? english : chinese;
+const text = tr;
+
+function LocalFooterLinks({ locale }: { locale: "pt-BR" | "es" }) {
+  const t = (chinese: string, english: string) => tr(locale, chinese, english);
+  return (
+    <div className="footer-links">
+      <Link href={localizedPath(locale, "home")}>{t("开始制作", "Start creating")}</Link>
+      <Link href={localizedPath(locale, "blockpostersAlternative")}>Block Posters</Link>
+      <Link href={localizedPath(locale, "rasterbatorAlternative")}>{t("Rasterbator替代", "Rasterbator Alternative")}</Link>
+      <Link href={localizedPath(locale, "photoToStencil")}>{t("照片转模板", "Photo to Stencil")}</Link>
+      <Link href={localizedPath(locale, "letterStencils")}>{t("字母模板", "Letter Stencils")}</Link>
+      <Link href={localizedPath("en", "pricing")} hrefLang="en">{t("价格", "Pricing (English)")}</Link>
+      <Link href={localizedPath("en", "privacy")} hrefLang="en">{t("隐私说明", "Privacy (English)")}</Link>
+      <Link href={localizedPath("en", "terms")} hrefLang="en">{t("服务条款", "Terms (English)")}</Link>
+      <Link href={localizedPath("en", "refundPolicy")} hrefLang="en">{t("退款政策", "Refunds (English)")}</Link>
+      <Link href={localizedPath("en", "home")} hrefLang="en">English</Link>
+      <a href="mailto:ismilewolf@gmail.com">{t("联系我们", "Contact")}</a>
+      <a href="https://github.com/ismilewolf-eng/tilestencil" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  );
 }
 
 const moreTools = [
@@ -41,7 +59,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
     <footer className="site-footer">
       <div className="footer-main">
         <span>{text(locale, "TileStencil · 浏览器本地打印工具", "TileStencil · Browser-local print tool")}</span>
-        <div className="footer-links">
+        {locale === "pt-BR" || locale === "es" ? <LocalFooterLinks locale={locale} /> : <div className="footer-links">
           <Link href={localizedPath(locale, "home")}>{text(locale, "开始制作", "Start creating")}</Link>
           <Link href={localizedPath(locale, "posterGuide")}>{text(locale, "分页打印", "Posters")}</Link>
           <Link href={localizedPath(locale, "stencilGuide")}>{text(locale, "模板放大", "Stencils")}</Link>
@@ -73,7 +91,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <Link href={localizedPath(locale, "refundPolicy")}>{text(locale, "退款政策", "Refunds")}</Link>
           <a href="mailto:ismilewolf@gmail.com">{text(locale, "联系我们", "Contact")}</a>
           <a href="https://github.com/ismilewolf-eng/tilestencil" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
+        </div>}
       </div>
       <div className="footer-tools">
         <span className="footer-tools-label">{text(locale, "更多免费工具", "More Free Tools")}</span>

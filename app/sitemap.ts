@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import {
   absoluteLanguageAlternates,
   absoluteLocalizedPath,
+  hasPage,
   type Locale,
   type SiteRoute,
 } from "@/lib/locale";
@@ -10,7 +11,7 @@ import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
-const locales: Locale[] = ["zh-CN", "en"];
+const locales: Locale[] = ["zh-CN", "en", "pt-BR", "es"];
 
 const routes: Array<{
   route: SiteRoute;
@@ -57,7 +58,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
 
   return routes.flatMap(({ route, changeFrequency, priority }) =>
-    locales.map((locale) => ({
+    locales.filter((locale) => hasPage(locale, route)).map((locale) => ({
       url: absoluteLocalizedPath(locale, route),
       lastModified,
       changeFrequency,

@@ -5,10 +5,12 @@ import { languageAlternates } from "../lib/locale";
 import { SITE_URL } from "../lib/site";
 
 describe("SEO metadata routes", () => {
-  it("lists both complete language versions of the tool, privacy page, and guides", () => {
+  it("lists every language version of the tool, privacy page, and guides", () => {
     expect(sitemap().map((entry) => entry.url)).toEqual([
       (SITE_URL + "/zh"),
       SITE_URL,
+      (SITE_URL + "/pt"),
+      (SITE_URL + "/es"),
       (SITE_URL + "/zh/privacy"),
       (SITE_URL + "/privacy"),
       (SITE_URL + "/zh/print-image-on-multiple-pages"),
@@ -25,18 +27,26 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/print-scroll-saw-patterns"),
       (SITE_URL + "/zh/rasterbator-alternative"),
       (SITE_URL + "/rasterbator-alternative"),
+      (SITE_URL + "/pt/alternativa-ao-rasterbator"),
+      (SITE_URL + "/es/alternativa-a-rasterbator"),
       (SITE_URL + "/zh/print-posters-without-acrobat"),
       (SITE_URL + "/print-posters-without-acrobat"),
       (SITE_URL + "/zh/blockposters-alternative"),
       (SITE_URL + "/blockposters-alternative"),
+      (SITE_URL + "/pt/block-posters-gratis"),
+      (SITE_URL + "/es/block-posters-gratis"),
       (SITE_URL + "/zh/print-a0-to-a4-actual-size"),
       (SITE_URL + "/print-a0-to-a4-actual-size"),
       (SITE_URL + "/zh/photo-to-stencil"),
       (SITE_URL + "/photo-to-stencil"),
+      (SITE_URL + "/pt/estencil-de-foto"),
+      (SITE_URL + "/es/stencil-de-foto"),
       (SITE_URL + "/zh/pumpkin-stencil-maker"),
       (SITE_URL + "/pumpkin-stencil-maker"),
       (SITE_URL + "/zh/letter-stencils"),
       (SITE_URL + "/letter-stencils"),
+      (SITE_URL + "/pt/moldes-de-letras"),
+      (SITE_URL + "/es/plantillas-de-letras"),
       (SITE_URL + "/zh/tattoo-stencil-maker"),
       (SITE_URL + "/tattoo-stencil-maker"),
       (SITE_URL + "/zh/cricut-stencil-maker"),
@@ -68,17 +78,21 @@ describe("SEO metadata routes", () => {
     ]);
   });
 
-  it("links each language version to its Chinese, English, and default alternatives", () => {
+  it("links each language version to its Chinese, English, Portuguese, Spanish and default alternatives", () => {
     const home = sitemap().find((entry) => entry.url === SITE_URL);
 
     expect(languageAlternates("home")).toEqual({
       "zh-CN": "/zh",
       en: "/",
+      "pt-BR": "/pt",
+      es: "/es",
       "x-default": "/",
     });
     expect(home?.alternates?.languages).toEqual({
       "zh-CN": (SITE_URL + "/zh"),
       en: SITE_URL,
+      "pt-BR": SITE_URL + "/pt",
+      es: SITE_URL + "/es",
       "x-default": SITE_URL,
     });
   });

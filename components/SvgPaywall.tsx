@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PaymentMarks } from "@/components/PaymentMarks";
 import { readFirstTouch, sourceTag } from "@/lib/attribution";
 import type { Locale } from "@/lib/locale";
 
@@ -46,12 +47,16 @@ export async function loadSvgPaymentConfig(): Promise<SvgPaymentConfig> {
 
 let sdkPromise: Promise<void> | null = null;
 
-/** Load PayPal's script only when someone actually opens the checkout. */
-function loadSdk(clientId: string, currency: string): Promise<void> {
+/**
+ * Load PayPal's script only when someone actually opens the checkout. With Waffo on, PayPal
+ * shows only its own button: cards and wallets go through Waffo, and Pay Later / Venmo don't
+ * apply to a $1.99 order, so the box stays one PayPal row and one Waffo row.
+ */
+function loadSdk(clientId: string, currency: string, paypalOnly: boolean): Promise<void> {
   if (window.paypal) return Promise.resolve();
   sdkPromise ??= new Promise((resolve, reject) => {
     const script = document.createElement("script");
-    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${currency}&intent=capture&components=buttons`;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${encodeURIComponent(clientId)}&currency=${currency}&intent=capture&components=buttons${paypalOnly ? "&disable-funding=paylater,card,credit,venmo" : ""}`;
     script.async = true;
     script.onload = () => resolve();
     script.onerror = () => {
@@ -82,11 +87,13 @@ export function SvgPaywall({
   useEffect(() => {
     let cancelled = false;
     let buttons: { close?: () => void } | null = null;
-    loadSdk(config.clientId, config.currency)
+    loadSdk(config.clientId, config.currency, Boolean(config.waffo))
       .then(() => {
         if (cancelled || !container.current || !window.paypal) return;
         buttons = window.paypal.Buttons({
-          style: { layout: "vertical", shape: "rect", label: "pay", height: 44 },
+          style: config.waffo
+            ? { layout: "vertical", shape: "rect", color: "gold", label: "paypal", height: 45 }
+            : { layout: "vertical", shape: "rect", label: "pay", height: 44 },
           createOrder: async () => {
             const response = await fetch("/api/svg/order", {
               method: "POST",
@@ -140,14 +147,23 @@ export function SvgPaywall({
       <div ref={container} />
       {config.waffo ? (
         <>
-          <p className="svg-paywall-or" aria-hidden="true">
-            {t("或", "or")}
-          </p>
-          <button type="button" className="svg-paywall-waffo" onClick={waffo.start} disabled={waffo.state.kind === "starting"}>
-            {waffo.state.kind === "starting"
-              ? t("正在打开付款页…", "Opening checkout…")
-              : t("Apple Pay / Google Pay / 微信支付 / 银行卡", "Apple Pay, Google Pay, WeChat Pay or card")}
+          <button
+            type="button"
+            className="svg-paywall-waffo"
+            onClick={waffo.start}
+            disabled={waffo.state.kind === "starting"}
+            aria-label={t("用银行卡、Apple Pay、Google Pay 或微信支付付款", "Pay with a card, Apple Pay, Google Pay or WeChat Pay")}
+          >
+            {waffo.state.kind === "starting" ? (
+              t("正在打开付款页…", "Opening checkout…")
+            ) : (
+              <>
+                <PaymentMarks />
+                <span className="svg-paywall-waffo-label">{t("银行卡或钱包", "Card or wallet")}</span>
+              </>
+            )}
           </button>
+          <p className="svg-paywall-by">{t("由 PayPal 或 Waffo 处理付款", "Payments by PayPal or Waffo")}</p>
           {config.waffo.test ? <p className="svg-paywall-note">{t("（这个付款方式在测试模式，不会真实扣款）", "(This option is in test mode: no real charge.)")}</p> : null}
           {waffo.state.kind === "waiting" ? (
             <p className="svg-paywall-message" role="status">

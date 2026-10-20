@@ -11,3 +11,4 @@ seo_pages_*.json
 scripts_build_seo_pages.js
 .env*
 !.env.example
+design-previews/

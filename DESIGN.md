@@ -23,6 +23,8 @@ Use the local system CJK stack for all Chinese UI. Numeric dimensions and coordi
 
 Controls are squared-soft (10px), high-contrast, clearly labeled, and have prominent keyboard focus rings. Cards are used only for task stages and output preview; settings are primarily grouped with rules and spacing.
 
+**Payment box (SVG paywall), 2026-10-20.** Two rows of equal weight: PayPal's own gold button (PayPal-only: Pay Later, card and Venmo are switched off when Waffo is on) and one Waffo button cut to PayPal's geometry — 45px high, 4px corners, PayPal's card-button grey `#2c2e2f`, white single-colour marks for Apple Pay, Google Pay, WeChat Pay and card, then "Card or wallet" after a thin divider. One small muted line under both: "Payments by PayPal or Waffo". No "or" separator, no security slogans; card details never touch this site, so the box does not talk about them.
+
 ## 5. Layout principles
 
 Desktop is a 2fr/1fr workbench: input/preview on the left and export summary on the right. Under 860px, it becomes one vertical workflow with the export action kept visible near the result.

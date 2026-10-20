@@ -1,6 +1,6 @@
 import { sanitizeCustomId } from "../../../lib/attribution";
 import { paidEnabled, type PaymentEnv } from "../../../lib/paypal";
-import { createCheckout, waffoEnabled } from "../../../lib/waffo";
+import { createCheckout, waffoEnabled, waffoLanguage } from "../../../lib/waffo";
 
 type Context = { env: PaymentEnv; request: Request };
 
@@ -15,7 +15,7 @@ export async function onRequestPost({ env, request }: Context): Promise<Response
     const session = await createCheckout(env, {
       source: sanitizeCustomId(body.source),
       returnUrl: new URL("/payment-complete", request.url).toString(),
-      language: body.locale === "zh-CN" ? "zh-Hans" : "en",
+      language: waffoLanguage(body.locale),
     });
     return Response.json(session, { headers: { "cache-control": "no-store" } });
   } catch (error) {

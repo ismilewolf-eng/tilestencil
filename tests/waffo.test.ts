@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { publicConfig } from "@/lib/paypal";
-import { checkOrder, createCheckout, isWaffoRef, signedPost, verifyWebhook, waffoEnabled, type WaffoEnv } from "@/lib/waffo";
+import { checkOrder, createCheckout, isWaffoRef, signedPost, verifyWebhook, waffoEnabled, waffoLanguage, type WaffoEnv } from "@/lib/waffo";
 
 async function keyPair() {
   const pair = await crypto.subtle.generateKey(
@@ -126,5 +126,16 @@ describe("waffo webhook signature", () => {
     await expect(verifyWebhook({}, body, await sign(now - 60 * 60 * 1000), now, publicKey)).rejects.toThrow(/stale/);
     await expect(verifyWebhook({}, body, null, now, publicKey)).rejects.toThrow(/missing/);
     await expect(verifyWebhook({ WAFFO_ENV: "live" }, body, await sign(now), now, publicKey)).rejects.toThrow(/wrong environment/);
+  });
+});
+
+describe("Waffo checkout language", () => {
+  it("opens the checkout in the visitor's language when Waffo has it", () => {
+    expect(waffoLanguage("zh-CN")).toBe("zh-Hans");
+    expect(waffoLanguage("pt-BR")).toBe("pt-BR");
+    expect(waffoLanguage("es")).toBe("es-MX");
+    expect(waffoLanguage("en")).toBe("en");
+    expect(waffoLanguage("fr")).toBe("en");
+    expect(waffoLanguage(undefined)).toBe("en");
   });
 });

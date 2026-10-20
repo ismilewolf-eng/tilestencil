@@ -88,9 +88,20 @@ export async function signedPost(env: WaffoEnv, path: string, body: unknown, fet
  * Start a hosted checkout. `source` is the buyer's first-referrer tag (lib/attribution);
  * `returnUrl` is where Waffo's "Done" button leads after payment.
  */
+/** Checkout languages Waffo accepts (its API lists them when given an unknown one), by site locale. */
+export type WaffoLanguage = "en" | "zh-Hans" | "pt-BR" | "es-MX";
+
+export function waffoLanguage(locale: unknown): WaffoLanguage {
+  if (locale === "zh-CN") return "zh-Hans";
+  if (locale === "pt-BR") return "pt-BR";
+  // Waffo has Mexican, Peruvian, Colombian and Chilean Spanish; Mexico is where the Spanish pages aim.
+  if (locale === "es") return "es-MX";
+  return "en";
+}
+
 export async function createCheckout(
   env: WaffoEnv,
-  { source = "", returnUrl, language }: { source?: string; returnUrl: string; language: "en" | "zh-Hans" },
+  { source = "", returnUrl, language }: { source?: string; returnUrl: string; language: WaffoLanguage },
   fetchImpl: Fetch = fetch,
 ): Promise<{ ref: string; url: string }> {
   const ref = newWaffoRef();

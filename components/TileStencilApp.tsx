@@ -129,9 +129,7 @@ function TilePreview({
         {image ? (
           <img src={displayUrl ?? image.dataUrl} alt={tr(locale, "已选择图片：{name}", "Selected image: {name}", { name: image.name })} />
         ) : (
-          <div className="preview-placeholder">
-            <span>{tr(locale, "本地图片预览", "Local image preview")}</span>
-          </div>
+          <div className="preview-placeholder" />
         )}
         <div
           className="tile-grid"
@@ -168,6 +166,8 @@ export type AppIntro = {
   eyebrow: string;
   heading: string;
   copy: string;
+  /** In-page link under the copy, e.g. to a step-by-step guide below the tool. */
+  guideLink?: { href: string; label: string };
 };
 
 export type AppDefaults = {
@@ -180,6 +180,10 @@ export type AppDefaults = {
   bridgeMm?: number;
   /** Initial paper (default A4); Mexico and most of Latin America print on Letter ("tamaño carta"). */
   paperSize?: PaperSize;
+  /** Initial unit (default cm). Sizes above stay in cm and are converted for display. */
+  unit?: MeasurementUnit;
+  /** Initial sheet orientation (default portrait). */
+  orientation?: PageOrientation;
 };
 
 type HubCard = { route: SiteRoute; icon: string; title: [string, string]; body: [string, string]; cta: [string, string] };
@@ -415,14 +419,17 @@ export function TileStencilApp({
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState<ExportImage | null>(null);
-  const [unit, setUnit] = useState<MeasurementUnit>("cm");
-  const [widthInput, setWidthInput] = useState(String(defaults?.widthCm ?? 30));
-  const [heightInput, setHeightInput] = useState(String(defaults?.heightCm ?? 20));
+  const startUnit = defaults?.unit ?? "cm";
+  // Same conversion as switching units by hand, so 0.8 cm reads 0.315 in either way.
+  const startValue = (cm: number): string => (startUnit === "cm" ? String(cm) : cleanNumber(fromMillimeters(cm * 10, startUnit), 3));
+  const [unit, setUnit] = useState<MeasurementUnit>(startUnit);
+  const [widthInput, setWidthInput] = useState(() => startValue(defaults?.widthCm ?? 30));
+  const [heightInput, setHeightInput] = useState(() => startValue(defaults?.heightCm ?? 20));
   const [keepAspectRatio, setKeepAspectRatio] = useState(true);
   const [paperSize, setPaperSize] = useState<PaperSize>(defaults?.paperSize ?? "a4");
-  const [orientation, setOrientation] = useState<PageOrientation>("portrait");
-  const [marginInput, setMarginInput] = useState("0.8");
-  const [overlapInput, setOverlapInput] = useState("0.5");
+  const [orientation, setOrientation] = useState<PageOrientation>(defaults?.orientation ?? "portrait");
+  const [marginInput, setMarginInput] = useState(() => startValue(0.8));
+  const [overlapInput, setOverlapInput] = useState(() => startValue(0.5));
   const [renderMode, setRenderMode] = useState<RenderMode>(defaults?.renderMode ?? "original");
   const [threshold, setThreshold] = useState(DEFAULT_STENCIL.threshold);
   const [invert, setInvert] = useState(DEFAULT_STENCIL.invert);
@@ -764,6 +771,11 @@ export function TileStencilApp({
                   "Import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter. Your image stays in this browser.",
                 )}
             </p>
+            {intro?.guideLink ? (
+              <a className="intro-guide-link" href={intro.guideLink.href}>
+                {intro.guideLink.label}
+              </a>
+            ) : null}
           </div>
           <div className="privacy-note">
             <span className="privacy-lock" aria-hidden="true">⌁</span>
@@ -1122,7 +1134,7 @@ export function TileStencilApp({
             </p>
           </div>
           <div className="guides-hub-grid">
-            {HUB_CARDS.filter((card) => hasPage(locale, card.route)).map((card) => (
+            {HUB_CARDS.filter((card) => card.route !== route && hasPage(locale, card.route)).map((card) => (
               <Link className="guide-card" href={localizedPath(locale, card.route)} key={card.route}>
                 <span className="guide-card-icon" aria-hidden="true">{card.icon}</span>
                 <h3>{t(...card.title)}</h3>

@@ -59,3 +59,10 @@ Use only brief opacity/transform feedback (100–180ms) for buttons, status chan
 - Line colour picker: three equal segments with a 10px colour dot before the word (Black / White / Red). Segment labels must not sit inside `.input-grid` (its `label > span` rule blocks them).
 - The surface result is one sentence with the numbers in mono bold ("Draw 6 × 8 squares, each 1 3/4 in."), measurements never split across lines, inches rounded down to 1/16 and centimetres to 1 mm so the grid always fits.
 - Status messages appear in the card of the button that caused them.
+
+## Poster printing guide (2026-10-21, English page only)
+
+- `/print-image-on-multiple-pages` (en) is the tool with a tutorial underneath: page defaults are inches, US Letter, landscape sheets and 24 × 36 in (15 sheets), set through `AppDefaults.unit/orientation`; the intro has an in-page `guideLink` to `#guide`. The Chinese page keeps its older article.
+- Tutorial steps are h2s that start "Step N:" (no separate numbered eyebrow). Tables use `.pg-table`; number tables add `.pg-table-figures` (mono, tabular). On phones under 560px the methods table turns into one card per row through `data-label`.
+- Diagrams live in `components/PosterGuideFigures.tsx` and are drawn from `calculateTilePlan`, so sheet counts match the export. Each has a phone version (`.pg-narrow`, shown under 690px) so diagram text is at least 11px on a 320px screen; on phones the tiny printed lines of a sheet become bars and the legend quotes them.
+- English copy uses straight quotes and apostrophes: the CJK-first font stack draws curly ones full-width on Windows.

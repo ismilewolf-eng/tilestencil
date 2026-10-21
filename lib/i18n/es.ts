@@ -77,7 +77,6 @@ export const ES: Record<string, string> = {
   "Letter Stencil Generator": "Generador de plantillas de letras",
   "Letter Stencils": "Plantillas de letras",
   "Letter stencils": "Plantillas de letras",
-  "Local image preview": "Vista previa de tu imagen",
   "Made with this page in one step. Black areas are cut out. Photo: ": "Hecho con esta página en un solo paso. Las áreas negras se recortan. Foto: ",
   "Main navigation": "Navegación principal",
   "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.": "Crea un stencil personalizado para tallar calabazas a partir de cualquier foto, del tamaño de tu calabaza.",

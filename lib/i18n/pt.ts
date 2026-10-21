@@ -77,7 +77,6 @@ export const PT: Record<string, string> = {
   "Letter Stencil Generator": "Gerador de moldes de letras",
   "Letter Stencils": "Moldes de letras",
   "Letter stencils": "Moldes de letras",
-  "Local image preview": "Prévia da imagem",
   "Made with this page in one step. Black areas are cut out. Photo: ": "Feito direto nesta página, num passo só. As áreas pretas são recortadas. Foto: ",
   "Main navigation": "Navegação principal",
   "Make a custom pumpkin carving stencil from any photo, sized to your pumpkin.": "Crie um estêncil personalizado para entalhar abóbora a partir de qualquer foto, no tamanho da sua abóbora.",

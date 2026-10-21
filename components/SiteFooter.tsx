@@ -27,33 +27,6 @@ function LocalFooterLinks({ locale }: { locale: "pt-BR" | "es" }) {
   );
 }
 
-const moreTools = [
-  {
-    href: "https://fee.skillary.ai",
-    glyph: "💰",
-    name: "Etsy Profit Studio",
-    title: { zh: "Etsy 卖家利润与定价计算器", en: "Etsy Fee & Margin Calculator for Sellers" },
-  },
-  {
-    href: "https://magickcmd.com",
-    glyph: "🪄",
-    name: "MagickCMD",
-    title: { zh: "ImageMagick 图像处理指令生成器", en: "ImageMagick Command Builder" },
-  },
-  {
-    href: "https://apriltag.skillary.ai",
-    glyph: "🎯",
-    name: "AprilTag Studio",
-    title: { zh: "机器人与视觉标定板生成", en: "AprilTag Calibration Studio" },
-  },
-  {
-    href: "https://bake.skillary.ai",
-    glyph: "🥖",
-    name: "BakeCost Studio",
-    title: { zh: "烘焙配方成本核算与定价工具", en: "Bakery Recipe Costing & Food Pricing" },
-  },
-];
-
 export function SiteFooter({ locale }: SiteFooterProps) {
   return (
     <footer className="site-footer">
@@ -93,24 +66,6 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <a href="mailto:ismilewolf@gmail.com">{text(locale, "联系我们", "Contact")}</a>
           <a href="https://github.com/ismilewolf-eng/tilestencil" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>}
-      </div>
-      <div className="footer-tools">
-        <span className="footer-tools-label">{text(locale, "更多免费工具", "More Free Tools")}</span>
-        <ul>
-          {moreTools.map((tool) => (
-            <li key={tool.href}>
-              <a
-                href={tool.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={text(locale, tool.title.zh, tool.title.en)}
-              >
-                <span aria-hidden="true">{tool.glyph}</span>
-                {tool.name}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     </footer>
   );

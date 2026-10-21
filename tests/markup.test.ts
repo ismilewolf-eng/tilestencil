@@ -181,13 +181,8 @@ describe("locale routing", () => {
   });
 });
 
-describe("cross-promotion footer", () => {
+describe("shared footer", () => {
   const shells = ["components/TileStencilApp.tsx", "components/GuideShell.tsx", "components/PrivacyPage.tsx"];
-  const tools = [
-    ["https://fee.skillary.ai", "Etsy Profit Studio"],
-    ["https://magickcmd.com", "MagickCMD"],
-    ["https://apriltag.skillary.ai", "AprilTag Studio"],
-  ];
 
   it.each(shells)("composes the shared SiteFooter in %s", (shell) => {
     const source = readFileSync(join(ROOT, shell), "utf8");
@@ -196,24 +191,10 @@ describe("cross-promotion footer", () => {
     expect(source).toMatch(/<SiteFooter\s+locale={locale}\s*\/>/);
   });
 
-  it("lists all three sibling tools in components/SiteFooter.tsx", () => {
+  // The skillary.ai tools go with that domain when it is sold, and MagickCMD is no longer maintained.
+  it("no longer links to the retired sibling tools", () => {
     const source = readFileSync(join(ROOT, "components/SiteFooter.tsx"), "utf8");
 
-    expect(source).toContain("footer-tools");
-    for (const [url, label] of tools) {
-      expect(source).toContain(`href: "${url}"`);
-      expect(source).toContain(label);
-    }
-  });
-
-  it("opens outbound tool links safely in components/SiteFooter.tsx", () => {
-    const source = readFileSync(join(ROOT, "components/SiteFooter.tsx"), "utf8");
-    const outbound = [...source.matchAll(/<a\s+[^>]*href={tool\.href}[^>]*>/g)];
-
-    expect(outbound.length).toBe(1);
-    for (const [tag] of outbound) {
-      expect(tag).toContain('target="_blank"');
-      expect(tag).toContain('rel="noopener noreferrer"');
-    }
+    expect(source).not.toMatch(/skillary\.ai|magickcmd\.com/);
   });
 });

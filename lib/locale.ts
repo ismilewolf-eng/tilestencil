@@ -2,7 +2,10 @@ import { SITE_URL } from "@/lib/site";
 import { ES } from "@/lib/i18n/es";
 import { PT } from "@/lib/i18n/pt";
 
-/** Chinese and English cover every page; Portuguese (Brazil) and Spanish (Latin America) cover the pages in LOCAL_SLUGS. */
+/**
+ * Chinese and English cover every page except the English-only ones in EN_ONLY; Portuguese (Brazil)
+ * and Spanish (Latin America) cover the pages in LOCAL_SLUGS.
+ */
 export type Locale = "zh-CN" | "en" | "pt-BR" | "es";
 export type SiteRoute =
   | "home"
@@ -33,7 +36,8 @@ export type SiteRoute =
   | "christmasStencils"
   | "flowerStencils"
   | "animalStencils"
-  | "shapeStencils";
+  | "shapeStencils"
+  | "gridDrawing";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -65,7 +69,11 @@ const routeSuffix: Record<SiteRoute, string> = {
   flowerStencils: "/free-stencils/flowers",
   animalStencils: "/free-stencils/animals",
   shapeStencils: "/free-stencils/shapes",
+  gridDrawing: "/drawing-grid-maker",
 };
+
+/** New pages are written in English only (2026-10-21); other languages get them once they draw traffic. */
+const EN_ONLY = new Set<SiteRoute>(["gridDrawing"]);
 
 /**
  * Pages written for Brazilian and Spanish-speaking visitors, with slugs in their language.
@@ -97,9 +105,11 @@ export const LOCALE_LABEL: Record<Locale, string> = { "zh-CN": "中文", en: "En
 /** BCP 47 tag for number formatting and inLanguage. */
 export const LOCALE_TAG: Record<Locale, string> = { "zh-CN": "zh-CN", en: "en-US", "pt-BR": "pt-BR", es: "es" };
 
-/** Whether this page exists in this language (Chinese and English have every page). */
+/** Whether this page exists in this language. */
 export function hasPage(locale: Locale, route: SiteRoute): boolean {
-  return locale === "en" || locale === "zh-CN" || LOCAL_SLUGS[locale][route] !== undefined;
+  if (locale === "en") return true;
+  if (EN_ONLY.has(route)) return false;
+  return locale === "zh-CN" || LOCAL_SLUGS[locale][route] !== undefined;
 }
 
 export function localizedPath(locale: Locale, route: SiteRoute): string {
@@ -110,6 +120,7 @@ export function localizedPath(locale: Locale, route: SiteRoute): string {
     return LOCALE_PREFIX[locale] + local;
   }
   if (locale === "zh-CN") {
+    if (EN_ONLY.has(route)) return suffix;
     return suffix ? ("/zh" + suffix) : "/zh";
   }
   return suffix || "/";

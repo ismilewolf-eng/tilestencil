@@ -51,3 +51,11 @@ Use only brief opacity/transform feedback (100–180ms) for buttons, status chan
 - Components pass Chinese and English to `tr()`; Portuguese and Spanish come from `lib/i18n/pt.ts` and `es.ts`, keyed by the English text. `tests/i18n.test.ts` fails when a string has no translation.
 - Language switch: one pill per other language the page exists in (`.language-switches`).
 - Spanish defaults to Letter paper ("tamaño carta", Mexico); Brazil writes decimals with a comma and prices as "US$ 1,99".
+
+## Drawing grid maker (2026-10-21, English only)
+
+- `/drawing-grid-maker` uses its own workbench (`.grid-bench`): four cards in grid areas. Desktop: photo, squares/lines and surface on the left, the preview sticky on the right. Under 980px the order is photo → preview → settings → surface, so the grid shows right after a photo is chosen.
+- The preview and the PNG put the square names in a white margin above and left of the photo (columns numbered, rows lettered: B3 is row B, column 3), never over the picture. The PDFs draw the grid as vector lines; the empty grid names every square in its corner on a paper-white patch, and counts sheets ("Sheet 2 of 4 · goes below sheet 1") instead of lettering them, so sheets never read like square names.
+- Line colour picker: three equal segments with a 10px colour dot before the word (Black / White / Red). Segment labels must not sit inside `.input-grid` (its `label > span` rule blocks them).
+- The surface result is one sentence with the numbers in mono bold ("Draw 6 × 8 squares, each 1 3/4 in."), measurements never split across lines, inches rounded down to 1/16 and centimetres to 1 mm so the grid always fits.
+- Status messages appear in the card of the button that caused them.

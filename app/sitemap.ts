@@ -38,6 +38,7 @@ const routes: Array<{
   { route: "sprayPaintStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "woodBurningStencil", changeFrequency: "monthly", priority: 0.9 },
   { route: "airbrushStencil", changeFrequency: "monthly", priority: 0.9 },
+  { route: "gridDrawing", changeFrequency: "monthly", priority: 0.9 },
   { route: "freeStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "halloweenStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "christmasStencils", changeFrequency: "weekly", priority: 0.9 },

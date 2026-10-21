@@ -14,10 +14,11 @@ import {
   type PaperSize,
   type TilePlan,
 } from "@/lib/geometry";
-import { hasPage, languageLinks, localDecimal, LOCALE_TAG, localizedPath, tr, type Locale, type SiteRoute } from "@/lib/locale";
+import { hasPage, localDecimal, LOCALE_TAG, localizedPath, tr, type Locale, type SiteRoute } from "@/lib/locale";
 import { LetterStencilSource } from "@/components/LetterStencilSource";
 import { loadSvgPaymentConfig, SvgPaywall, type SvgPaymentConfig } from "@/components/SvgPaywall";
 import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { cleanupStencil, findIslands } from "@/lib/stencil-bridges";
 import { stencilSvg, traceMask } from "@/lib/stencil-svg";
 import {
@@ -181,27 +182,6 @@ export type AppDefaults = {
   paperSize?: PaperSize;
 };
 
-type NavItem = { route: SiteRoute; zh: string; en: string };
-
-const MAIN_NAV: NavItem[] = [
-  { route: "posterGuide", zh: "分页打印", en: "Print posters" },
-  { route: "stencilGuide", zh: "模板放大", en: "Enlarge stencils" },
-  { route: "patternGuide", zh: "纸样打印", en: "Craft patterns" },
-  { route: "bannerGuide", zh: "横幅大字", en: "Banner letters" },
-  { route: "stainedGlassGuide", zh: "彩色玻璃", en: "Stained glass" },
-  { route: "scrollSawGuide", zh: "木工线锯", en: "Scroll saw" },
-  { route: "privacy", zh: "隐私", en: "Privacy" },
-];
-
-/** Portuguese and Spanish pages (see LOCAL_SLUGS in lib/locale.ts). */
-const LOCAL_NAV: NavItem[] = [
-  { route: "home", zh: "分页打印", en: "Print posters" },
-  { route: "blockpostersAlternative", zh: "Block Posters", en: "Block Posters" },
-  { route: "rasterbatorAlternative", zh: "Rasterbator 替代", en: "Rasterbator alternative" },
-  { route: "photoToStencil", zh: "照片转模板", en: "Photo to stencil" },
-  { route: "letterStencils", zh: "字母模板", en: "Letter stencils" },
-];
-
 type HubCard = { route: SiteRoute; icon: string; title: [string, string]; body: [string, string]; cta: [string, string] };
 
 const HUB_CARDS: HubCard[] = [
@@ -217,6 +197,7 @@ const HUB_CARDS: HubCard[] = [
   { route: "animalStencils", icon: "🐾", title: ["免费动物模板", "Free Animal Stencils"], body: ["狗、猫、狼、马、独角兽、恐龙等，已加连接桥，免费下载 PDF。", "Dogs, cats, wolves, horses, unicorns, dinosaurs and more. Free PDF downloads."], cta: ["下载免费模板 →", "Get free stencils →"] },
   { route: "letterStencils", icon: "🔠", title: ["字母模板生成器", "Letter Stencil Generator"], body: ["输入文字，生成任意大小的镂空字母和数字，分页打印。", "Type any word and print stencil letters or numbers at any size across pages."], cta: ["生成字母模板 →", "Make letter stencils →"] },
   { route: "tattooStencil", icon: "🖋️", title: ["纹身转印模板", "Tattoo Stencil Maker"], body: ["把图案转成清晰线稿，按身体部位的真实尺寸打印。", "Turn a design into a clean stencil and print it at the exact size for the placement."], cta: ["制作纹身模板 →", "Make a tattoo stencil →"] },
+  { route: "gridDrawing", icon: "▦", title: ["网格画法工具", "Drawing Grid Maker"], body: ["给参考照片加上编号方格，算好画布上每格画多大。", "Add numbered squares to a reference photo and get the matching grid for your canvas or wall."], cta: ["打开网格工具 →", "Make a drawing grid →"] },
   { route: "posterGuide", icon: "🖼️", title: ["大图分页打印海报", "Multi-Page Poster Printing"], body: ["将高分辨率照片无损拆切为多张 A4/A3 拼接海报，支持自定义重叠与边距。", "Split high-resolution photos across standard A4/A3 sheets for giant wall posters."], cta: ["查看海报教程 →", "Read poster guide →"] },
   { route: "stencilGuide", icon: "🎨", title: ["墙绘与描摹模板放大", "Wall Stencils & Murals"], body: ["一键转为高对比度黑白线条，方便投影、复写纸描摹与艺术喷涂。", "Generate crisp high-contrast monochrome contours for mural transfers and tracing."], cta: ["查看墙绘教程 →", "Read mural guide →"] },
   { route: "patternGuide", icon: "📐", title: ["手工皮具与缝纫纸样 1:1 打印", "1:1 Craft & Sewing Patterns"], body: ["严格保留物理毫米精度，杜绝缩放形变，皮具木工开料不出错。", "Preserve exact physical mm scale for leathercraft, sewing blocks, and Cosplay."], cta: ["查看纸样教程 →", "Read pattern guide →"] },
@@ -463,8 +444,6 @@ export function TileStencilApp({
   const [isDragging, setIsDragging] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const t = (chinese: string, english: string, vars?: Record<string, string | number>) => tr(locale, chinese, english, vars);
-  // Portuguese and Spanish have a handful of pages; their nav and project cards only list those.
-  const localOnly = locale === "pt-BR" || locale === "es";
 
   const planResult = useMemo(() => {
     try {
@@ -769,29 +748,7 @@ export function TileStencilApp({
       <a className="skip-link" href="#workspace">
         {t("跳到制作区域", "Skip to workspace")}
       </a>
-      <header className="topbar">
-        <Link className="brand" href={localizedPath(locale, "home")} aria-label={t("TileStencil 首页", "TileStencil home")}>
-          <span className="brand-mark" aria-hidden="true">
-            <i />
-            <i />
-          </span>
-          <span>TileStencil</span>
-        </Link>
-        <nav aria-label={t("主导航", "Main navigation")}>
-          {(localOnly ? LOCAL_NAV : MAIN_NAV).map((item) => (
-            <Link key={item.route} href={localizedPath(locale, item.route)}>
-              {t(item.zh, item.en)}
-            </Link>
-          ))}
-          <span className="language-switches">
-            {languageLinks(locale, route).map((link) => (
-              <Link key={link.locale} className="language-switch" href={link.href} hrefLang={link.locale} lang={link.locale}>
-                {link.label}
-              </Link>
-            ))}
-          </span>
-        </nav>
-      </header>
+      <SiteHeader locale={locale} route={route} />
 
       <main id="workspace" className="workspace">
         <section className="intro" aria-labelledby="page-title">
@@ -1165,7 +1122,7 @@ export function TileStencilApp({
             </p>
           </div>
           <div className="guides-hub-grid">
-            {HUB_CARDS.filter((card) => !localOnly || hasPage(locale, card.route)).map((card) => (
+            {HUB_CARDS.filter((card) => hasPage(locale, card.route)).map((card) => (
               <Link className="guide-card" href={localizedPath(locale, card.route)} key={card.route}>
                 <span className="guide-card-icon" aria-hidden="true">{card.icon}</span>
                 <h3>{t(...card.title)}</h3>

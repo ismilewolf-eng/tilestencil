@@ -32,7 +32,7 @@ export function stencilValue(luminance: number, stencil: StencilSettings = DEFAU
   return white !== stencil.invert ? 255 : 0;
 }
 
-type JsPdfInstance = {
+export type JsPdfInstance = {
   addPage: (format?: [number, number], orientation?: "portrait" | "landscape") => void;
   addImage: (
     imageData: string,
@@ -131,7 +131,7 @@ function createTileImage(
   return { dataUrl: canvas.toDataURL("image/jpeg", 0.92), format: "JPEG" };
 }
 
-function drawRegistrationMarks(pdf: JsPdfInstance, tile: TileRegion, plan: TilePlan): void {
+export function drawRegistrationMarks(pdf: JsPdfInstance, tile: TileRegion, plan: TilePlan): void {
   const x = tile.pageXmm;
   const y = tile.pageYmm;
   const right = x + tile.widthMm;
@@ -151,7 +151,7 @@ function drawRegistrationMarks(pdf: JsPdfInstance, tile: TileRegion, plan: TileP
   pdf.line(right, bottom + 0.7, right, bottom + mark);
 }
 
-function drawPageGuidance(pdf: JsPdfInstance, tile: TileRegion, plan: TilePlan): void {
+export function drawPageGuidance(pdf: JsPdfInstance, tile: TileRegion, plan: TilePlan): void {
   const pageNumber = tile.index + 1;
   const totalPages = plan.tiles.length;
   const connections: string[] = [];
@@ -187,7 +187,7 @@ function drawPageGuidance(pdf: JsPdfInstance, tile: TileRegion, plan: TilePlan):
   }
 }
 
-function fileStem(filename: string): string {
+export function fileStem(filename: string): string {
   const withoutExtension = filename.replace(/\.[^.]+$/, "");
   return withoutExtension
     .trim()

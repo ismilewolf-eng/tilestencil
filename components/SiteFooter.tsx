@@ -63,6 +63,7 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           <Link href={localizedPath(locale, "home")}>{text(locale, "开始制作", "Start creating")}</Link>
           <Link href={localizedPath(locale, "posterGuide")}>{text(locale, "分页打印", "Posters")}</Link>
           <Link href={localizedPath(locale, "stencilGuide")}>{text(locale, "模板放大", "Stencils")}</Link>
+          {locale === "en" ? <Link href={localizedPath("en", "gridDrawing")}>Drawing Grid Maker</Link> : null}
           <Link href={localizedPath(locale, "patternGuide")}>{text(locale, "纸样打印", "Patterns")}</Link>
           <Link href={localizedPath(locale, "bannerGuide")}>{text(locale, "横幅大字", "Banners")}</Link>
           <Link href={localizedPath(locale, "stainedGlassGuide")}>{text(locale, "彩色玻璃", "Stained Glass")}</Link>

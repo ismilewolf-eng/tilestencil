@@ -2235,3 +2235,242 @@ select {
     display: none;
   }
 }
+
+/* ---------- Drawing grid maker (/drawing-grid-maker) ---------- */
+.grid-bench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(340px, 1fr);
+  grid-template-areas:
+    "source preview"
+    "settings preview"
+    "surface preview";
+  grid-template-rows: auto auto 1fr;
+  align-items: start;
+  gap: 24px 32px;
+}
+
+.grid-card {
+  min-width: 0;
+  padding: 28px;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+}
+
+.grid-source {
+  grid-area: source;
+}
+
+.grid-card.grid-settings {
+  grid-area: settings;
+  padding: 0;
+}
+
+.grid-settings-part {
+  padding: 28px;
+}
+
+.grid-settings-part + .grid-settings-part {
+  border-top: 1px solid var(--rule);
+}
+
+.grid-surface {
+  grid-area: surface;
+}
+
+.grid-preview {
+  position: sticky;
+  top: 20px;
+  grid-area: preview;
+  padding: 24px;
+}
+
+.grid-canvas-frame {
+  display: grid;
+  margin-top: 16px;
+  padding: 10px;
+  place-items: center;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--surface-soft);
+}
+
+.grid-canvas-frame canvas {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(64vh, 640px);
+}
+
+.grid-empty {
+  margin-top: 16px;
+}
+
+.grid-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.grid-print-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 128px;
+  gap: 10px;
+}
+
+.grid-print-row .secondary-button {
+  min-height: 46px;
+  justify-content: center;
+}
+
+.grid-paper select {
+  min-height: 46px;
+}
+
+.grid-credit {
+  margin: 10px 0 0;
+  color: var(--faint);
+  font-size: 12px;
+}
+
+.grid-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.grid-columns {
+  margin-top: 18px;
+}
+
+.grid-columns small {
+  font-size: 12px;
+}
+
+.grid-pickers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 19px;
+}
+
+.grid-pickers legend {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.segmented-control.three {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-swatch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.grid-swatch::before {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border: 1px solid #a89f91;
+  border-radius: 50%;
+  background: var(--swatch);
+  content: "";
+}
+
+.grid-swatch.is-black {
+  --swatch: #1d1b18;
+}
+
+.grid-swatch.is-white {
+  --swatch: #ffffff;
+}
+
+.grid-swatch.is-red {
+  --swatch: #d6332a;
+}
+
+.grid-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 22px;
+}
+
+.grid-result {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--rule));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent-soft) 40%, var(--surface));
+}
+
+.grid-result-main {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.45;
+}
+
+.grid-result-main b {
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.grid-result-detail {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.grid-blank-button {
+  margin-top: 14px;
+}
+
+/* The cm/in switch keeps both buttons on small phones; the heading wraps instead. */
+.grid-surface .unit-switch {
+  flex: none;
+}
+
+@media (max-width: 980px) {
+  .grid-bench {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "source"
+      "preview"
+      "settings"
+      "surface";
+    grid-template-rows: none;
+  }
+
+  .grid-preview {
+    position: static;
+  }
+}
+
+@media (max-width: 690px) {
+  .grid-card,
+  .grid-settings-part {
+    padding: 20px;
+  }
+
+  .grid-preview {
+    padding: 18px;
+  }
+
+  .grid-pickers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .grid-canvas-frame canvas {
+    max-height: 70vh;
+  }
+}

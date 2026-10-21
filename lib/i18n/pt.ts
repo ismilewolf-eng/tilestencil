@@ -243,4 +243,8 @@ export const PT: Record<string, string> = {
   "🎨 Art Poster (40×60cm)": "🎨 Pôster de arte (40×60cm)",
   "🏷️ Party Banner (120×30cm)": "🏷️ Faixa de festa (120×30cm)",
   "📐 Craft Pattern (30×20cm)": "📐 Molde de artesanato (30×20cm)",
+  "Grid drawing": "Desenho com grade",
+  "Drawing Grid Maker": "Gerador de grade para desenho",
+  "Add numbered squares to a reference photo and get the matching grid for your canvas or wall.": "Coloque quadrados numerados na foto de referência e veja a grade certa para a sua tela ou parede.",
+  "Make a drawing grid →": "Fazer uma grade de desenho →",
 };

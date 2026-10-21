@@ -10,6 +10,7 @@ const LOCALIZED_FILES = [
   "components/SvgPaywall.tsx",
   "components/LetterStencilSource.tsx",
   "components/SiteFooter.tsx",
+  "components/SiteHeader.tsx",
   "components/StencilExample.tsx",
   "components/StencilLanding.tsx",
   "lib/sample-presets.ts",
@@ -70,6 +71,14 @@ describe("Portuguese and Spanish", () => {
     expect(tr("pt-BR", "{n} 页", "{n} pages", { n: 3 })).toBe("3 folhas");
     expect(tr("pt-BR", "当前纸张：{w} × {h} mm。", "Current paper: {w} × {h} mm.", { w: "215.9", h: "279.4" })).toContain("215,9 × 279,4");
     expect(tr("es", "当前纸张：{w} × {h} mm。", "Current paper: {w} × {h} mm.", { w: "215.9", h: "279.4" })).toContain("215.9 × 279.4");
+  });
+
+  it("keeps English-only pages out of the other languages", () => {
+    expect(hasPage("en", "gridDrawing")).toBe(true);
+    expect(hasPage("zh-CN", "gridDrawing")).toBe(false);
+    expect(hasPage("pt-BR", "gridDrawing")).toBe(false);
+    expect(localizedPath("zh-CN", "gridDrawing")).toBe("/drawing-grid-maker");
+    expect(languageAlternates("gridDrawing")).toEqual({ en: "/drawing-grid-maker", "x-default": "/drawing-grid-maker" });
   });
 
   it("routes Portuguese and Spanish pages, falling back to English", () => {

@@ -33,6 +33,7 @@ TileStencil (https://tilestencil.com) is a privacy-first web utility designed fo
 ## Documentation & Use Cases
 
 - [Tile Printing Guide](https://tilestencil.com/print-image-on-multiple-pages): Instructions for splitting large photos across multiple A4/A3 pages at home.
+- [Drawing Grid Maker](https://tilestencil.com/drawing-grid-maker): Grid method tool. Adds a numbered grid (rows A, B, C…; columns 1, 2, 3…) to any reference photo, with line colour, weight, diagonals and black-and-white options; calculates how many squares to draw on a given paper, canvas or wall and how big each one is (rounded down to a ruler step: 1 mm or 1/8 inch); downloads a PNG, prints the photo with its grid on one A4/Letter page, or prints the empty grid at full drawing size across several pages. English only; nothing is uploaded.
 - [Large Wall Stencil Maker](https://tilestencil.com/print-large-stencil): Make a wall-size or mural stencil on a home printer, tiled with alignment marks; no projector needed.
 - [Craft & Sewing Patterns](https://tilestencil.com/print-pattern-actual-size): 1:1 true scale pattern printing for leathercraft, woodworking templates, and Cosplay armor blueprints.
 - [Banner & Sign Printing](https://tilestencil.com/print-banner-letters): Horizontal landscape tiling for multi-meter party banners, classroom headlines, and event signs.

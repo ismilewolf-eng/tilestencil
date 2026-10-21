@@ -243,4 +243,8 @@ export const ES: Record<string, string> = {
   "🎨 Art Poster (40×60cm)": "🎨 Póster de arte (40×60 cm)",
   "🏷️ Party Banner (120×30cm)": "🏷️ Banner para fiesta (120×30 cm)",
   "📐 Craft Pattern (30×20cm)": "📐 Patrón de manualidades (30×20 cm)",
+  "Grid drawing": "Dibujo con cuadrícula",
+  "Drawing Grid Maker": "Creador de cuadrícula para dibujar",
+  "Add numbered squares to a reference photo and get the matching grid for your canvas or wall.": "Pon cuadros numerados sobre tu foto de referencia y obtén la cuadrícula que va en tu lienzo o pared.",
+  "Make a drawing grid →": "Hacer una cuadrícula →",
 };

@@ -57,6 +57,7 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/wood-burning-stencil-maker"),
       (SITE_URL + "/zh/airbrush-stencil-maker"),
       (SITE_URL + "/airbrush-stencil-maker"),
+      (SITE_URL + "/drawing-grid-maker"),
       (SITE_URL + "/zh/free-stencils"),
       (SITE_URL + "/free-stencils"),
       (SITE_URL + "/zh/free-stencils/halloween"),

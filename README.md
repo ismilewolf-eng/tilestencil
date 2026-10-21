@@ -69,7 +69,11 @@ Explore detailed step-by-step guides and tips on the live site:
 
 | Project Type | Guide Link | Focus |
 |---|---|---|
-| **Tiled Poster Printing** | [Poster Guide](https://tilestencil.com/print-image-on-multiple-pages) | Large photo wall art from standard A4/A3 pages |
+| **Tiled Poster Printing** | [How to print a big picture on multiple pages](https://tilestencil.com/print-image-on-multiple-pages) | Step-by-step: size, print at 100%, trim and tape |
+| **Photo Stencils** | [Photo to stencil maker](https://tilestencil.com/photo-to-stencil) | Black-and-white stencil with bridges, printed at real size |
+| **Drawing Grid** | [Drawing grid maker](https://tilestencil.com/drawing-grid-maker) | Numbered grid over a reference photo for the grid method |
+| **Free Templates** | [Free printable stencils](https://tilestencil.com/free-stencils) | 131 Halloween, Christmas, flower, animal and shape stencils |
+| **Lettering** | [Letter stencil generator](https://tilestencil.com/letter-stencils) | Any word as stencil letters, tiled across pages |
 | **Mural & Tracing Stencils** | [Stencil Guide](https://tilestencil.com/print-large-stencil) | High-contrast B&W transfers for walls and canvas |
 | **1:1 Craft & Leather Patterns** | [Pattern Guide](https://tilestencil.com/print-pattern-actual-size) | Exact scale templates for leathercraft and Cosplay |
 | **Large Event Banners** | [Banner Guide](https://tilestencil.com/print-banner-letters) | Horizontal multi-meter slogans and party garlands |

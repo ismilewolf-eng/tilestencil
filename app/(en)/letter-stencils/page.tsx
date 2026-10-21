@@ -5,9 +5,9 @@ import { TileStencilApp } from "@/components/TileStencilApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
 export const metadata: Metadata = {
-  title: "Printable Letter Stencils – Any Word, Any Size, Free",
+  title: "Printable Letter & Alphabet Stencils – Any Word, Any Size, Free",
   description:
-    "Type any word or number and print stencil letters at the exact size you need, from 5 cm to over a metre tall, split across A4, A3, or Letter pages. Three stencil fonts, free, no sign-up.",
+    "Type any word, number or the whole A–Z alphabet and print stencil letters at the exact size you need, from 5 cm to over a metre tall, across A4, A3 or Letter pages. Free, no sign-up.",
   keywords: [
     "letter stencils printable",
     "printable alphabet stencils",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     locale: "en_US",
-    title: "Printable Letter Stencils – any word, any size, free",
+    title: "Printable letter & alphabet stencils – any word, any size, free",
     description: "Type a word, pick a stencil font, and print letters at actual size across multiple pages.",
     url: "/letter-stencils",
   },

@@ -85,7 +85,7 @@ export default function EnglishTattooStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
+      <TileStencilApp route="tattooStencil" locale="en" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
         <article className="app-guide">
           <StencilExampleSection locale="en" name="tattoo" />
           <h2>From design to stencil in one step</h2>

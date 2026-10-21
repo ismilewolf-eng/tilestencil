@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function EnglishWoodBurningStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="woodBurningStencil"
       locale="en"
       intro={{
         eyebrow: "WOOD BURNING STENCIL MAKER",

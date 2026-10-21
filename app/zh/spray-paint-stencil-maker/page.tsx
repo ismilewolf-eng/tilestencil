@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ChineseSprayPaintStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="sprayPaintStencil"
       locale="zh-CN"
       intro={{ eyebrow: "喷漆模板制作", heading: "用任意照片或标志，做一张喷漆模板。", copy: "实时预览调整模板，自动连接桥固定孤岛，按真实尺寸分页打印，或导出 SVG 用 Mylar 膜切割。" }}
       defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 40, heightCm: 30 }}

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ChineseWoodBurningStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="woodBurningStencil"
       locale="zh-CN"
       intro={{ eyebrow: "烙画模板制作", heading: "把任意照片做成烙画图样，按木板大小打印。", copy: "实时预览得到清晰的高对比轮廓，按实际尺寸打印，用转印纸、热转印或针扎转到木头上。免费，照片不离开浏览器。" }}
       defaults={{ renderMode: "template", widthCm: 18, heightCm: 13 }}

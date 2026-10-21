@@ -62,7 +62,7 @@ export default function ChineseCricutStencilPage() {
     <>
       <HowToJsonLd name="如何用照片制作 Cricut 模板 SVG" description="把照片转成带自动连接桥的可切割模板 SVG。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
+      <TileStencilApp route="cricutStencil" locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
         <article className="app-guide">
           <StencilExampleSection locale="zh-CN" name="cricut" />
           <h2>比在 Design Space 里描图强在哪</h2>

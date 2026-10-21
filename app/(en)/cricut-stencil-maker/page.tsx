@@ -97,7 +97,7 @@ export default function EnglishCricutStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
+      <TileStencilApp route="cricutStencil" locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, widthCm: 20, heightCm: 20 }}>
         <article className="app-guide">
           <QuickAnswer heading="How to make a cut-ready Cricut stencil SVG with bridges from a photo">
             <ol>

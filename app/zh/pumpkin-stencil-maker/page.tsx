@@ -58,7 +58,7 @@ export default function ChinesePumpkinStencilPage() {
     <>
       <HowToJsonLd name="如何用照片制作南瓜雕刻模板" description="把照片转成按南瓜大小打印的雕刻模板。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
+      <TileStencilApp route="pumpkinStencil" locale="zh-CN" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
           <StencilExampleSection locale="zh-CN" name="pumpkin" />
           <p>

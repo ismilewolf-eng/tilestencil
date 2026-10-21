@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function EnglishPrintLargeStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="stencilGuide"
       locale="en"
       intro={{
         eyebrow: "LARGE WALL STENCIL MAKER",

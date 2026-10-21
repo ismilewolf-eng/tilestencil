@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function EnglishAirbrushStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="airbrushStencil"
       locale="en"
       intro={{
         eyebrow: "AIRBRUSH STENCIL MAKER",

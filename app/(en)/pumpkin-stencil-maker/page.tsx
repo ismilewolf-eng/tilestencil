@@ -91,7 +91,7 @@ export default function EnglishPumpkinStencilPage() {
         steps={howToSteps}
       />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
+      <TileStencilApp route="pumpkinStencil" locale="en" intro={intro} defaults={{ renderMode: "template", bridges: true, bridgeMm: 3, widthCm: 18, heightCm: 18 }}>
         <article className="app-guide">
           <StencilExampleSection locale="en" name="pumpkin" />
           <h2>Why make your own pumpkin stencil</h2>

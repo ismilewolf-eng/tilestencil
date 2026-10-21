@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function ChineseAirbrushStencilPage() {
   return (
-    <StencilLanding
+    <StencilLanding route="airbrushStencil"
       locale="zh-CN"
       intro={{ eyebrow: "喷笔模板制作", heading: "用任意图片做正片和负片喷笔模板。", copy: "用黑白反转在模板和遮罩之间切换，可重复使用的模板保留连接桥，按实际尺寸打印，或导出 SVG 用胶片、Mylar 膜或遮盖膜切割。" }}
       defaults={{ renderMode: "template", bridges: true, bridgeMm: 2, widthCm: 18, heightCm: 13 }}

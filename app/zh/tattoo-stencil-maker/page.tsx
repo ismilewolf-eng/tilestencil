@@ -54,7 +54,7 @@ export default function ChineseTattooStencilPage() {
     <>
       <HowToJsonLd name="如何按准确尺寸制作并打印纹身模板" description="把图案转成黑白纹身模板，并按部位尺寸打印。" steps={howToSteps} />
       <FaqJsonLd items={faqItems} />
-      <TileStencilApp locale="zh-CN" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
+      <TileStencilApp route="tattooStencil" locale="zh-CN" intro={intro} defaults={{ renderMode: "template", widthCm: 10, heightCm: 10 }}>
         <article className="app-guide">
           <StencilExampleSection locale="zh-CN" name="tattoo" />
           <h2>线条干净的几个要点</h2>

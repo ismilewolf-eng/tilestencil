@@ -287,7 +287,7 @@ export function GridDrawingApp({ children }: { children?: ReactNode }) {
             <p className="eyebrow">GRID METHOD</p>
             <h1 id="page-title">Drawing grid maker</h1>
             <p className="intro-copy">
-              Put numbered squares over a reference photo, draw the same squares on your paper, canvas or wall, then copy the picture one square at a
+              Free, no sign-up: put numbered squares over a reference photo, draw the same squares on your paper, canvas or wall, then copy the picture one square at a
               time. The grid maker also works out how big each square should be on your surface.
             </p>
           </div>

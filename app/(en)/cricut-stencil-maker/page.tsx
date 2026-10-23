@@ -85,7 +85,7 @@ const faqItems = [
 const intro = {
   eyebrow: "CRICUT & LASER STENCIL MAKER",
   heading: "Turn any photo into a stencil your Cricut can cut.",
-  copy: "Choose a photo, tune the stencil with a live preview, and export a cut-ready SVG with bridges already in place, sized in millimetres for Cricut, Silhouette, and laser cutters. Everything runs in your browser.",
+  copy: "TileStencil makes a cut-ready SVG stencil with bridges from any photo, so the centres of letters and eyes stay attached. Choose a photo, tune the stencil with a live preview, and export a cut-ready SVG with bridges already in place, sized in millimetres for Cricut, Silhouette, and laser cutters. Everything runs in your browser.",
 };
 
 export default function EnglishCricutStencilPage() {

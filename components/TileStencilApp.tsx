@@ -767,8 +767,8 @@ export function TileStencilApp({
             <p className="intro-copy">
               {intro?.copy ??
                 t(
-                  "导入本地 JPG 或 PNG，按真实尺寸自动分到 A4、A3 或 US Letter。图像只在此浏览器中处理。",
-                  "Import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter. Your image stays in this browser.",
+                  "免费用家里的普通打印机打印大海报，不需要大幅面打印机：导入本地 JPG 或 PNG，设好成品尺寸，按 100% 实际尺寸分到 A4、A3 或 US Letter。无需注册，图像只在此浏览器中处理。",
+                  "A free way to print a poster at home without a large-format printer: import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter at 100% actual size. No sign-up, and your image stays in this browser.",
                 )}
             </p>
             {intro?.guideLink ? (

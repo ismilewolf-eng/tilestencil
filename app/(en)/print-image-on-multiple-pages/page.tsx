@@ -146,7 +146,7 @@ export default function EnglishPrintImageOnMultiplePagesPage() {
         intro={{
           eyebrow: "POSTER PRINTING GUIDE",
           heading: "How to print a big picture on multiple pages",
-          copy: "Choose your picture below and type how big you want the poster. You get a PDF of numbered pages: print every page at 100% (Actual Size), trim one edge of each sheet, and tape them together from the back.",
+          copy: "Yes, a normal home printer can do it, for free and with no sign-up. Choose your picture below and type how big you want the poster. You get a PDF of numbered pages: print every page at 100% (Actual Size), trim one edge of each sheet, and tape them together from the back.",
           guideLink: { href: "#guide", label: "Step-by-step guide with diagrams ↓" },
         }}
         defaults={{ unit: "in", widthCm: 60.96, heightCm: 91.44, paperSize: "letter", orientation: "landscape" }}

@@ -73,7 +73,7 @@ export default function RasterbatorAlternativeEnPage() {
         route="rasterbatorAlternative"
         kicker="RASTERBATOR ALTERNATIVE"
         title="Print large tiled posters without halftone dots or blur."
-        lead="Looking for a modern alternative to The Rasterbator or Blockposters? TileStencil tiles any image across multiple A4, A3, or Letter sheets at 100% actual physical size with razor-sharp clarity and zero cloud uploads."
+        lead="Looking for a free alternative to The Rasterbator or Blockposters? TileStencil is free, needs no sign-up, and tiles any image across multiple A4, A3, or Letter sheets at 100% actual physical size with razor-sharp clarity and zero cloud uploads."
       >
         <QuickAnswer heading="The best free Rasterbator alternative for sharp, true-size prints">
           <p>

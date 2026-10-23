@@ -67,7 +67,7 @@ export const PT: Record<string, string> = {
   "High contrast for tracing and cutting": "Alto contraste para decalque e corte",
   "I've paid, check now": "Já paguei, verificar agora",
   "IMAGE EFFECT": "EFEITO DA IMAGEM",
-  "Import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter. Your image stays in this browser.": "Importe um JPG ou PNG do seu dispositivo, defina o tamanho final e divida em folhas A4, A3 ou Carta (US Letter). Sua imagem fica neste navegador.",
+  "A free way to print a poster at home without a large-format printer: import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter at 100% actual size. No sign-up, and your image stays in this browser.": "Um jeito grátis de imprimir um pôster em casa sem impressora de grande formato: importe um JPG ou PNG do seu dispositivo, defina o tamanho final e divida em folhas A4, A3 ou Carta (US Letter) em 100% do tamanho real. Sem cadastro, e sua imagem fica neste navegador.",
   "Invert black and white": "Inverter preto e branco",
   "Keep colour and detail": "Manter cor e detalhes",
   "Keep the original image ratio when changing one side": "Manter a proporção original da imagem ao alterar um lado",

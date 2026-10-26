@@ -7,6 +7,8 @@ import "../globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  // Risetive directory ownership check (claimed listing gives a dofollow link)
+  verification: { other: { "risetive-verification": "VYZa8O0wjUIc5s7x" } },
   title: {
     default: "TileStencil | Free Multi-Page Poster Printer (A4, A3, Letter) - 100% Actual Size",
     template: "%s | TileStencil",

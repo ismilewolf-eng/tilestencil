@@ -66,3 +66,11 @@ Use only brief opacity/transform feedback (100–180ms) for buttons, status chan
 - Tutorial steps are h2s that start "Step N:" (no separate numbered eyebrow). Tables use `.pg-table`; number tables add `.pg-table-figures` (mono, tabular). On phones under 560px the methods table turns into one card per row through `data-label`.
 - Diagrams live in `components/PosterGuideFigures.tsx` and are drawn from `calculateTilePlan`, so sheet counts match the export. Each has a phone version (`.pg-narrow`, shown under 690px) so diagram text is at least 11px on a 320px screen; on phones the tiny printed lines of a sheet become bars and the legend quotes them.
 - English copy uses straight quotes and apostrophes: the CJK-first font stack draws curly ones full-width on Windows.
+
+## Christmas stocking pattern (2026-10-27, English only)
+
+- `/christmas-stocking-pattern` uses `.stocking-bench`: the pattern preview (SVG, drawn from `lib/stocking.ts` in millimetres) on the left, size and paper on the right (sticky). Under 980px the settings card comes first so the download button is reachable without scrolling past the preview.
+- Preview: pieces in paper-white with a solid cutting line and dashed sewing line; the printed sheets are dashed accent boxes drawn on top, each with a numbered accent-soft tag. Only sheets that carry part of a piece are shown and printed (`usedTiles`), numbered in print order.
+- Inch/centimetre pairs (`.stocking-pair`) read "16 in · 41 cm" on one line and stack under 420px instead of wrapping mid-pair.
+- The PDF draws every piece on every sheet clipped to that sheet, so labels crossing a join line up again; each sheet has the 100% note, its sheet number and neighbours, corner marks, and the stocking carries a 1 in square and 5 cm bar.
+

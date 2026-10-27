@@ -79,6 +79,8 @@ describe("Portuguese and Spanish", () => {
     expect(hasPage("pt-BR", "gridDrawing")).toBe(false);
     expect(localizedPath("zh-CN", "gridDrawing")).toBe("/drawing-grid-maker");
     expect(languageAlternates("gridDrawing")).toEqual({ en: "/drawing-grid-maker", "x-default": "/drawing-grid-maker" });
+    expect(hasPage("zh-CN", "stockingPattern")).toBe(false);
+    expect(languageAlternates("stockingPattern")).toEqual({ en: "/christmas-stocking-pattern", "x-default": "/christmas-stocking-pattern" });
   });
 
   it("routes Portuguese and Spanish pages, falling back to English", () => {

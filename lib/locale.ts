@@ -37,7 +37,8 @@ export type SiteRoute =
   | "flowerStencils"
   | "animalStencils"
   | "shapeStencils"
-  | "gridDrawing";
+  | "gridDrawing"
+  | "stockingPattern";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -70,10 +71,11 @@ const routeSuffix: Record<SiteRoute, string> = {
   animalStencils: "/free-stencils/animals",
   shapeStencils: "/free-stencils/shapes",
   gridDrawing: "/drawing-grid-maker",
+  stockingPattern: "/christmas-stocking-pattern",
 };
 
 /** New pages are written in English only (2026-10-21); other languages get them once they draw traffic. */
-const EN_ONLY = new Set<SiteRoute>(["gridDrawing"]);
+const EN_ONLY = new Set<SiteRoute>(["gridDrawing", "stockingPattern"]);
 
 /**
  * Pages written for Brazilian and Spanish-speaking visitors, with slugs in their language.

@@ -206,6 +206,14 @@ function categoryCopy(category: GalleryCategory, locale: Locale): CategoryCopy {
       t("黑色部分是要刻掉的地方，颜料从这里透过去。", "Black areas are cut out; that is where the paint goes through."),
       t("窗户和镜子用喷雪或玻璃颜料，事后能擦掉；木牌用丙烯颜料和海绵拍，薄拍几次边缘才干净。", "On windows and mirrors use snow spray or glass paint, which wipes off later. On wood signs, dab acrylic paint with a sponge in thin coats for clean edges."),
       t("要做很多张贺卡或礼物标签，用 Mylar 膜或塑料文件夹刻一张，可以反复用。", "Making a stack of cards or gift tags? Cut the stencil once from mylar or a plastic folder and reuse it."),
+      ...(locale === "en"
+        ? [
+            <>
+              Sewing a fabric stocking? Use the free <Link href={localizedPath("en", "stockingPattern")}>Christmas stocking pattern</Link>, with cuff and
+              seam allowance, in three sizes.
+            </>,
+          ]
+        : []),
       makeYourOwn,
     ],
     faq: [

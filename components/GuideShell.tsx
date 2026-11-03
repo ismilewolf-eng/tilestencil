@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { UpdatedNote } from "@/components/UpdatedNote";
 import { languageLinks, localizedPath, tr, type Locale, type SiteRoute } from "@/lib/locale";
 import { SiteFooter } from "@/components/SiteFooter";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
@@ -70,6 +71,7 @@ export function GuideShell({ locale, route, kicker, title, lead, children }: Gui
           <p className="guide-kicker">{kicker}</p>
           <h1>{title}</h1>
           <p className="guide-lead">{lead}</p>
+          <UpdatedNote locale={locale} route={route} />
           {children}
         </article>
       </main>

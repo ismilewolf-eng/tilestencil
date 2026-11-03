@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { UpdatedNote } from "@/components/UpdatedNote";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { PaperSize } from "@/lib/geometry";
@@ -85,6 +86,7 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
               Free printable stocking pattern in three sizes, with a cuff and a hanging loop. Pick a size and your paper, download the PDF, and print it at
               actual size on a home printer. Seam allowance is already added. No sign-up.
             </p>
+            <UpdatedNote locale="en" route="stockingPattern" />
           </div>
           <div className="privacy-note">
             <span className="privacy-lock" aria-hidden="true">✂</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChangeEvent, DragEvent, ReactNode } from "react";
+import { UpdatedNote } from "@/components/UpdatedNote";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
@@ -771,6 +772,7 @@ export function TileStencilApp({
                   "A free way to print a poster at home without a large-format printer: import a local JPG or PNG, set its final size, and tile it across A4, A3, or US Letter at 100% actual size. No sign-up, and your image stays in this browser.",
                 )}
             </p>
+            <UpdatedNote locale={locale} route={route} />
             {intro?.guideLink ? (
               <a className="intro-guide-link" href={intro.guideLink.href}>
                 {intro.guideLink.label}

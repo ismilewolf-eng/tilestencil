@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChangeEvent, DragEvent, ReactNode } from "react";
+import { UpdatedNote } from "@/components/UpdatedNote";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { PaperSize } from "@/lib/geometry";
 import {
@@ -290,6 +291,7 @@ export function GridDrawingApp({ children }: { children?: ReactNode }) {
               Free, no sign-up: put numbered squares over a reference photo, draw the same squares on your paper, canvas or wall, then copy the picture one square at a
               time. The grid maker also works out how big each square should be on your surface.
             </p>
+            <UpdatedNote locale="en" route="gridDrawing" />
           </div>
           <div className="privacy-note">
             <span className="privacy-lock" aria-hidden="true">⌁</span>

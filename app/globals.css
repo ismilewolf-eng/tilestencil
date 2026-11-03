@@ -3322,3 +3322,11 @@ select {
     font-size: 13px;
   }
 }
+
+/* "Updated November 2026" under a page lead (components/UpdatedNote.tsx) */
+.updated-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}

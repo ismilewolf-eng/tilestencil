@@ -74,3 +74,11 @@ Use only brief opacity/transform feedback (100–180ms) for buttons, status chan
 - Inch/centimetre pairs (`.stocking-pair`) read "16 in · 41 cm" on one line and stack under 420px instead of wrapping mid-pair.
 - The PDF draws every piece on every sheet clipped to that sheet, so labels crossing a join line up again; each sheet has the 100% note, its sheet number and neighbours, corner marks, and the stocking carries a 1 in square and 5 cm bar.
 
+
+## Gingerbread house template (2026-11-04, English only)
+
+- `/gingerbread-house-template` reuses `.stocking-bench`: what prints on the left, the house and settings on the right (first on phones, so the download stays near the top).
+- The left card shows every printed sheet as a paper thumbnail (`.gb-sheets`), drawn from `houseSheets()` in `lib/gingerbread.ts`, so the preview, the sheet count and the PDF always agree. Two thumbnails per row under 560px.
+- Pieces that fit one sheet are packed (every order, quarter turn and page orientation is tried); the three ready-made sizes print with no taping, which the badge says ("No taping" in success green). Only a piece too big for one sheet is tiled, and its thumbnails name the part in the sheet corner ("FRONT 2/4") instead of at the piece centre, where a sheet edge would cut the word in half.
+- The settings card opens with a small oblique drawing of the assembled house, redrawn to the chosen proportions, naming width, depth, wall and roof, so the four custom fields are self-explanatory. Custom sizes outside the limits show the reason under the fields, keep the Classic preview, and disable the download.
+- Side walls are shortened by two thicknesses of the material (1/4 in dough, 1/8 in card) so they sit between the front and back; the roof overhangs 1/2 in on every side.

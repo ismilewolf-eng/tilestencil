@@ -3330,3 +3330,280 @@ select {
   font-size: 13px;
   letter-spacing: 0.01em;
 }
+
+/* Gingerbread house template (/gingerbread-house-template, 2026-11-04): reuses the stocking bench.
+   Left: every printed sheet as a paper thumbnail; right: the house diagram and settings. */
+.gb-sheets {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--surface-soft);
+}
+
+.gb-sheet {
+  margin: 0;
+}
+
+.gb-sheet svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 340px;
+  filter: drop-shadow(0 1px 2px rgb(59 45 28 / 12%));
+}
+
+.gb-paper {
+  fill: #fffefa;
+  stroke: #cfc5b6;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.gb-piece {
+  fill: #f3e2cc;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.gb-opening {
+  fill: #fffefa;
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.gb-piece-label {
+  fill: var(--ink);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.gb-piece-cut {
+  fill: var(--muted);
+  font-weight: 500;
+}
+
+.gb-sheet-tag {
+  fill: var(--accent-soft);
+}
+
+.gb-sheet-num {
+  fill: var(--accent-dark);
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-weight: 650;
+}
+
+.page-badge.gb-badge-ok {
+  background: color-mix(in srgb, var(--success) 12%, white);
+  color: var(--success);
+}
+
+.gb-cutlist {
+  display: grid;
+  gap: 0;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rule);
+}
+
+.gb-cutlist li {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(0, 1.6fr) auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+
+.gb-cutlist li span {
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+
+.gb-cutlist .gb-cut-count {
+  color: var(--muted);
+  font-family: inherit;
+  text-align: right;
+}
+
+.gb-diagram {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  max-height: 170px;
+  margin: 10px auto 0;
+}
+
+.gb-diagram text {
+  fill: var(--muted);
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-weight: 600;
+}
+
+.gb-face {
+  fill: #f3e2cc;
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.gb-face.gb-face-side {
+  fill: #e6cfb2;
+}
+
+.gb-face.gb-face-roof {
+  fill: #fffdf8;
+}
+
+.gb-sizes {
+  grid-template-columns: repeat(4, 1fr);
+  min-height: 56px;
+}
+
+.gb-sizes label > span {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+}
+
+.gb-sizes b {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.gb-sizes small {
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.gb-custom {
+  margin-top: 14px;
+}
+
+.gb-custom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.gb-input {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.gb-input-box {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border: 1px solid #cfc5b6;
+  border-radius: 8px;
+  background: #fffefa;
+}
+
+.gb-input-box:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--focus) 72%, white);
+  outline-offset: 2px;
+}
+
+.gb-input-box input {
+  width: 100%;
+  min-width: 0;
+  padding: 0 4px 0 12px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.gb-input-box input[aria-invalid="true"] {
+  color: var(--error);
+}
+
+.gb-input-box span {
+  padding-right: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.gb-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 0 12px;
+}
+
+.gb-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.gb-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.gb-size-table th[scope="row"] {
+  font-weight: 700;
+}
+
+/* Phones: two sheets per row, so the whole print run is visible without a long scroll. */
+@media (max-width: 560px) {
+  .gb-sheets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 420px) {
+  .gb-sizes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gb-sizes label:nth-child(3) {
+    border-left: 0;
+  }
+
+  .gb-sizes label:nth-child(n + 3) {
+    border-top: 1px solid #cfc5b6;
+  }
+
+  .gb-two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .gb-cutlist li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .gb-cutlist li span:not(.gb-cut-count) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

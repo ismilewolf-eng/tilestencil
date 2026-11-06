@@ -3737,3 +3737,12 @@ select {
     border-top: 1px solid #cfc5b6;
   }
 }
+
+/* One line per gallery design (lib/gallery-notes.ts) */
+.gallery-note {
+  display: block;
+  margin: 4px 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GallerySvgButton } from "@/components/GallerySvgButton";
 import { designFiles, LICENSE_URL, type GalleryCategory, type GalleryDesign, type GalleryGroup } from "@/lib/gallery";
+import { DESIGN_NOTES } from "@/lib/gallery-notes";
 import { absoluteLocalizedPath, localizedPath, type Locale } from "@/lib/locale";
 import { SITE_URL } from "@/lib/site";
 
@@ -26,6 +27,9 @@ export function GalleryCard({ locale, design, group }: { locale: Locale; design:
       </a>
       <figcaption>
         <strong>{name}</strong>
+        {DESIGN_NOTES[`${design.category}-${design.slug}`] ? (
+          <span className="gallery-note">{DESIGN_NOTES[`${design.category}-${design.slug}`][locale === "en" ? "en" : "zh"]}</span>
+        ) : null}
         <span className="gallery-actions">
           <a href={files.pdf} download>{text(locale, "免费 PDF", "Free PDF")}</a>
           <a href={files.png} download>PNG</a>

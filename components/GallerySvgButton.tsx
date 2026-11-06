@@ -77,6 +77,9 @@ export function GallerySvgButton({ slug, name, png, locale }: { slug: string; na
         {label}
       </button>
       <dialog ref={dialog} className="svg-dialog" onClose={() => setOpen(false)} aria-labelledby={`svg-${slug}-title`}>
+        {/* Rendered only while open, so the same help text isn't repeated on every card in the page HTML. */}
+        {open ? (
+          <>
         <div className="svg-dialog-head">
           <h3 id={`svg-${slug}-title`}>{t(`${name} · 可切割 SVG`, `${name} · cut-ready SVG`)}</h3>
           <button type="button" className="svg-dialog-close" onClick={close} aria-label={t("关闭", "Close")}>
@@ -119,6 +122,8 @@ export function GallerySvgButton({ slug, name, png, locale }: { slug: string; na
           </p>
         ) : null}
         {status.kind === "error" ? <p className="svg-dialog-error" role="alert">{status.message}</p> : null}
+          </>
+        ) : null}
       </dialog>
     </>
   );

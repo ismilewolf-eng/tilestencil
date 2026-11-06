@@ -3607,3 +3607,133 @@ select {
     grid-row: 2;
   }
 }
+
+/* Christmas tree skirt pattern (/christmas-tree-skirt-pattern, 2026-11-06): reuses the stocking bench;
+   the settings card opens with the finished skirt seen from above. */
+.ts-diagram {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 8px auto 0;
+}
+
+.ts-diagram text {
+  fill: var(--muted);
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ts-diagram .ts-hole-label {
+  font-size: 10px;
+}
+
+.ts-skirt {
+  fill: #f3e2cc;
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.ts-seam {
+  stroke: var(--muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.ts-dim {
+  stroke: var(--muted);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.ts-fold {
+  stroke: var(--accent-dark);
+  stroke-width: 1.6;
+  stroke-dasharray: 10 4 2 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.ts-fold-label {
+  fill: var(--accent-dark);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.stocking-legend .legend-fold::before {
+  border-top: 2px dashed var(--accent-dark);
+}
+
+.ts-fabric-note {
+  margin: -6px 0 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Gingerbread man template (/gingerbread-man-template, 2026-11-06): sheet thumbnails as on the
+   gingerbread house page; a grid size shows its single sheet larger. */
+.gm-sheets-one {
+  grid-template-columns: minmax(0, 340px);
+  justify-content: center;
+}
+
+.gm-detail circle,
+.gm-detail path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.1;
+  vector-effect: non-scaling-stroke;
+}
+
+.gm-key {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.gm-size-note {
+  margin: 12px 0 0;
+}
+
+.gm-sizes {
+  grid-template-columns: repeat(5, 1fr);
+  min-height: 56px;
+}
+
+.gm-sizes label > span {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+}
+
+.gm-sizes b {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.gm-sizes small {
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+@media (max-width: 560px) {
+  .gm-sizes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gm-sizes label:nth-child(4) {
+    border-left: 0;
+  }
+
+  .gm-sizes label:nth-child(n + 4) {
+    border-top: 1px solid #cfc5b6;
+  }
+}

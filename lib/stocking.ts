@@ -227,7 +227,7 @@ export function stockingPattern(sizeId: StockingSize): StockingPattern {
   };
 }
 
-function polygonTouchesRect(poly: Point[], left: number, top: number, right: number, bottom: number): boolean {
+export function polygonTouchesRect(poly: Point[], left: number, top: number, right: number, bottom: number): boolean {
   for (let i = 0; i < poly.length; i++) {
     const [x1, y1] = poly[i];
     const [x2, y2] = poly[(i + 1) % poly.length];

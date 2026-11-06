@@ -60,6 +60,8 @@ describe("SEO metadata routes", () => {
       (SITE_URL + "/drawing-grid-maker"),
       (SITE_URL + "/christmas-stocking-pattern"),
       (SITE_URL + "/gingerbread-house-template"),
+      (SITE_URL + "/christmas-tree-skirt-pattern"),
+      (SITE_URL + "/gingerbread-man-template"),
       (SITE_URL + "/zh/free-stencils"),
       (SITE_URL + "/free-stencils"),
       (SITE_URL + "/zh/free-stencils/halloween"),

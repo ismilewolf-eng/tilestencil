@@ -82,3 +82,15 @@ Use only brief opacity/transform feedback (100–180ms) for buttons, status chan
 - Pieces that fit one sheet are packed (every order, quarter turn and page orientation is tried); the three ready-made sizes print with no taping, which the badge says ("No taping" in success green). Only a piece too big for one sheet is tiled, and its thumbnails name the part in the sheet corner ("FRONT 2/4") instead of at the piece centre, where a sheet edge would cut the word in half.
 - The settings card opens with a small oblique drawing of the assembled house, redrawn to the chosen proportions, naming width, depth, wall and roof, so the four custom fields are self-explanatory. Custom sizes outside the limits show the reason under the fields, keep the Classic preview, and disable the download.
 - Side walls are shortened by two thicknesses of the material (1/4 in dough, 1/8 in card) so they sit between the front and back; the roof overhangs 1/2 in on every side.
+
+## Christmas tree skirt pattern (2026-11-06, English only)
+
+- `/christmas-tree-skirt-pattern` reuses `.stocking-bench`: the template with the printed sheets drawn over it on the left (as the stocking page), settings on the right with a top view of the finished skirt (`.ts-diagram`) that redraws for round or 6/8/12 panels.
+- Round = one quarter ring cut on fabric folded in four; both straight edges are fold lines, drawn dash-dot in accent-dark and labelled PLACE ON FOLD (top edge and, rotated, the left edge, kept clear of the sheet tags). Panels = one straight-edged wedge, cut N times. 3/8 in seam allowance on every cut edge, none on folds.
+- The fabric note under the facts says plainly when a round skirt is wider than 44 in quilting cotton and points to Panels.
+
+## Gingerbread man template (2026-11-06, English only)
+
+- `/gingerbread-man-template`: the outline is stored in `lib/gingerbreadman.ts` (a union of head, body, arms and legs made once with shapely, scaled to height 1); face and buttons are optional thin lines.
+- Sizes that fit one sheet are laid out as a grid of copies and the preview shows that one sheet ("No taping"); bigger sizes show the whole figure with numbered sheet boxes over it, like the stocking page, not a row of fragments.
+- Five size segments (`.gm-sizes`, its own class so the two-column phone rules of `.gb-sizes` don't apply) become three columns under 560px.

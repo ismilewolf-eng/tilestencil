@@ -39,6 +39,8 @@ export function SiteFooter({ locale }: SiteFooterProps) {
           {locale === "en" ? <Link href={localizedPath("en", "gridDrawing")}>Drawing Grid Maker</Link> : null}
           {locale === "en" ? <Link href={localizedPath("en", "stockingPattern")}>Christmas Stocking Pattern</Link> : null}
           {locale === "en" ? <Link href={localizedPath("en", "gingerbreadHouse")}>Gingerbread House Template</Link> : null}
+          {locale === "en" ? <Link href={localizedPath("en", "treeSkirt")}>Tree Skirt Pattern</Link> : null}
+          {locale === "en" ? <Link href={localizedPath("en", "gingerbreadMan")}>Gingerbread Man Template</Link> : null}
           <Link href={localizedPath(locale, "patternGuide")}>{text(locale, "纸样打印", "Patterns")}</Link>
           <Link href={localizedPath(locale, "bannerGuide")}>{text(locale, "横幅大字", "Banners")}</Link>
           <Link href={localizedPath(locale, "stainedGlassGuide")}>{text(locale, "彩色玻璃", "Stained Glass")}</Link>

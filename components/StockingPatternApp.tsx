@@ -83,8 +83,8 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
             <p className="eyebrow">FREE SEWING PATTERN</p>
             <h1 id="page-title">Christmas stocking pattern</h1>
             <p className="intro-copy">
-              Free printable stocking pattern in three sizes, with a cuff and a hanging loop. Pick a size and your paper, download the PDF, and print it at
-              actual size on a home printer. Seam allowance is already added. No sign-up.
+              Free PDF download: a printable stocking pattern with a cuff and a hanging loop, in small, medium and large (20 in). Pick a size and your
+              paper, download the PDF, and print it at actual size on a home printer. Seam allowance is already added. No sign-up.
             </p>
             <UpdatedNote locale="en" route="stockingPattern" />
           </div>

@@ -5,9 +5,10 @@ import { QuickAnswer } from "@/components/QuickAnswer";
 import { StockingPatternApp } from "@/components/StockingPatternApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
-const TITLE = "Free Christmas Stocking Pattern – Printable PDF in 3 Sizes";
+// 2026-11-10: wording people search (Search Console): "pdf free download", "with cuff", "large".
+const TITLE = "Free Christmas Stocking Pattern PDF – With Cuff, Small to Large";
 const DESCRIPTION =
-  "Free printable Christmas stocking pattern with cuff and hanging loop, in 12, 16 and 20 inch sizes. Prints at actual size on US Letter or A4. Seam allowance included.";
+  "Free PDF download: printable Christmas stocking pattern with cuff and hanging loop, in small (12 in), medium (16 in) and large (20 in). Prints at actual size on US Letter or A4.";
 
 export const metadata: Metadata = {
   title: TITLE,

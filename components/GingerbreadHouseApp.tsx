@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { UpdatedNote } from "@/components/UpdatedNote";
 import { PatternSvgOffer } from "@/components/ChristmasPack";
+import { PatternRequest } from "@/components/PatternRequest";
 import { houseFit, houseSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -412,6 +413,7 @@ export function GingerbreadHouseApp({ children }: { children?: ReactNode }) {
         </div>
 
         {children}
+        <PatternRequest />
       </main>
 
       <SiteFooter locale="en" />

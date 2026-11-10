@@ -8,6 +8,7 @@ import type { PaperSize } from "@/lib/geometry";
 import { localizedPath } from "@/lib/locale";
 import { pathData, patternPlan, STOCKING_SIZES, stockingPattern, usedTiles, type StockingSize } from "@/lib/stocking";
 import { PatternSvgOffer } from "@/components/ChristmasPack";
+import { PatternRequest } from "@/components/PatternRequest";
 import { stockingFit, stockingSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -238,6 +239,7 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
         </div>
 
         {children}
+        <PatternRequest />
       </main>
 
       <SiteFooter locale="en" />

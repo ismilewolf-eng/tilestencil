@@ -3896,3 +3896,94 @@ select {
     padding-left: 8px;
   }
 }
+
+/* "Looking for a pattern we don't have?" — one line from the visitor, at the foot of a pattern page */
+.request-box {
+  width: min(780px, 100%);
+  margin: 32px auto 0;
+  padding: 20px 22px;
+  border: 1px dashed var(--rule);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.request-box h2 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.request-box-label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.request-box-row {
+  display: flex;
+  gap: 8px;
+}
+
+.request-box-row input[type="text"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #b8ab99;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+}
+
+.request-box-row .request-box-trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.request-box-row button {
+  flex: none;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fffdf8;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.request-box-row button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.request-box-row input:focus-visible,
+.request-box-row button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.request-box-thanks {
+  margin: 0;
+  color: var(--success);
+  font-weight: 600;
+}
+
+.request-box-error {
+  margin: 10px 0 0;
+  color: var(--error);
+  font-size: 14px;
+}
+
+@media (max-width: 520px) {
+  .request-box-row {
+    flex-direction: column;
+  }
+}

@@ -8,9 +8,10 @@
  *   PAYPAL_ENV                        "sandbox" (default) or "live"
  *   SVG_PAID                          "1" turns paid SVG on; anything else keeps SVG free
  *   SVG_PRICE_USD                     price per stencil, default "1.99"
+ *   PACK_PRICE_USD                    price of the Christmas pack (all Christmas SVGs), default "4.99"
  */
 
-import { waffoEnabled, waffoTestMode, type WaffoEnv } from "./waffo";
+import { waffoEnabled, waffoTestMode, type Product, type WaffoEnv } from "./waffo";
 
 export interface PaymentEnv extends WaffoEnv {
   PAYPAL_CLIENT_ID?: string;
@@ -18,6 +19,7 @@ export interface PaymentEnv extends WaffoEnv {
   PAYPAL_ENV?: string;
   SVG_PAID?: string;
   SVG_PRICE_USD?: string;
+  PACK_PRICE_USD?: string;
 }
 
 type Fetch = (input: string, init?: RequestInit) => Promise<Response>;
@@ -31,6 +33,23 @@ export function apiBase(env: PaymentEnv): string {
 export function price(env: PaymentEnv): string {
   const value = Number(env.SVG_PRICE_USD ?? DEFAULT_PRICE);
   return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : DEFAULT_PRICE;
+}
+
+export const DEFAULT_PACK_PRICE = "4.99";
+
+export function packPrice(env: PaymentEnv): string {
+  const value = Number(env.PACK_PRICE_USD ?? DEFAULT_PACK_PRICE);
+  return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : DEFAULT_PACK_PRICE;
+}
+
+export const priceFor = (env: PaymentEnv, product: Product) => (product === "pack" ? packPrice(env) : price(env));
+
+/**
+ * The pack is offered only when every checkout row can sell it: with Waffo on, that needs its
+ * own Waffo product. A pack at the single-SVG price could not be told apart, so it is off then too.
+ */
+export function packEnabled(env: PaymentEnv): boolean {
+  return paidEnabled(env) && packPrice(env) !== price(env) && (!waffoEnabled(env) || Boolean(env.WAFFO_PACK_PRODUCT_ID));
 }
 
 export function paidEnabled(env: PaymentEnv): boolean {
@@ -50,6 +69,7 @@ export function publicConfig(env: PaymentEnv) {
     currency: "USD",
     sandbox: env.PAYPAL_ENV !== "live",
     ...(waffoEnabled(env) ? { waffo: { test: waffoTestMode(env) } } : {}),
+    ...(packEnabled(env) ? { pack: { price: packPrice(env) } } : {}),
   };
 }
 
@@ -65,7 +85,8 @@ async function accessToken(env: PaymentEnv, fetchImpl: Fetch): Promise<string> {
 }
 
 /** customId: optional first-referrer tag shown as "Custom" on the PayPal transaction (max 127 chars). */
-export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, customId = ""): Promise<{ id: string }> {
+export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, customId = "", product: Product = "svg"): Promise<{ id: string }> {
+  if (product === "pack" && !packEnabled(env)) throw new Error("pack not offered");
   const token = await accessToken(env, fetchImpl);
   const response = await fetchImpl(`${apiBase(env)}/v2/checkout/orders`, {
     method: "POST",
@@ -74,8 +95,8 @@ export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, cus
       intent: "CAPTURE",
       purchase_units: [
         {
-          description: "TileStencil cut-ready SVG stencil export",
-          amount: { currency_code: "USD", value: price(env) },
+          description: product === "pack" ? "TileStencil Christmas SVG pack" : "TileStencil cut-ready SVG stencil export",
+          amount: { currency_code: "USD", value: priceFor(env, product) },
           ...(customId ? { custom_id: customId.slice(0, 127) } : {}),
         },
       ],
@@ -87,7 +108,7 @@ export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, cus
   return { id: order.id };
 }
 
-export type CaptureResult = { ok: true; orderId: string } | { ok: false; reason: string };
+export type CaptureResult = { ok: true; orderId: string; product: Product } | { ok: false; reason: string };
 
 /**
  * Capture the approved order and accept it only if PayPal reports the money as
@@ -128,6 +149,9 @@ function checkCaptured(env: PaymentEnv, orderId: string, body: unknown): Capture
   };
   const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
   if (order.status !== "COMPLETED" || capture?.status !== "COMPLETED") return { ok: false, reason: "not completed" };
-  if (capture.amount?.currency_code !== "USD" || capture.amount?.value !== price(env)) return { ok: false, reason: "amount mismatch" };
-  return { ok: true, orderId };
+  if (capture.amount?.currency_code !== "USD") return { ok: false, reason: "amount mismatch" };
+  // The amount PayPal captured decides what was bought; the browser's claim is not used.
+  if (packEnabled(env) && capture.amount?.value === packPrice(env)) return { ok: true, orderId, product: "pack" };
+  if (capture.amount?.value !== price(env)) return { ok: false, reason: "amount mismatch" };
+  return { ok: true, orderId, product: "svg" };
 }

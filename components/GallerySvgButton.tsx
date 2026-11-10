@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { loadSvgPaymentConfig, SvgPaywall, type SvgPaymentConfig } from "@/components/SvgPaywall";
 import { gallerySvg } from "@/lib/gallery-svg";
 import type { Locale } from "@/lib/locale";
+import { hasPack, isChristmasSlug, PACK_EVENT } from "@/lib/unlock";
 
 // One config request per page, shared by every card.
 let configPromise: Promise<SvgPaymentConfig> | null = null;
@@ -27,7 +28,11 @@ export function GallerySvgButton({ slug, name, png, locale }: { slug: string; na
 
   useEffect(() => {
     void paymentConfig().then(setConfig);
-    setUnlocked(Boolean(window.sessionStorage.getItem(unlockKey(slug))));
+    const read = () => setUnlocked(Boolean(window.sessionStorage.getItem(unlockKey(slug))) || (isChristmasSlug(slug) && hasPack()));
+    read();
+    // The pack can be bought from the banner above the cards.
+    window.addEventListener(PACK_EVENT, read);
+    return () => window.removeEventListener(PACK_EVENT, read);
   }, [slug]);
 
   const widthMm = Number(size) * (unit === "in" ? 25.4 : 10);

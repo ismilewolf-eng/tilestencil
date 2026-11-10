@@ -1821,6 +1821,8 @@ select {
 
 .svg-paywall {
   display: grid;
+  /* minmax(0, …): the pay buttons shrink with a narrow dialog instead of pushing past its border. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 8px;
   margin-top: 12px;
   padding: 14px;
@@ -3745,4 +3747,152 @@ select {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.45;
+}
+
+/* Christmas pattern pages: paid cut-ready SVG under the free PDF button */
+.pattern-svg {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule);
+}
+
+.pattern-svg-title {
+  margin: 0;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pattern-svg .secondary-button {
+  min-height: 44px;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pattern-svg .secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.pattern-svg-price {
+  flex: none;
+  color: var(--accent-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.pattern-svg-fit,
+.pattern-svg-done {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pattern-svg-done {
+  color: var(--success);
+}
+
+/* Christmas gallery: the pack, above the cards */
+.pack-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.pack-banner-text {
+  display: grid;
+  flex: 1 1 280px;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.pack-banner-text strong {
+  font-size: 16px;
+}
+
+.pack-banner-text span {
+  color: var(--muted);
+}
+
+.pack-banner-button {
+  flex: none;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fffdf8;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms var(--ease-out);
+}
+
+.pack-banner-button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.pack-banner-button:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pack-banner-button:hover:not(:disabled) {
+    background: var(--accent-dark);
+  }
+}
+
+.pack-banner-status {
+  flex: 1 1 100%;
+  margin: 0;
+  color: var(--success);
+  font-size: 14px;
+}
+
+.pack-banner-status.is-error {
+  color: var(--error);
+}
+
+@media (max-width: 520px) {
+  .pack-banner-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pack-banner-button {
+    transition: none;
+  }
+}
+
+/* Phones: the pay box sits inside a dialog, so the Waffo row tightens to stay inside it. */
+@media (max-width: 430px) {
+  .svg-dialog .svg-paywall-waffo {
+    gap: 8px;
+    padding: 0 10px;
+    font-size: 15px;
+  }
+
+  .svg-dialog .pay-marks {
+    gap: 7px;
+  }
+
+  .svg-dialog .svg-paywall-waffo-label {
+    padding-left: 8px;
+  }
 }

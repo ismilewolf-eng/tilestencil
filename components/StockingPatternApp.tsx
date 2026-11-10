@@ -7,6 +7,8 @@ import Link from "next/link";
 import type { PaperSize } from "@/lib/geometry";
 import { localizedPath } from "@/lib/locale";
 import { pathData, patternPlan, STOCKING_SIZES, stockingPattern, usedTiles, type StockingSize } from "@/lib/stocking";
+import { PatternSvgOffer } from "@/components/ChristmasPack";
+import { stockingFit, stockingSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
@@ -212,6 +214,12 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
             <button className="secondary-button export-button stocking-outline-button" type="button" onClick={() => void downloadOutline()} disabled={busy}>
               One-page outline PDF
             </button>
+            <PatternSvgOffer
+              slug="christmas-pattern-stocking"
+              fileName={`christmas-stocking-${size}.svg`}
+              makeSvg={() => stockingSvg(size)}
+              fit={stockingFit(size)}
+            />
             {status ? (
               <p className={STATUS_CLASS[status.kind]} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">
                 {status.message}

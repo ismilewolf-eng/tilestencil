@@ -84,7 +84,7 @@ describe("waffo checkout and order check", () => {
     const { base64 } = await keyPair();
     const env = { ...ids, WAFFO_PRIVATE_KEY: base64 };
     const run = (orders: unknown[], e: WaffoEnv = env) => checkOrder(e, REF, fakeWaffo({ onetimeOrders: orders }).fetchImpl);
-    await expect(run([order()])).resolves.toEqual({ ok: true, orderId: "ORD_1" });
+    await expect(run([order()])).resolves.toEqual({ ok: true, orderId: "ORD_1", product: "svg" });
     await expect(run([])).resolves.toEqual({ ok: false, reason: "not found" });
     await expect(run([order({ status: "pending" })])).resolves.toEqual({ ok: false, reason: "pending" });
     await expect(run([order({ onetimeProduct: { id: "PROD_other" } })])).resolves.toEqual({ ok: false, reason: "mismatch" });

@@ -1,6 +1,6 @@
 import { sanitizeCustomId } from "../../../lib/attribution";
-import { paidEnabled, type PaymentEnv } from "../../../lib/paypal";
-import { createCheckout, waffoEnabled, waffoLanguage } from "../../../lib/waffo";
+import { packEnabled, paidEnabled, type PaymentEnv } from "../../../lib/paypal";
+import { asProduct, createCheckout, waffoEnabled, waffoLanguage } from "../../../lib/waffo";
 
 type Context = { env: PaymentEnv; request: Request };
 
@@ -11,8 +11,11 @@ type Context = { env: PaymentEnv; request: Request };
 export async function onRequestPost({ env, request }: Context): Promise<Response> {
   if (!paidEnabled(env) || !waffoEnabled(env)) return Response.json({ error: "payments off" }, { status: 404 });
   try {
-    const body = (await request.json().catch(() => ({}))) as { source?: unknown; locale?: unknown };
+    const body = (await request.json().catch(() => ({}))) as { source?: unknown; locale?: unknown; product?: unknown };
+    const product = asProduct(body.product);
+    if (product === "pack" && !packEnabled(env)) return Response.json({ error: "pack not offered" }, { status: 404 });
     const session = await createCheckout(env, {
+      product,
       source: sanitizeCustomId(body.source),
       returnUrl: new URL("/payment-complete", request.url).toString(),
       language: waffoLanguage(body.locale),

@@ -8,6 +8,7 @@
  *   WAFFO_PRIVATE_KEY   RSA private key of the API key (PEM or bare base64; test and live keys differ)
  *   WAFFO_STORE_ID      STO_…
  *   WAFFO_PRODUCT_ID    PROD_… (one-time product priced to match SVG_PRICE_USD)
+ *   WAFFO_PACK_PRODUCT_ID  PROD_… (one-time product priced to match PACK_PRICE_USD; without it the pack is not offered)
  *   WAFFO_ENV           "test" (default) or "live"; must match the key
  *
  * Flow: the browser asks for a checkout session, opens it in a new tab, then polls the
@@ -20,6 +21,7 @@ export interface WaffoEnv {
   WAFFO_PRIVATE_KEY?: string;
   WAFFO_STORE_ID?: string;
   WAFFO_PRODUCT_ID?: string;
+  WAFFO_PACK_PRODUCT_ID?: string;
   WAFFO_ENV?: string;
 }
 
@@ -31,6 +33,11 @@ const REF_PATTERN = /^ts_[0-9a-f]{32}$/;
 export function waffoEnabled(env: WaffoEnv): boolean {
   return Boolean(env.WAFFO_MERCHANT_ID && env.WAFFO_PRIVATE_KEY && env.WAFFO_STORE_ID && env.WAFFO_PRODUCT_ID);
 }
+
+/** What is being bought: one SVG export, or the Christmas pack (every Christmas SVG on the site). */
+export type Product = "svg" | "pack";
+export const asProduct = (value: unknown): Product => (value === "pack" ? "pack" : "svg");
+const waffoProductId = (env: WaffoEnv, product: Product) => (product === "pack" ? env.WAFFO_PACK_PRODUCT_ID : env.WAFFO_PRODUCT_ID);
 
 export const waffoTestMode = (env: WaffoEnv) => env.WAFFO_ENV !== "live";
 
@@ -101,15 +108,17 @@ export function waffoLanguage(locale: unknown): WaffoLanguage {
 
 export async function createCheckout(
   env: WaffoEnv,
-  { source = "", returnUrl, language }: { source?: string; returnUrl: string; language: WaffoLanguage },
+  { source = "", returnUrl, language, product = "svg" }: { source?: string; returnUrl: string; language: WaffoLanguage; product?: Product },
   fetchImpl: Fetch = fetch,
 ): Promise<{ ref: string; url: string }> {
+  const productId = waffoProductId(env, product);
+  if (!productId) throw new Error(`waffo product not configured: ${product}`);
   const ref = newWaffoRef();
   const data = (await signedPost(
     env,
     "/v1/actions/checkout/create-session",
     {
-      productId: env.WAFFO_PRODUCT_ID,
+      productId,
       currency: "USD",
       orderMerchantExternalId: ref,
       metadata: source ? { source: source.slice(0, 127) } : {},
@@ -123,7 +132,7 @@ export async function createCheckout(
   return { ref, url: data.checkoutUrl };
 }
 
-export type WaffoStatus = { ok: true; orderId: string } | { ok: false; reason: "pending" | "not found" | "bad ref" | "mismatch" };
+export type WaffoStatus = { ok: true; orderId: string; product: Product } | { ok: false; reason: "pending" | "not found" | "bad ref" | "mismatch" };
 
 type OrderRow = { id?: string; status?: string; testMode?: boolean; currency?: string; onetimeProduct?: { id?: string } | null };
 
@@ -147,10 +156,12 @@ export async function checkOrder(env: WaffoEnv, ref: string, fetchImpl: Fetch = 
   if (!orders.length) return { ok: false, reason: "not found" };
   const paid = orders.find((order) => order.status === "completed");
   if (!paid) return { ok: false, reason: "pending" };
-  if (paid.onetimeProduct?.id !== env.WAFFO_PRODUCT_ID || paid.currency !== "USD" || paid.testMode !== waffoTestMode(env)) {
+  const bought = paid.onetimeProduct?.id;
+  const product: Product | null = bought && bought === env.WAFFO_PACK_PRODUCT_ID ? "pack" : bought && bought === env.WAFFO_PRODUCT_ID ? "svg" : null;
+  if (!product || paid.currency !== "USD" || paid.testMode !== waffoTestMode(env)) {
     return { ok: false, reason: "mismatch" };
   }
-  return { ok: true, orderId: paid.id ?? ref };
+  return { ok: true, orderId: paid.id ?? ref, product };
 }
 
 // Waffo's webhook signing keys, as embedded in @waffo/pancake-ts 0.26.0 (same as video-starter).

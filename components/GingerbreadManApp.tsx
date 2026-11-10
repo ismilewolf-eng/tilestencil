@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { UpdatedNote } from "@/components/UpdatedNote";
+import { PatternSvgOffer } from "@/components/ChristmasPack";
+import { manFit, manSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import type { PaperSize } from "@/lib/geometry";
@@ -297,6 +299,13 @@ export function GingerbreadManApp({ children }: { children?: ReactNode }) {
             <button className="primary-button export-button" type="button" onClick={() => void download()} disabled={busy || Boolean(problem)}>
               Download template PDF
             </button>
+            <PatternSvgOffer
+              slug="christmas-pattern-gingerbread-man"
+              fileName="gingerbread-man-template.svg"
+              makeSvg={() => manSvg(heightMm, details)}
+              disabled={Boolean(problem)}
+              fit={manFit(heightMm)}
+            />
             {status ? (
               <p className={STATUS_CLASS[status.kind]} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">
                 {status.message}

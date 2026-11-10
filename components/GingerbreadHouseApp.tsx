@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { UpdatedNote } from "@/components/UpdatedNote";
+import { PatternSvgOffer } from "@/components/ChristmasPack";
+import { houseFit, houseSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import type { PaperSize } from "@/lib/geometry";
@@ -386,6 +388,13 @@ export function GingerbreadHouseApp({ children }: { children?: ReactNode }) {
             <button className="primary-button export-button" type="button" onClick={() => void download()} disabled={busy || Boolean(problem)}>
               Download template PDF
             </button>
+            <PatternSvgOffer
+              slug="christmas-pattern-gingerbread-house"
+              fileName="gingerbread-house-template.svg"
+              makeSvg={() => houseSvg(size, material, openings)}
+              disabled={Boolean(problem)}
+              fit={houseFit(size, material)}
+            />
             {status ? (
               <p className={STATUS_CLASS[status.kind]} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">
                 {status.message}

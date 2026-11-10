@@ -3,7 +3,8 @@ import Link from "next/link";
 import { GuideShell } from "@/components/GuideShell";
 import { FaqJsonLd } from "@/components/JsonLd";
 import { GalleryCard, GalleryCredits, GalleryJsonLd, GallerySections } from "@/components/StencilGallery";
-import { GALLERY_CATEGORIES, type GalleryCategory } from "@/lib/gallery";
+import { ChristmasPackBanner } from "@/components/ChristmasPack";
+import { designFiles, GALLERY_CATEGORIES, type GalleryCategory } from "@/lib/gallery";
 import { localizedPath, type Locale } from "@/lib/locale";
 
 function text(locale: Locale, chinese: string, english: string): string {
@@ -238,6 +239,12 @@ export function CategoryGalleryPage({ locale, category }: { locale: Locale; cate
       <GalleryJsonLd locale={locale} category={category} />
       <FaqJsonLd items={copy.faq} />
       <GuideShell locale={locale} route={category.route} kicker={copy.kicker} title={copy.title} lead={copy.lead}>
+        {category.id === "christmas" ? (
+          <ChristmasPackBanner
+            locale={locale}
+            designs={category.designs.map((design) => ({ slug: design.slug, png: designFiles(design).png }))}
+          />
+        ) : null}
         <GallerySections locale={locale} category={category} />
 
         <section>

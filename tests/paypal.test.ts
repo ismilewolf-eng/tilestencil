@@ -70,7 +70,7 @@ describe("createOrder", () => {
 describe("captureOrder", () => {
   it("unlocks when PayPal confirms the full amount was captured", async () => {
     const { fetchImpl } = fakePaypal({ "/v2/checkout/orders/ORDER123ABC/capture": { body: completed() } });
-    expect(await captureOrder(env, "ORDER123ABC", fetchImpl)).toEqual({ ok: true, orderId: "ORDER123ABC" });
+    expect(await captureOrder(env, "ORDER123ABC", fetchImpl)).toEqual({ ok: true, orderId: "ORDER123ABC", product: "svg" });
   });
 
   it("refuses when the payment is not completed", async () => {
@@ -97,6 +97,6 @@ describe("captureOrder", () => {
       "/v2/checkout/orders/ORDER123ABC/capture": { status: 422, body: { details: [{ issue: "ORDER_ALREADY_CAPTURED" }] } },
       "/v2/checkout/orders/ORDER123ABC": { body: completed() },
     });
-    expect(await captureOrder(env, "ORDER123ABC", fetchImpl)).toEqual({ ok: true, orderId: "ORDER123ABC" });
+    expect(await captureOrder(env, "ORDER123ABC", fetchImpl)).toEqual({ ok: true, orderId: "ORDER123ABC", product: "svg" });
   });
 });

@@ -4,10 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import { PaymentMarks } from "@/components/PaymentMarks";
 import { readFirstTouch, sourceTag } from "@/lib/attribution";
 import { tr, type Locale } from "@/lib/locale";
+import type { Product } from "@/lib/waffo";
 
 export type SvgPaymentConfig =
   | { paid: false }
-  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean } }
+  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean }; pack?: { price: string } }
   /** The check failed on the live site: do not hand out the paid export, ask for a refresh. */
   | { paid: "unknown" };
 
@@ -71,18 +72,23 @@ function loadSdk(clientId: string, currency: string, paypalOnly: boolean): Promi
 export function SvgPaywall({
   config,
   locale,
+  product = "svg",
   onPaid,
   onClose,
 }: {
   config: Extract<SvgPaymentConfig, { paid: true }>;
   locale: Locale;
-  onPaid: (orderId: string) => void;
+  /** "pack" sells the Christmas pack at config.pack.price; the server confirms what was actually paid for. */
+  product?: Product;
+  onPaid: (orderId: string, product: Product) => void;
   onClose: () => void;
 }) {
   const container = useRef<HTMLDivElement>(null);
   const [message, setMessage] = useState<string | null>(null);
   const t = (zh: string, en: string, vars?: Record<string, string | number>) => tr(locale, zh, en, vars);
-  const waffo = useWaffoCheckout(locale, onPaid);
+  const waffo = useWaffoCheckout(locale, onPaid, product);
+  const pack = product === "pack";
+  const shownPrice = pack ? (config.pack?.price ?? config.price) : config.price;
 
   useEffect(() => {
     let cancelled = false;
@@ -98,7 +104,7 @@ export function SvgPaywall({
             const response = await fetch("/api/svg/order", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ source: sourceTag(readFirstTouch(), location.pathname) }),
+              body: JSON.stringify({ source: sourceTag(readFirstTouch(), location.pathname), product }),
             });
             if (!response.ok) throw new Error("order");
             return ((await response.json()) as { id: string }).id;
@@ -110,8 +116,8 @@ export function SvgPaywall({
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ orderId: orderID }),
             });
-            const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean };
-            if (result.ok) onPaid(orderID);
+            const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean; product?: Product };
+            if (result.ok) onPaid(orderID, result.product === "pack" ? "pack" : "svg");
             else setMessage(t("付款没有确认成功，没有扣款请重试；已扣款请发邮件联系我们。", "The payment could not be confirmed. If you were charged, email us and we will sort it out."));
           },
           onError: () => setMessage(t("付款出错了，请重试。", "Something went wrong with the payment. Please try again.")),
@@ -132,16 +138,21 @@ export function SvgPaywall({
   return (
     <div className="svg-paywall" role="dialog" aria-label={t("购买 SVG", "Buy SVG")}>
       <p className="svg-paywall-title">
-        <strong>{t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: config.price })}</strong>
+        <strong>{pack ? t("圣诞全套 SVG · ${price}", "Christmas SVG pack · ${price}", { price: shownPrice }) : t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: shownPrice })}</strong>
         <button type="button" className="text-button" onClick={onClose}>
           {t("关闭", "Close")}
         </button>
       </p>
       <p className="svg-paywall-note">
-        {t(
-          "一次付款，这张图之后可以随时重新导出（调阈值、改尺寸都不再收费）。14 天内不满意可全额退款。",
-          "One payment unlocks this image: re-export as often as you like while you adjust it. 14-day money-back guarantee.",
-        )}
+        {pack
+          ? t(
+              "一次付款，解锁本站全部圣诞 SVG，付款后可打包下载。14 天内不满意可全额退款。",
+              "One payment unlocks every Christmas SVG on this site. Download them all as one zip right after paying. 14-day money-back guarantee.",
+            )
+          : t(
+              "一次付款，这张图之后可以随时重新导出（调阈值、改尺寸都不再收费）。14 天内不满意可全额退款。",
+              "One payment unlocks this image: re-export as often as you like while you adjust it. 14-day money-back guarantee.",
+            )}
         {config.sandbox ? t("（测试模式，不会真实扣款）", " (Test mode: no real charge.)") : null}
       </p>
       <div ref={container} />
@@ -209,7 +220,7 @@ const POLL_LIMIT_MS = 45 * 60 * 1000;
  * Waffo hosted checkout: open it in a new tab (so this page keeps the user's image), then
  * poll our server until Waffo reports the order as paid.
  */
-function useWaffoCheckout(locale: Locale, onPaid: (orderId: string) => void) {
+function useWaffoCheckout(locale: Locale, onPaid: (orderId: string, product: Product) => void, product: Product) {
   const t = (zh: string, en: string, vars?: Record<string, string | number>) => tr(locale, zh, en, vars);
   const [state, setState] = useState<WaffoState>({ kind: "idle" });
   const paidRef = useRef(onPaid);
@@ -225,10 +236,10 @@ function useWaffoCheckout(locale: Locale, onPaid: (orderId: string) => void) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ref }),
       });
-      const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean };
+      const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean; product?: Product };
       if (result.ok) {
         setState({ kind: "idle" });
-        paidRef.current(ref);
+        paidRef.current(ref, result.product === "pack" ? "pack" : "svg");
         return true;
       }
       return false;
@@ -271,7 +282,7 @@ function useWaffoCheckout(locale: Locale, onPaid: (orderId: string) => void) {
       const response = await fetch("/api/svg/waffo-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ source: sourceTag(readFirstTouch(), location.pathname), locale }),
+        body: JSON.stringify({ source: sourceTag(readFirstTouch(), location.pathname), locale, product }),
       });
       if (!response.ok) throw new Error("session");
       const { ref, url } = (await response.json()) as { ref: string; url: string };

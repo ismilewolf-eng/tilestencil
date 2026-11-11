@@ -9,6 +9,7 @@ import { MAN_PRESETS } from "@/lib/gingerbreadman";
 import type { Locale } from "@/lib/locale";
 import { houseSvg, manSvg, stockingSvg } from "@/lib/pattern-svg";
 import { STOCKING_SIZES } from "@/lib/stocking";
+import { sheetFileName, sheetFormat } from "@/lib/stocking-sheet";
 import { grantPack, grantSingle, hasPack, hasSingle, PACK_EVENT, saveFile } from "@/lib/unlock";
 import type { Product } from "@/lib/waffo";
 import { zipStore } from "@/lib/zip";
@@ -17,16 +18,24 @@ let configPromise: Promise<SvgPaymentConfig> | null = null;
 const paymentConfig = () => (configPromise ??= loadSvgPaymentConfig());
 
 export const STENCIL_COUNT = 28;
+export const paymentConfigOnce = () => paymentConfig();
 const ZIP_WIDTH_MM = 8 * 25.4;
 
 type Design = { slug: string; png: string };
 
 /** Every Christmas SVG in one archive: the gallery stencils at 8 in wide, the three patterns in their preset sizes. */
 async function buildPackZip(designs: Design[], onProgress: (done: number) => void): Promise<Uint8Array> {
-  const files: Array<{ name: string; text: string }> = [];
+  const files: Array<{ name: string; text?: string; bytes?: Uint8Array }> = [];
   for (const size of STOCKING_SIZES) files.push({ name: `patterns/christmas-stocking-${size.id}.svg`, text: stockingSvg(size.id) });
   for (const preset of HOUSE_PRESETS) files.push({ name: `patterns/gingerbread-house-${preset.id}.svg`, text: houseSvg(preset.size, "gingerbread", true) });
   for (const preset of MAN_PRESETS) files.push({ name: `patterns/gingerbread-man-${preset.note.replace(/\s+/g, "")}.svg`, text: manSvg(preset.heightMm, true) });
+  const { exportStockingSheetPdf } = await import("@/lib/stocking-pdf");
+  for (const size of STOCKING_SIZES) {
+    for (const paper of ["letter", "a4"] as const) {
+      const bytes = await exportStockingSheetPdf({ size: size.id, paperSize: paper, save: false });
+      if (bytes) files.push({ name: `patterns/print-shop/${sheetFileName(size.id, sheetFormat(size.id, paper))}`, bytes });
+    }
+  }
   let done = 0;
   for (const design of designs) {
     files.push({ name: `stencils/${design.slug}-8in.svg`, text: await gallerySvg(design.png, ZIP_WIDTH_MM) });
@@ -43,6 +52,8 @@ async function buildPackZip(designs: Design[], onProgress: (done: number) => voi
       "           Black lines are cut lines. Red lines (door, windows, eyes, buttons) are optional details:",
       "           set them to draw or score, or delete them. Cut each gingerbread house piece twice.",
       "           For another size, open the pattern page on tilestencil.com in the browser you paid in.",
+      "patterns/print-shop/  The stocking pattern on one large sheet (24 x 36 in, 36 x 48 in, A1 or A0).",
+      "           Take the PDF to a print shop and ask for it at 100%, not scaled to fit. Nothing to tape.",
       "",
       "Free for personal and commercial use. Please do not resell the files themselves.",
       "Questions or a refund within 14 days: tilestencil.com/refund-policy",
@@ -52,7 +63,7 @@ async function buildPackZip(designs: Design[], onProgress: (done: number) => voi
   return zipStore(files);
 }
 
-function PayDialog({
+export function PayDialog({
   title,
   config,
   product,
@@ -144,7 +155,7 @@ export function PatternSvgOffer({
     else grantSingle(slug, orderId);
     setUnlocked(true);
     setPack(product === "pack" || pack);
-    setDone(product);
+    setDone(product === "pack" ? "pack" : "svg");
     dialog.current?.close();
     download();
   }

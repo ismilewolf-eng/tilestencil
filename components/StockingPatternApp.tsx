@@ -9,6 +9,7 @@ import { localizedPath } from "@/lib/locale";
 import { pathData, patternPlan, STOCKING_SIZES, stockingPattern, usedTiles, type StockingSize } from "@/lib/stocking";
 import { PatternSvgOffer } from "@/components/ChristmasPack";
 import { PatternRequest } from "@/components/PatternRequest";
+import { PrintShopOffer } from "@/components/PrintShopOffer";
 import { stockingFit, stockingSvg } from "@/lib/pattern-svg";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -34,6 +35,7 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
   const [paperSize, setPaperSize] = useState<PaperSize>("letter");
   const [status, setStatus] = useState<Status>(null);
   const [busy, setBusy] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
 
   const pattern = useMemo(() => stockingPattern(size), [size]);
   const plan = useMemo(() => patternPlan(pattern, paperSize), [pattern, paperSize]);
@@ -48,6 +50,7 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
     try {
       const { exportStockingPatternPdf } = await import("@/lib/stocking-pdf");
       const count = await exportStockingPatternPdf({ size, paperSize });
+      setDownloaded(true);
       setStatus({ kind: "success", message: `Downloaded: ${count} sheets. Print at 100% (Actual Size), then check the 1 in square before cutting.` });
     } catch {
       setStatus({ kind: "error", message: "The PDF could not be made in this browser. Reload the page and try again, or try another browser." });
@@ -215,17 +218,18 @@ export function StockingPatternApp({ children }: { children?: ReactNode }) {
             <button className="secondary-button export-button stocking-outline-button" type="button" onClick={() => void downloadOutline()} disabled={busy}>
               One-page outline PDF
             </button>
+            {status ? (
+              <p className={STATUS_CLASS[status.kind]} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">
+                {status.message}
+              </p>
+            ) : null}
+            <PrintShopOffer size={size} paperSize={paperSize} sheets={sheets} afterDownload={downloaded} />
             <PatternSvgOffer
               slug="christmas-pattern-stocking"
               fileName={`christmas-stocking-${size}.svg`}
               makeSvg={() => stockingSvg(size)}
               fit={stockingFit(size)}
             />
-            {status ? (
-              <p className={STATUS_CLASS[status.kind]} role={status.kind === "error" ? "alert" : "status"} aria-live="polite">
-                {status.message}
-              </p>
-            ) : null}
             <p className="grid-note">
               Print at 100% (Actual Size), not &quot;Fit to page&quot;. Trim each sheet on its corner marks, overlap the edges, and tape them in sheet
               order.

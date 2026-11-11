@@ -195,8 +195,8 @@ export function PricingPage({ locale }: { locale: Locale }) {
         {
           heading: en ? "Cut-ready SVG export" : "可切割 SVG 导出",
           body: en
-            ? "Closed cut paths for Cricut, Silhouette, and laser cutters, with bridges included and sized in millimetres. $1.99 per image, paid once through PayPal, or by card, Apple Pay, Google Pay or WeChat Pay through Waffo; after that you can re-export the same image as often as you like while you adjust it. The Christmas pack is $4.99 once for every Christmas SVG on the site: all 28 Christmas stencils plus the stocking, gingerbread house and gingerbread man patterns. No account and no subscription, with a 14-day money-back guarantee."
-            : "给 Cricut、Silhouette 刻字机和激光切割机用的闭合切割路径，带连接桥，按毫米标注尺寸。每张图 1.99 美元，用 PayPal 付一次，或通过 Waffo 用银行卡、Apple Pay、Google Pay、微信支付付一次，之后同一张图怎么调都可以反复导出。圣诞全套 4.99 美元，一次付款拿到本站全部圣诞 SVG：28 张圣诞模板，加上圣诞袜、姜饼屋、姜饼人三个纸样。不用注册，没有订阅，14 天内可全额退款。",
+            ? "Closed cut paths for Cricut, Silhouette, and laser cutters, with bridges included and sized in millimetres. $1.99 per image, paid once through PayPal, or by card, Apple Pay, Google Pay or WeChat Pay through Waffo; after that you can re-export the same image as often as you like while you adjust it. The Christmas pack is $4.99 once for every Christmas SVG on the site: all 28 Christmas stencils plus the stocking, gingerbread house and gingerbread man patterns. The one-sheet print-shop PDF of the Christmas stocking pattern is $1.99 once and covers all three sizes; it is also part of the Christmas pack. No account and no subscription, with a 14-day money-back guarantee."
+            : "给 Cricut、Silhouette 刻字机和激光切割机用的闭合切割路径，带连接桥，按毫米标注尺寸。每张图 1.99 美元，用 PayPal 付一次，或通过 Waffo 用银行卡、Apple Pay、Google Pay、微信支付付一次，之后同一张图怎么调都可以反复导出。圣诞全套 4.99 美元，一次付款拿到本站全部圣诞 SVG：28 张圣诞模板，加上圣诞袜、姜饼屋、姜饼人三个纸样。圣诞袜纸样的打印店整张版 PDF 1.99 美元，一次付款三个尺寸都能下载，圣诞全套里也包含。不用注册，没有订阅，14 天内可全额退款。",
         },
         {
           heading: en ? "Questions" : "有问题",

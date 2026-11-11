@@ -19,14 +19,14 @@ export function crc32(bytes: Uint8Array): number {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
-export function zipStore(files: Array<{ name: string; text: string }>): Uint8Array {
+export function zipStore(files: Array<{ name: string; text?: string; bytes?: Uint8Array }>): Uint8Array {
   const encoder = new TextEncoder();
   const chunks: Uint8Array[] = [];
   const central: Uint8Array[] = [];
   let offset = 0;
   for (const file of files) {
     const name = encoder.encode(file.name);
-    const data = encoder.encode(file.text);
+    const data = file.bytes ?? encoder.encode(file.text ?? "");
     const crc = crc32(data);
     const local = new DataView(new ArrayBuffer(30));
     local.setUint32(0, 0x04034b50, true);

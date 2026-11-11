@@ -8,7 +8,7 @@ import type { Product } from "@/lib/waffo";
 
 export type SvgPaymentConfig =
   | { paid: false }
-  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean }; pack?: { price: string } }
+  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean }; pack?: { price: string }; sheet?: { price: string } }
   /** The check failed on the live site: do not hand out the paid export, ask for a refresh. */
   | { paid: "unknown" };
 
@@ -88,7 +88,8 @@ export function SvgPaywall({
   const t = (zh: string, en: string, vars?: Record<string, string | number>) => tr(locale, zh, en, vars);
   const waffo = useWaffoCheckout(locale, onPaid, product);
   const pack = product === "pack";
-  const shownPrice = pack ? (config.pack?.price ?? config.price) : config.price;
+  const sheet = product === "sheet";
+  const shownPrice = pack ? (config.pack?.price ?? config.price) : sheet ? (config.sheet?.price ?? config.price) : config.price;
 
   useEffect(() => {
     let cancelled = false;
@@ -117,7 +118,7 @@ export function SvgPaywall({
               body: JSON.stringify({ orderId: orderID }),
             });
             const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean; product?: Product };
-            if (result.ok) onPaid(orderID, result.product === "pack" ? "pack" : "svg");
+            if (result.ok) onPaid(orderID, result.product ?? "svg");
             else setMessage(t("付款没有确认成功，没有扣款请重试；已扣款请发邮件联系我们。", "The payment could not be confirmed. If you were charged, email us and we will sort it out."));
           },
           onError: () => setMessage(t("付款出错了，请重试。", "Something went wrong with the payment. Please try again.")),
@@ -138,13 +139,18 @@ export function SvgPaywall({
   return (
     <div className="svg-paywall" role="dialog" aria-label={t("购买 SVG", "Buy SVG")}>
       <p className="svg-paywall-title">
-        <strong>{pack ? t("圣诞全套 SVG · ${price}", "Christmas SVG pack · ${price}", { price: shownPrice }) : t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: shownPrice })}</strong>
+        <strong>{sheet ? t("打印店整张版 PDF · ${price}", "Print-shop PDF · ${price}", { price: shownPrice }) : pack ? t("圣诞全套 SVG · ${price}", "Christmas SVG pack · ${price}", { price: shownPrice }) : t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: shownPrice })}</strong>
         <button type="button" className="text-button" onClick={onClose}>
           {t("关闭", "Close")}
         </button>
       </p>
       <p className="svg-paywall-note">
-        {pack
+        {sheet
+          ? t(
+              "一次付款，这个纸样的整张版三个尺寸都能下载。14 天内不满意可全额退款。",
+              "One payment unlocks the one-sheet PDF of this pattern in every size. 14-day money-back guarantee.",
+            )
+          : pack
           ? t(
               "一次付款，解锁本站全部圣诞 SVG，付款后可打包下载。14 天内不满意可全额退款。",
               "One payment unlocks every Christmas SVG on this site. Download them all as one zip right after paying. 14-day money-back guarantee.",
@@ -239,7 +245,7 @@ function useWaffoCheckout(locale: Locale, onPaid: (orderId: string, product: Pro
       const result = (await response.json().catch(() => ({ ok: false }))) as { ok: boolean; product?: Product };
       if (result.ok) {
         setState({ kind: "idle" });
-        paidRef.current(ref, result.product === "pack" ? "pack" : "svg");
+        paidRef.current(ref, result.product ?? "svg");
         return true;
       }
       return false;

@@ -1,5 +1,5 @@
 import { sanitizeCustomId } from "../../../lib/attribution";
-import { packEnabled, paidEnabled, type PaymentEnv } from "../../../lib/paypal";
+import { offered, paidEnabled, type PaymentEnv } from "../../../lib/paypal";
 import { asProduct, createCheckout, waffoEnabled, waffoLanguage } from "../../../lib/waffo";
 
 type Context = { env: PaymentEnv; request: Request };
@@ -13,7 +13,7 @@ export async function onRequestPost({ env, request }: Context): Promise<Response
   try {
     const body = (await request.json().catch(() => ({}))) as { source?: unknown; locale?: unknown; product?: unknown };
     const product = asProduct(body.product);
-    if (product === "pack" && !packEnabled(env)) return Response.json({ error: "pack not offered" }, { status: 404 });
+    if (!offered(env, product)) return Response.json({ error: `${product} not offered` }, { status: 404 });
     const session = await createCheckout(env, {
       product,
       source: sanitizeCustomId(body.source),

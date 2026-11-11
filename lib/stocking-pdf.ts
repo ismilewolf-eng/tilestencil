@@ -6,7 +6,8 @@
  */
 import { getPaperDimensions, type PaperSize, type TilePlan } from "@/lib/geometry";
 import { drawRegistrationMarks, type JsPdfInstance } from "@/lib/pdf-export";
-import { bounds, patternPlan, stockingOutline, stockingPattern, sizeById, usedTiles, type Point, type StockingSize } from "@/lib/stocking";
+import { bounds, patternPlan, stockingOutline, stockingPattern, sizeById, usedTiles, type Point, type StockingPattern, type StockingSize } from "@/lib/stocking";
+import { SHEET_FOOTER_MM, SHEET_MARGIN_MM, sheetFileName, sheetFormat } from "@/lib/stocking-sheet";
 
 /** jsPDF calls used here beyond the shared tiled-export type (all present in jsPDF 4). */
 type PatternPdf = JsPdfInstance & {
@@ -75,34 +76,8 @@ function sheetNote(pdf: PatternPdf, tile: TilePlan["tiles"][number], plan: TileP
   );
 }
 
-export const stockingFileName = (size: StockingSize, paperSize: PaperSize, kind: "pattern" | "outline") =>
-  kind === "pattern" ? `christmas-stocking-pattern-${size}-${paperSize}.pdf` : `christmas-stocking-outline-${paperSize}.pdf`;
-
-/** The sewing pattern at actual size, tiled. Returns the number of sheets. */
-export async function exportStockingPatternPdf({
-  size: sizeId,
-  paperSize,
-}: {
-  size: StockingSize;
-  paperSize: PaperSize;
-}): Promise<number> {
-  const pattern = stockingPattern(sizeId);
-  const plan = patternPlan(pattern, paperSize);
-  const pdf = await newPdf(plan.orientation, plan.paper.widthMm, plan.paper.heightMm);
-  const { size } = pattern;
-  const tiles = usedTiles(pattern, plan);
-  const numbers = new Map(tiles.map((tile, i) => [tile.index, i + 1]));
-
-  for (const tile of tiles) {
-    if (numbers.get(tile.index) !== 1) pdf.addPage([plan.paper.widthMm, plan.paper.heightMm], plan.orientation);
-    sheetNote(pdf, tile, plan, numbers, `${size.label} (${size.heightIn} in)`);
-    const map = ([x, y]: Point): Point => [tile.pageXmm + (x - tile.xMm), tile.pageYmm + (y - tile.yMm)];
-
-    pdf.saveGraphicsState();
-    pdf.rect(tile.pageXmm, tile.pageYmm, tile.widthMm, tile.heightMm, null);
-    pdf.clip();
-    pdf.discardPath();
-
+/** Every piece with its labels, the grainline and the size check marks, through `map` (pattern mm to page mm). */
+function drawPattern(pdf: PatternPdf, pattern: StockingPattern, map: (p: Point) => Point): void {
     pdf.setDrawColor(...INK);
     for (const piece of pattern.pieces) {
       pdf.setLineDashPattern([], 0);
@@ -156,6 +131,37 @@ export async function exportStockingPatternPdf({
     pdf.setFontSize(7);
     pdf.text("Check these before cutting fabric", tx, barY + 9);
     pdf.text("tilestencil.com/christmas-stocking-pattern", tx, barY + 13);
+}
+
+export const stockingFileName = (size: StockingSize, paperSize: PaperSize, kind: "pattern" | "outline") =>
+  kind === "pattern" ? `christmas-stocking-pattern-${size}-${paperSize}.pdf` : `christmas-stocking-outline-${paperSize}.pdf`;
+
+/** The sewing pattern at actual size, tiled. Returns the number of sheets. */
+export async function exportStockingPatternPdf({
+  size: sizeId,
+  paperSize,
+}: {
+  size: StockingSize;
+  paperSize: PaperSize;
+}): Promise<number> {
+  const pattern = stockingPattern(sizeId);
+  const plan = patternPlan(pattern, paperSize);
+  const pdf = await newPdf(plan.orientation, plan.paper.widthMm, plan.paper.heightMm);
+  const { size } = pattern;
+  const tiles = usedTiles(pattern, plan);
+  const numbers = new Map(tiles.map((tile, i) => [tile.index, i + 1]));
+
+  for (const tile of tiles) {
+    if (numbers.get(tile.index) !== 1) pdf.addPage([plan.paper.widthMm, plan.paper.heightMm], plan.orientation);
+    sheetNote(pdf, tile, plan, numbers, `${size.label} (${size.heightIn} in)`);
+    const map = ([x, y]: Point): Point => [tile.pageXmm + (x - tile.xMm), tile.pageYmm + (y - tile.yMm)];
+
+    pdf.saveGraphicsState();
+    pdf.rect(tile.pageXmm, tile.pageYmm, tile.widthMm, tile.heightMm, null);
+    pdf.clip();
+    pdf.discardPath();
+
+    drawPattern(pdf, pattern, map);
 
     pdf.restoreGraphicsState();
     drawRegistrationMarks(pdf, tile, plan);
@@ -195,4 +201,31 @@ export async function exportStockingOutlinePdf({ paperSize }: { paperSize: Paper
   pdf.setTextColor(...MUTED);
   pdf.text("Christmas stocking outline · free from tilestencil.com/christmas-stocking-pattern", paper.widthMm / 2, paper.heightMm - margin + 6, { align: "center" });
   pdf.save(stockingFileName("medium", paperSize, "outline"));
+}
+
+/**
+ * The whole pattern on one large sheet for a print shop: no tiling, nothing to tape.
+ * Saves the file, or returns its bytes when `save` is false (for the Christmas pack zip).
+ */
+export async function exportStockingSheetPdf({ size: sizeId, paperSize, save = true }: { size: StockingSize; paperSize: PaperSize; save?: boolean }): Promise<Uint8Array | null> {
+  const pattern = stockingPattern(sizeId);
+  const format = sheetFormat(sizeId, paperSize);
+  const pdf = await newPdf(format.widthMm > format.heightMm ? "landscape" : "portrait", format.widthMm, format.heightMm);
+  const x0 = (format.widthMm - pattern.widthMm) / 2;
+  const y0 = Math.max(SHEET_MARGIN_MM, (format.heightMm - SHEET_FOOTER_MM - pattern.heightMm) / 2);
+  drawPattern(pdf, pattern, ([x, y]) => [x0 + x, y0 + y]);
+  pdf.setFont("helvetica", "normal");
+  pdf.setTextColor(...MUTED);
+  pdf.setFontSize(9);
+  pdf.text(
+    `Christmas stocking ${pattern.size.label} (${pattern.size.heightIn} in) · one ${format.label} sheet · print at 100% / Actual Size, do not scale to fit · tilestencil.com`,
+    format.widthMm / 2,
+    format.heightMm - SHEET_MARGIN_MM / 2,
+    { align: "center" },
+  );
+  if (save) {
+    pdf.save(sheetFileName(sizeId, format));
+    return null;
+  }
+  return new Uint8Array((pdf as unknown as { output: (type: "arraybuffer") => ArrayBuffer }).output("arraybuffer"));
 }

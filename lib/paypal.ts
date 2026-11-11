@@ -20,6 +20,7 @@ export interface PaymentEnv extends WaffoEnv {
   SVG_PAID?: string;
   SVG_PRICE_USD?: string;
   PACK_PRICE_USD?: string;
+  SHEET_PRICE_USD?: string;
 }
 
 type Fetch = (input: string, init?: RequestInit) => Promise<Response>;
@@ -42,7 +43,26 @@ export function packPrice(env: PaymentEnv): string {
   return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : DEFAULT_PACK_PRICE;
 }
 
-export const priceFor = (env: PaymentEnv, product: Product) => (product === "pack" ? packPrice(env) : price(env));
+/** The print-shop PDF: a pattern on one large sheet. Priced like one SVG unless set otherwise. */
+export function sheetPrice(env: PaymentEnv): string {
+  const value = Number(env.SHEET_PRICE_USD ?? price(env));
+  return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : price(env);
+}
+
+export const priceFor = (env: PaymentEnv, product: Product) => (product === "pack" ? packPrice(env) : product === "sheet" ? sheetPrice(env) : price(env));
+
+/** Offered only when every checkout row can sell it: with Waffo on, that needs its own Waffo product. */
+export function sheetEnabled(env: PaymentEnv): boolean {
+  return paidEnabled(env) && (!waffoEnabled(env) || Boolean(env.WAFFO_SHEET_PRODUCT_ID));
+}
+
+export const offered = (env: PaymentEnv, product: Product) => (product === "pack" ? packEnabled(env) : product === "sheet" ? sheetEnabled(env) : paidEnabled(env));
+
+const DESCRIPTION: Record<Product, string> = {
+  svg: "TileStencil cut-ready SVG stencil export",
+  pack: "TileStencil Christmas SVG pack",
+  sheet: "TileStencil print-shop pattern PDF",
+};
 
 /**
  * The pack is offered only when every checkout row can sell it: with Waffo on, that needs its
@@ -70,6 +90,7 @@ export function publicConfig(env: PaymentEnv) {
     sandbox: env.PAYPAL_ENV !== "live",
     ...(waffoEnabled(env) ? { waffo: { test: waffoTestMode(env) } } : {}),
     ...(packEnabled(env) ? { pack: { price: packPrice(env) } } : {}),
+    ...(sheetEnabled(env) ? { sheet: { price: sheetPrice(env) } } : {}),
   };
 }
 
@@ -86,7 +107,7 @@ async function accessToken(env: PaymentEnv, fetchImpl: Fetch): Promise<string> {
 
 /** customId: optional first-referrer tag shown as "Custom" on the PayPal transaction (max 127 chars). */
 export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, customId = "", product: Product = "svg"): Promise<{ id: string }> {
-  if (product === "pack" && !packEnabled(env)) throw new Error("pack not offered");
+  if (!offered(env, product)) throw new Error(`${product} not offered`);
   const token = await accessToken(env, fetchImpl);
   const response = await fetchImpl(`${apiBase(env)}/v2/checkout/orders`, {
     method: "POST",
@@ -95,7 +116,9 @@ export async function createOrder(env: PaymentEnv, fetchImpl: Fetch = fetch, cus
       intent: "CAPTURE",
       purchase_units: [
         {
-          description: product === "pack" ? "TileStencil Christmas SVG pack" : "TileStencil cut-ready SVG stencil export",
+          // Comes back on the captured order, so it tells same-priced products apart.
+          reference_id: product,
+          description: DESCRIPTION[product],
           amount: { currency_code: "USD", value: priceFor(env, product) },
           ...(customId ? { custom_id: customId.slice(0, 127) } : {}),
         },
@@ -145,12 +168,16 @@ async function verifyOrder(env: PaymentEnv, orderId: string, token: string, fetc
 function checkCaptured(env: PaymentEnv, orderId: string, body: unknown): CaptureResult {
   const order = body as {
     status?: string;
-    purchase_units?: Array<{ payments?: { captures?: Array<{ status?: string; amount?: { value?: string; currency_code?: string } }> } }>;
+    purchase_units?: Array<{ reference_id?: string; payments?: { captures?: Array<{ status?: string; amount?: { value?: string; currency_code?: string } }> } }>;
   };
   const capture = order.purchase_units?.[0]?.payments?.captures?.[0];
   if (order.status !== "COMPLETED" || capture?.status !== "COMPLETED") return { ok: false, reason: "not completed" };
   if (capture.amount?.currency_code !== "USD") return { ok: false, reason: "amount mismatch" };
-  // The amount PayPal captured decides what was bought; the browser's claim is not used.
+  // We wrote reference_id when creating the order, so it names the product; the captured amount must still be that product's price.
+  if (order.purchase_units?.[0]?.reference_id === "sheet") {
+    return sheetEnabled(env) && capture.amount?.value === sheetPrice(env) ? { ok: true, orderId, product: "sheet" } : { ok: false, reason: "amount mismatch" };
+  }
+  // Otherwise the amount PayPal captured decides what was bought; the browser's claim is not used.
   if (packEnabled(env) && capture.amount?.value === packPrice(env)) return { ok: true, orderId, product: "pack" };
   if (capture.amount?.value !== price(env)) return { ok: false, reason: "amount mismatch" };
   return { ok: true, orderId, product: "svg" };

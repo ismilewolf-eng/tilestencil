@@ -1,5 +1,5 @@
 import { sanitizeCustomId } from "../../../lib/attribution";
-import { createOrder, packEnabled, paidEnabled, type PaymentEnv } from "../../../lib/paypal";
+import { createOrder, offered, paidEnabled, type PaymentEnv } from "../../../lib/paypal";
 import { asProduct } from "../../../lib/waffo";
 
 type Context = { env: PaymentEnv; request: Request };
@@ -14,7 +14,7 @@ export async function onRequestPost({ env, request }: Context): Promise<Response
   try {
     const body = (await request.json().catch(() => ({}))) as { source?: unknown; product?: unknown };
     const product = asProduct(body.product);
-    if (product === "pack" && !packEnabled(env)) return Response.json({ error: "pack not offered" }, { status: 404 });
+    if (!offered(env, product)) return Response.json({ error: `${product} not offered` }, { status: 404 });
     return Response.json(await createOrder(env, (input, init) => fetch(input, init), sanitizeCustomId(body.source), product), { headers: { "cache-control": "no-store" } });
   } catch (error) {
     console.error("svg order failed", error instanceof Error ? error.message : error);

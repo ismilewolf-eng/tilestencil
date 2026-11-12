@@ -6,6 +6,7 @@ import { StockingPatternApp } from "@/components/StockingPatternApp";
 import { languageAlternates, localizedPath } from "@/lib/locale";
 
 // 2026-11-10: wording people search (Search Console): "pdf free download", "with cuff", "large".
+// 2026-11-12: also "for adults", "simple", "modern": answered in "Which size and style" and the FAQ.
 const TITLE = "Free Christmas Stocking Pattern PDF – With Cuff, Small to Large";
 const DESCRIPTION =
   "Free PDF download: printable Christmas stocking pattern with cuff and hanging loop, in small (12 in), medium (16 in) and large (20 in). Prints at actual size on US Letter or A4.";
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
     "printable christmas stocking pattern",
     "stocking pattern pdf",
     "christmas stocking outline",
+    "simple christmas stocking pattern",
+    "christmas stocking pattern for adults",
+    "modern christmas stocking pattern",
   ],
   alternates: {
     canonical: "/christmas-stocking-pattern",
@@ -62,6 +66,21 @@ const faqItems = [
     question: "How big is a Christmas stocking?",
     answer:
       "Most stockings are 16 to 18 inches tall, top to heel. This pattern comes in Small (12 in / 31 cm) for children, pets or a row on a mantel, Medium (16 in / 41 cm), which is the classic size, and Large (20 in / 51 cm) for a big stocking that holds a lot.",
+  },
+  {
+    question: "Which size is right for adults?",
+    answer:
+      "Medium (16 in / 41 cm) is the size most shop-bought adult stockings are, and it suits a mantel with several stockings side by side. Choose Large (20 in / 51 cm) if you fill stockings generously or want one that stands out. Small (12 in / 31 cm) is for children, pets and decoration.",
+  },
+  {
+    question: "Is this a simple pattern for beginners?",
+    answer:
+      "Yes. There are three pieces (stocking, cuff and loop), every seam is a straight line or one gentle curve, and there are no darts, zips or pleats. A first stocking takes about an hour; the lining can be left out to make it simpler still.",
+  },
+  {
+    question: "How do I make it look modern?",
+    answer:
+      "The shape is a classic stocking with a rounded toe, so the look comes from the fabric. For a modern stocking use one plain fabric such as linen, canvas, wool felt or bouclé in a neutral or a single deep colour, cut the cuff from the same fabric instead of faux fur, and use a leather or twill-tape loop.",
   },
   {
     question: "Is seam allowance included?",
@@ -112,6 +131,28 @@ export default function ChristmasStockingPatternPage() {
             </p>
             <p>Want a plain shape for colouring, felt or card? Download the one-page outline instead.</p>
           </QuickAnswer>
+
+          <section>
+            <h2>Which size and style to make</h2>
+            <ul>
+              <li>
+                <b>For adults:</b> Medium (16 in) is the usual adult size. Large (20 in) holds more and looks generous on a wide mantel.
+              </li>
+              <li>
+                <b>For children and pets:</b> Small (12 in) fits a few small gifts and hangs well in a row or on a stair rail.
+              </li>
+              <li>
+                <b>A simple first stocking:</b> use felt for both layers and skip the lining. Felt does not fray, so you only sew the outline and add the
+                cuff.
+              </li>
+              <li>
+                <b>A modern stocking:</b> one plain fabric (linen, canvas or wool felt), a cuff cut from the same fabric, and no trim.
+              </li>
+              <li>
+                <b>A traditional stocking:</b> red velvet or plaid flannel with a white faux-fur cuff.
+              </li>
+            </ul>
+          </section>
 
           <section>
             <h2>What you need</h2>

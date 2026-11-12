@@ -8,7 +8,7 @@ import type { Product } from "@/lib/waffo";
 
 export type SvgPaymentConfig =
   | { paid: false }
-  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean }; pack?: { price: string }; sheet?: { price: string } }
+  | { paid: true; clientId: string; price: string; currency: string; sandbox: boolean; waffo?: { test: boolean }; pack?: { price: string }; sheet?: { price: string }; list?: { price: string } }
   /** The check failed on the live site: do not hand out the paid export, ask for a refresh. */
   | { paid: "unknown" };
 
@@ -89,7 +89,8 @@ export function SvgPaywall({
   const waffo = useWaffoCheckout(locale, onPaid, product);
   const pack = product === "pack";
   const sheet = product === "sheet";
-  const shownPrice = pack ? (config.pack?.price ?? config.price) : sheet ? (config.sheet?.price ?? config.price) : config.price;
+  const list = product === "list";
+  const shownPrice = pack ? (config.pack?.price ?? config.price) : sheet ? (config.sheet?.price ?? config.price) : list ? (config.list?.price ?? config.price) : config.price;
 
   useEffect(() => {
     let cancelled = false;
@@ -139,13 +140,18 @@ export function SvgPaywall({
   return (
     <div className="svg-paywall" role="dialog" aria-label={t("购买 SVG", "Buy SVG")}>
       <p className="svg-paywall-title">
-        <strong>{sheet ? t("打印店整张版 PDF · ${price}", "Print-shop PDF · ${price}", { price: shownPrice }) : pack ? t("圣诞全套 SVG · ${price}", "Christmas SVG pack · ${price}", { price: shownPrice }) : t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: shownPrice })}</strong>
+        <strong>{list ? t("完整打印文件 · ${price}", "Full print file · ${price}", { price: shownPrice }) : sheet ? t("打印店整张版 PDF · ${price}", "Print-shop PDF · ${price}", { price: shownPrice }) : pack ? t("圣诞全套 SVG · ${price}", "Christmas SVG pack · ${price}", { price: shownPrice }) : t("可切割 SVG · ${price}", "Cut-ready SVG · ${price}", { price: shownPrice })}</strong>
         <button type="button" className="text-button" onClick={onClose}>
           {t("关闭", "Close")}
         </button>
       </p>
       <p className="svg-paywall-note">
-        {sheet
+        {list
+          ? t(
+              "一次付款，这个工具 7 天内不限数量：改名单、改设置后可以反复下载。14 天内不满意可全额退款。",
+              "One payment unlocks this tool for 7 days in this browser, with no limit: change the list or the settings and download again. 14-day money-back guarantee.",
+            )
+          : sheet
           ? t(
               "一次付款，这个纸样的整张版三个尺寸都能下载。14 天内不满意可全额退款。",
               "One payment unlocks the one-sheet PDF of this pattern in every size. 14-day money-back guarantee.",

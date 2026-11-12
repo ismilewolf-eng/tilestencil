@@ -41,7 +41,9 @@ export type SiteRoute =
   | "stockingPattern"
   | "gingerbreadHouse"
   | "treeSkirt"
-  | "gingerbreadMan";
+  | "gingerbreadMan"
+  | "addressLabels"
+  | "raffleTickets";
 
 const routeSuffix: Record<SiteRoute, string> = {
   home: "",
@@ -78,10 +80,12 @@ const routeSuffix: Record<SiteRoute, string> = {
   gingerbreadHouse: "/gingerbread-house-template",
   treeSkirt: "/christmas-tree-skirt-pattern",
   gingerbreadMan: "/gingerbread-man-template",
+  addressLabels: "/address-label-template",
+  raffleTickets: "/raffle-ticket-template",
 };
 
 /** New pages are written in English only (2026-10-21); other languages get them once they draw traffic. */
-const EN_ONLY = new Set<SiteRoute>(["gridDrawing", "stockingPattern", "gingerbreadHouse", "treeSkirt", "gingerbreadMan"]);
+const EN_ONLY = new Set<SiteRoute>(["gridDrawing", "stockingPattern", "gingerbreadHouse", "treeSkirt", "gingerbreadMan", "addressLabels", "raffleTickets"]);
 
 /**
  * Pages written for Brazilian and Spanish-speaking visitors, with slugs in their language.

@@ -45,6 +45,27 @@ export function grantSingle(slug: string, orderId: string): void {
   }
 }
 
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const timedKey = (slug: string) => `tilestencil:paid:${slug}`;
+
+/** A purchase that lasts 7 days in this browser (list tools: people come back to print more). */
+export function hasTimed(slug: string, now = Date.now()): boolean {
+  try {
+    const until = Number(JSON.parse(window.localStorage.getItem(timedKey(slug)) ?? "{}").until);
+    return Number.isFinite(until) && until > now;
+  } catch {
+    return false;
+  }
+}
+
+export function grantTimed(slug: string, orderId: string, now = Date.now()): void {
+  try {
+    window.localStorage.setItem(timedKey(slug), JSON.stringify({ orderId, until: now + WEEK_MS }));
+  } catch {
+    // Private mode: the caller keeps its own unlocked state for this page view.
+  }
+}
+
 export function saveFile(name: string, data: BlobPart, type: string): void {
   const url = URL.createObjectURL(new Blob([data], { type }));
   const link = document.createElement("a");

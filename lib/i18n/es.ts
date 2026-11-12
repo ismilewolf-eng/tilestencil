@@ -32,6 +32,8 @@ export const ES: Record<string, string> = {
   "Cricut Stencils": "Stencils para Cricut",
   "Current paper: {w} × {h} mm.": "Papel actual: {w} × {h} mm.",
   "Cut-ready SVG · ${price}": "SVG listo para cortar · US${price}",
+  "Full print file · ${price}": "Archivo completo para imprimir · US${price}",
+  "One payment unlocks this tool for 7 days in this browser, with no limit: change the list or the settings and download again. 14-day money-back guarantee.": "Un solo pago desbloquea esta herramienta durante 7 días en este navegador, sin límite: cambia la lista o los ajustes y descarga de nuevo. Garantía de devolución de 14 días.",
   "Print-shop PDF · ${price}": "PDF para copistería · US${price}",
   "One payment unlocks the one-sheet PDF of this pattern in every size. 14-day money-back guarantee.": "Un solo pago desbloquea el PDF en una sola hoja de este patrón en todos los tamaños. Garantía de devolución de 14 días.",
   "Christmas SVG pack · ${price}": "Pack navideño de SVG · US${price}",

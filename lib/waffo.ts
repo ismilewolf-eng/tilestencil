@@ -10,6 +10,7 @@
  *   WAFFO_PRODUCT_ID    PROD_… (one-time product priced to match SVG_PRICE_USD)
  *   WAFFO_PACK_PRODUCT_ID  PROD_… (one-time product priced to match PACK_PRICE_USD; without it the pack is not offered)
  *   WAFFO_SHEET_PRODUCT_ID  PROD_… (one-time product priced to match SHEET_PRICE_USD; without it the print-shop PDF is not offered)
+ *   WAFFO_LIST_PRODUCT_ID   PROD_… (one-time product priced to match LIST_PRICE_USD; without it the full-list PDF is not offered)
  *   WAFFO_ENV           "test" (default) or "live"; must match the key
  *
  * Flow: the browser asks for a checkout session, opens it in a new tab, then polls the
@@ -24,6 +25,7 @@ export interface WaffoEnv {
   WAFFO_PRODUCT_ID?: string;
   WAFFO_PACK_PRODUCT_ID?: string;
   WAFFO_SHEET_PRODUCT_ID?: string;
+  WAFFO_LIST_PRODUCT_ID?: string;
   WAFFO_ENV?: string;
 }
 
@@ -37,10 +39,10 @@ export function waffoEnabled(env: WaffoEnv): boolean {
 }
 
 /** What is being bought: one SVG export, or the Christmas pack (every Christmas SVG on the site). */
-export type Product = "svg" | "pack" | "sheet";
-export const asProduct = (value: unknown): Product => (value === "pack" || value === "sheet" ? value : "svg");
+export type Product = "svg" | "pack" | "sheet" | "list";
+export const asProduct = (value: unknown): Product => (value === "pack" || value === "sheet" || value === "list" ? value : "svg");
 const waffoProductId = (env: WaffoEnv, product: Product) =>
-  product === "pack" ? env.WAFFO_PACK_PRODUCT_ID : product === "sheet" ? env.WAFFO_SHEET_PRODUCT_ID : env.WAFFO_PRODUCT_ID;
+  product === "pack" ? env.WAFFO_PACK_PRODUCT_ID : product === "sheet" ? env.WAFFO_SHEET_PRODUCT_ID : product === "list" ? env.WAFFO_LIST_PRODUCT_ID : env.WAFFO_PRODUCT_ID;
 
 export const waffoTestMode = (env: WaffoEnv) => env.WAFFO_ENV !== "live";
 
@@ -166,6 +168,8 @@ export async function checkOrder(env: WaffoEnv, ref: string, fetchImpl: Fetch = 
       ? "pack"
       : bought === env.WAFFO_SHEET_PRODUCT_ID
         ? "sheet"
+        : bought === env.WAFFO_LIST_PRODUCT_ID
+          ? "list"
         : bought === env.WAFFO_PRODUCT_ID
           ? "svg"
           : null;

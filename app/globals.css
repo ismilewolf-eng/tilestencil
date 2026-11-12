@@ -4032,3 +4032,159 @@ select {
   color: var(--error);
   font-size: 12px;
 }
+
+/* List tools (address labels, raffle tickets): form fields and sheet previews */
+.list-field {
+  display: grid;
+  gap: 2px;
+  margin: 14px 0 6px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.list-field small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.list-textarea,
+.list-input,
+.list-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #b8ab99;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+}
+
+.list-textarea {
+  min-height: 190px;
+  resize: vertical;
+  font-family: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.list-input,
+.list-select {
+  min-height: 44px;
+}
+
+.list-textarea:focus-visible,
+.list-input:focus-visible,
+.list-select:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.list-upload {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.list-upload input {
+  max-width: 100%;
+  font-size: 12px;
+}
+
+.list-fits {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.list-advanced {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+}
+
+.list-advanced summary {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list-advanced-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  margin-top: 12px;
+}
+
+.list-advanced-grid .gb-input-box input[type="text"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.list-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+.lbl-edge {
+  fill: none;
+  stroke: #c9bfb0;
+  stroke-width: 0.35;
+}
+
+.lbl-edge.lbl-used {
+  fill: #ebe4d8;
+}
+
+.lbl-text {
+  fill: var(--ink);
+}
+
+.rt-cut {
+  fill: none;
+  stroke: #9b9184;
+  stroke-width: 0.3;
+  stroke-dasharray: 2.5 1.5;
+}
+
+.rt-tear {
+  stroke: #9b9184;
+  stroke-width: 0.3;
+  stroke-dasharray: 0.6 1.2;
+}
+
+.rt-rule {
+  stroke: #9b9184;
+  stroke-width: 0.2;
+}
+
+.rt-num,
+.rt-title {
+  fill: var(--ink);
+  font-weight: 700;
+}
+
+.rt-line {
+  fill: var(--ink);
+}
+
+.rt-field {
+  fill: var(--muted);
+}
+
+@media (max-width: 520px) {
+  .list-advanced-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

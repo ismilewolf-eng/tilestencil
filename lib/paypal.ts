@@ -21,6 +21,7 @@ export interface PaymentEnv extends WaffoEnv {
   SVG_PRICE_USD?: string;
   PACK_PRICE_USD?: string;
   SHEET_PRICE_USD?: string;
+  LIST_PRICE_USD?: string;
 }
 
 type Fetch = (input: string, init?: RequestInit) => Promise<Response>;
@@ -49,19 +50,34 @@ export function sheetPrice(env: PaymentEnv): string {
   return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : price(env);
 }
 
-export const priceFor = (env: PaymentEnv, product: Product) => (product === "pack" ? packPrice(env) : product === "sheet" ? sheetPrice(env) : price(env));
+export const DEFAULT_LIST_PRICE = "2.99";
+
+/** The full print file of a list tool (address labels, raffle tickets) beyond its free amount. */
+export function listPrice(env: PaymentEnv): string {
+  const value = Number(env.LIST_PRICE_USD ?? DEFAULT_LIST_PRICE);
+  return Number.isFinite(value) && value >= 0.5 && value <= 100 ? value.toFixed(2) : DEFAULT_LIST_PRICE;
+}
+
+export function listEnabled(env: PaymentEnv): boolean {
+  return paidEnabled(env) && (!waffoEnabled(env) || Boolean(env.WAFFO_LIST_PRODUCT_ID));
+}
+
+export const priceFor = (env: PaymentEnv, product: Product) =>
+  product === "pack" ? packPrice(env) : product === "sheet" ? sheetPrice(env) : product === "list" ? listPrice(env) : price(env);
 
 /** Offered only when every checkout row can sell it: with Waffo on, that needs its own Waffo product. */
 export function sheetEnabled(env: PaymentEnv): boolean {
   return paidEnabled(env) && (!waffoEnabled(env) || Boolean(env.WAFFO_SHEET_PRODUCT_ID));
 }
 
-export const offered = (env: PaymentEnv, product: Product) => (product === "pack" ? packEnabled(env) : product === "sheet" ? sheetEnabled(env) : paidEnabled(env));
+export const offered = (env: PaymentEnv, product: Product) =>
+  product === "pack" ? packEnabled(env) : product === "sheet" ? sheetEnabled(env) : product === "list" ? listEnabled(env) : paidEnabled(env);
 
 const DESCRIPTION: Record<Product, string> = {
   svg: "TileStencil cut-ready SVG stencil export",
   pack: "TileStencil Christmas SVG pack",
   sheet: "TileStencil print-shop pattern PDF",
+  list: "TileStencil full print file (labels or tickets)",
 };
 
 /**
@@ -91,6 +107,7 @@ export function publicConfig(env: PaymentEnv) {
     ...(waffoEnabled(env) ? { waffo: { test: waffoTestMode(env) } } : {}),
     ...(packEnabled(env) ? { pack: { price: packPrice(env) } } : {}),
     ...(sheetEnabled(env) ? { sheet: { price: sheetPrice(env) } } : {}),
+    ...(listEnabled(env) ? { list: { price: listPrice(env) } } : {}),
   };
 }
 
@@ -176,6 +193,9 @@ function checkCaptured(env: PaymentEnv, orderId: string, body: unknown): Capture
   // We wrote reference_id when creating the order, so it names the product; the captured amount must still be that product's price.
   if (order.purchase_units?.[0]?.reference_id === "sheet") {
     return sheetEnabled(env) && capture.amount?.value === sheetPrice(env) ? { ok: true, orderId, product: "sheet" } : { ok: false, reason: "amount mismatch" };
+  }
+  if (order.purchase_units?.[0]?.reference_id === "list") {
+    return listEnabled(env) && capture.amount?.value === listPrice(env) ? { ok: true, orderId, product: "list" } : { ok: false, reason: "amount mismatch" };
   }
   // Otherwise the amount PayPal captured decides what was bought; the browser's claim is not used.
   if (packEnabled(env) && capture.amount?.value === packPrice(env)) return { ok: true, orderId, product: "pack" };

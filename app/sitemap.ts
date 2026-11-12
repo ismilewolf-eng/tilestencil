@@ -43,6 +43,8 @@ const routes: Array<{
   { route: "gingerbreadHouse", changeFrequency: "monthly", priority: 0.9 },
   { route: "treeSkirt", changeFrequency: "monthly", priority: 0.9 },
   { route: "gingerbreadMan", changeFrequency: "monthly", priority: 0.9 },
+  { route: "addressLabels", changeFrequency: "monthly", priority: 0.9 },
+  { route: "raffleTickets", changeFrequency: "monthly", priority: 0.9 },
   { route: "freeStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "halloweenStencils", changeFrequency: "weekly", priority: 0.9 },
   { route: "christmasStencils", changeFrequency: "weekly", priority: 0.9 },

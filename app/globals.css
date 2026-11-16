@@ -3769,7 +3769,8 @@ select {
   min-height: 44px;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 12px;
+  padding: 10px 12px;
+  line-height: 1.35;
   text-align: left;
   cursor: pointer;
 }
@@ -3988,11 +3989,11 @@ select {
   }
 }
 
-/* Stocking page: after the free download, the one-sheet print-shop PDF */
+/* Stocking page: one-sheet print-shop PDF option */
 .print-shop {
   display: grid;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
   padding: 14px;
   border: 1px solid var(--accent);
   border-radius: 10px;
@@ -4017,7 +4018,8 @@ select {
   min-height: 44px;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 12px;
+  padding: 10px 12px;
+  line-height: 1.35;
   text-align: left;
   cursor: pointer;
 }

@@ -12,10 +12,10 @@ import type { Product } from "@/lib/waffo";
 const SLUG = "christmas-sheet-stocking";
 
 /**
- * Shown once the free tiled PDF has been downloaded: the same pattern on one large sheet for a
- * print shop, so there is nothing to trim and tape. Stays visible after it has been bought.
+ * Shown on the stocking pattern page: the same pattern on one large sheet for a print shop,
+ * so there is nothing to trim and tape. Visible upfront and stays visible after it has been bought.
  */
-export function PrintShopOffer({ size, paperSize, sheets, afterDownload }: { size: StockingSize; paperSize: PaperSize; sheets: number; afterDownload: boolean }) {
+export function PrintShopOffer({ size, paperSize, sheets }: { size: StockingSize; paperSize: PaperSize; sheets: number; afterDownload?: boolean }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [config, setConfig] = useState<SvgPaymentConfig | null>(null);
   const [unlocked, setUnlocked] = useState(false);
@@ -34,7 +34,7 @@ export function PrintShopOffer({ size, paperSize, sheets, afterDownload }: { siz
   const free = config.paid === false;
   const offer = config.paid === true ? config.sheet : undefined;
   const canDownload = free || unlocked;
-  if (!canDownload && (!offer || !afterDownload)) return null;
+  if (!canDownload && !offer) return null;
 
   const format = sheetFormat(size, paperSize);
 
